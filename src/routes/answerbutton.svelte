@@ -6,9 +6,9 @@
 <style>
     .button {
     /*Button background color*/
-    background-color: green;
+    background-color: #fbb900;
     /*Button text color*/
-    color: white;
+    color: black;
     /*Button space around text*/
     padding: 15px 32px;
     /*Centering text inside button*/
@@ -16,15 +16,20 @@
     /*Button rounding*/
     border-radius: 8px;
     /*Button border*/
-    border: 2px solid black;
+    border: none;
     text-decoration:none;
     display: inline-block;
     /*Text size*/
     font-size: 20px;
+    font-weight: bold;
     /*Size of the button*/
     width: 90%;
     margin: 20px;
     height: 85px;
+  }
+
+  button:hover {
+    background-color: rgb(255, 193, 69);
   }
   .buttons {
     /*Puts buttons in the center of screen horizontally*/

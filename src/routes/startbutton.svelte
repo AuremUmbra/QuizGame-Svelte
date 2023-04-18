@@ -4,9 +4,9 @@
 <style>
     .button {
     /*Button background color*/
-    background-color: green;
+    background-color: rgb(255, 187, 0);
     /*Button text color*/
-    color: white;
+    color: black;
     /*Button space around text*/
     padding: 15px 32px;
     /*Centering text inside button*/
@@ -14,7 +14,7 @@
     /*Button rounding*/
     border-radius: 8px;
     /*Button border*/
-    border: 2px solid black;
+    border: none;
     text-decoration:none;
     display: inline-block;
     /*Text size*/
@@ -22,8 +22,19 @@
     /*Width of the button*/
     width: 25%;
     /*How fast the color changes*/
-    margin: 20px;
+    margin: 80px;
     height: 85px;
+    font-family: sans-serif;
+    font-weight: bold;
+    box-shadow: 1px 5px 11px black;
+  }
+
+  .button:hover {
+    background-color:  rgb(255, 170, 0);
+  }
+
+  .button:active {
+    background-color:  rgb(255, 155, 0);
   }
 </style>
 

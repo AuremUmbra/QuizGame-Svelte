@@ -14,22 +14,34 @@
 h2 {
     text-align: center;
     font-size: 28px;
+    font: sans-serif;
+    font-weight: bold;
 }
+
+.ansblock {
+    background-color: white;
+    padding: 35px;
+    margin-top: 55px;
+    box-shadow: 5px 5px 18px black;
+}
+
 </style>
 
 <!-- Question number and number of total questions -->
-    <h2>Question {i+1}/{questions.length}</h2>
-    <!-- Asking the question -->
-    <h2>{questions[i]}</h2>
+        <h2>Question {i+1}/{questions.length}</h2>
+        <!-- Asking the question -->
+        <h2>{questions[i]}</h2>
+
     
     <!-- Using component,
         passing on on:click event to another component
         Giving values for the different buttons to show
      -->
+<div class="ansblock">
     <Answerblock on:click answer={ [
         correct_answers[i],
         incorrect_answers[i*3],
         incorrect_answers[(i*3+1)],
         incorrect_answers[(i*3+2)]
     ]}/> 
-    
+</div>

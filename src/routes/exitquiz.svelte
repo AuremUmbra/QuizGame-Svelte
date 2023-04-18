@@ -5,7 +5,7 @@
 <style>
     .exitbutton {
         /*Button background color*/
-        background-color: green;
+        background-color: #b88103;
         /*Button text color*/
         color: white;
         /*Button space around text*/
@@ -15,11 +15,14 @@
         /*Button rounding*/
         border-radius: 8px;
         /*Button border*/
-        border: 2px solid black;
+        border: none;
         text-decoration:none;
         display: inline-block;
         /*Text size*/
         font-size: 14px;
+    }
+    .exitbutton:hover {
+        background-color: #d68e10;
     }
     .exit{
         /*Puts button at bottom of screen*/

@@ -3,6 +3,7 @@
     import Logintextinput from "./logintextinput.svelte";
     import Passwordtextinput from "./passwordtextinput.svelte";
     import Title from "./title.svelte";
+    import Logos from "./Logos.svelte"
     export let username;
     export let password;
     // export let admin_visibility = 0;
@@ -25,9 +26,12 @@
     .login {
         display: flex;
         justify-content: center;
+        margin-top: 80px;
     }
 </style>
+
 <Title/>
+<Logos/>
 
 <div class = "login">
 <Logintextinput placeholder="Username" bind:value={username}/>

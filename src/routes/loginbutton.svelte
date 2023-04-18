@@ -5,7 +5,7 @@
 <style>
     .login {
         /*Button background color*/
-        background-color: green;
+        background-color: black;
         /*Button text color*/
         color: white;
         /*Button space around text*/
@@ -20,7 +20,8 @@
         display: inline-block;
         /*Text size*/
         font-size: 14px;
+        margin: 10px;
     }
 </style>
 
-<button class="login" on:click>{login}</button>
+<button class="login button" on:click>{login}</button>

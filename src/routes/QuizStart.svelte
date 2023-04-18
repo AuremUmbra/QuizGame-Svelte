@@ -39,7 +39,7 @@
 <style>
     /* Background color */
     :global(body) {
-        background-color: lightblue;
+        background-color:  #298fbf;
     }
 </style>
 
