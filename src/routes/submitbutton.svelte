@@ -5,7 +5,7 @@
 <style>
     .button {
         /*Button background color*/
-        background-color: green;
+        background-color:  #b88103;
         /*Button text color*/
         color: white;
         /*Button space around text*/
@@ -15,15 +15,18 @@
         /*Button rounding*/
         border-radius: 8px;
         /*Button border*/
-        border: 2px solid black;
+        border: none;
         text-decoration:none;
         display: inline-block;
         /*Text size*/
         font-size: 20px;
         /*Size of the button*/
-        width: 20%;
+        /* width: 20%; */
         margin: 20px;
         height: 85px;
+    }
+    .button:hover {
+        background-color: #d68e10;
     }
 </style>
 
