@@ -37,11 +37,9 @@
 <Title/>
 <Logos/>
 <body>
-    <div class = "login">
-    <Logintextinput placeholder="Username" bind:value={username}/>
-    <br>
-    <Passwordtextinput placeholder="Password" bind:value={password}/>
-
-    <Loginbutton on:click login="Log In"/><!--={handleLogIn}-->
-    </div>
+    <form class = "login">
+        <Logintextinput placeholder="Username" bind:value={username}/>
+        <Passwordtextinput placeholder="Password" bind:value={password}/>
+        <Loginbutton on:click login="Log In"/><!--={handleLogIn}-->
+    </form>
 </body>
