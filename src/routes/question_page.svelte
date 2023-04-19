@@ -46,9 +46,5 @@ body {
      -->
     <div class="ansblock">
     <Answerblock answer = {answers} answerID = {answerID} bind:answeredID = {answeredID} on:click/>
-        // correct_answers[i],
-        // incorrect_answers[i*3],
-        // incorrect_answers[(i*3+1)],
-        // incorrect_answers[(i*3+2)]
     </div>
 </body>

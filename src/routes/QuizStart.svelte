@@ -82,7 +82,7 @@
 
 <style>
     /* Background color */
-    :global(body) {
+    body {
         background-color:  #298fbf;
     }
 </style>

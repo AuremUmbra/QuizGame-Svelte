@@ -28,15 +28,20 @@
         justify-content: center;
         margin-top: 80px;
     }
+
+    body {
+        background-color:  #298fbf;
+    }
 </style>
 
 <Title/>
 <Logos/>
+<body>
+    <div class = "login">
+    <Logintextinput placeholder="Username" bind:value={username}/>
+    <br>
+    <Passwordtextinput placeholder="Password" bind:value={password}/>
 
-<div class = "login">
-<Logintextinput placeholder="Username" bind:value={username}/>
-<br>
-<Passwordtextinput placeholder="Password" bind:value={password}/>
-
-<Loginbutton on:click login="Log In"/><!--={handleLogIn}-->
-</div>
+    <Loginbutton on:click login="Log In"/><!--={handleLogIn}-->
+    </div>
+</body>
