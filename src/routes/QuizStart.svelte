@@ -86,7 +86,7 @@
 </script>
 
 <style>
-    /* Background color */
+    /* Background color -- Currently Unused*/
     body {
         background-color:  #298fbf;
     }
