@@ -29,10 +29,12 @@
     box-shadow: 1px 5px 11px black;
   }
 
+  /* Color changes when hovered above */
   .button:hover {
     background-color:  rgb(255, 170, 0);
   }
 
+  /* Color changes when actived */
   .button:active {
     background-color:  rgb(255, 155, 0);
   }

@@ -25,9 +25,12 @@
         margin: 20px;
         height: 85px;
     }
+
+    /* Color changes when hovered above */
     .button:hover {
         background-color: #d68e10;
     }
 </style>
 
+<!-- Button for submiting answer -->
 <div class="buttons"><button class="button" on:click>Submit</button></div>
