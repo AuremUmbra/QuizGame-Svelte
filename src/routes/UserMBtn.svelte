@@ -1,11 +1,18 @@
 <script>
-    export let login;
+    export let User_Manager;
 </script>
 
 <style>
-    .login {
-        /*Button background color*/
-        background-color: black;
+    .UserMButton{
+        /*Puts button at top right of screen underneath logout button*/
+        display:flex;
+        justify-content:flex-end;
+    }
+
+    .UmBtn {
+        /* Same styling as logout/in button */
+         /*Button background color*/
+         background-color: black;
         /*Button text color*/
         color: white;
         /*Centering text inside button*/
@@ -26,4 +33,6 @@
     }
 </style>
 
-<button class="login button" on:click>{login}</button>
+<div class=UserMButton>
+    <button class=UmBtn on:click>{User_Manager}</button>
+</div>

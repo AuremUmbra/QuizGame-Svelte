@@ -2,6 +2,7 @@
     import LoginPage from "./loginpage.svelte";
     import QuizStart from "./QuizStart.svelte";
     import Loginbutton from "./loginbutton.svelte";
+    import Adminpage from "./Adminpage.svelte";
     let admin_visibility = 0;
     let quiz_visibility = 0;
     let username;
@@ -48,7 +49,7 @@
     <div class="logout">
     <Loginbutton on:click={handleLogOut} login="Log Out"/>
     </div>
-    <!-- Show Admin Page Here -->
+    <Adminpage/>
     
 {:else if quiz_visibility === 1}
     <div class="logout">
