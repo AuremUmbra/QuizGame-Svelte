@@ -16,16 +16,18 @@
     let answerID = [0,1,2,3];
     let score = 0;
     let answeredID;
-    // import questions from "./question_page.svelte";
-
+    
+    //Creating answers for this question array
     $: answers =[
         correct_answers[i],
         incorrect_answers[i*3],
         incorrect_answers[(i*3+1)],
         incorrect_answers[(i*3+2)]
     ]
+    //Define shuffled answers array
     let answers2;
 
+    //Function to shuffle answers array
     function shuffle(a) {
     var y, x, z;
     for (z = a.length - 1; z > 0; z--) {
@@ -56,10 +58,11 @@
     function handleClickAnswer() {
         
         
-
+        //If statement to check for score and add score if correct
         if (answers2[answeredID] === correct_answers[i]) {
             score += 1;
         };
+        //Change variables
         answeredID=0
         i += 1;
         answers =[
@@ -68,8 +71,10 @@
             incorrect_answers[(i*3+1)],
             incorrect_answers[(i*3+2)]
         ];
+        //Shuffle new answers array
         answers2 = shuffle(answers);
 
+        //End quiz if finished
         if (i >= questions.length) {
             // alert("Quiz Finished. You Scored "{score}"/"{questions.length})
             score_visibility = 1
@@ -87,7 +92,7 @@
     }
 </style>
 
-<!-- Shows Question page or Homepage -->
+<!-- Shows Question page or ScorePage or Homepage -->
 {#if (question_visibility===1)}
     <Question_page  on:click={handleClickAnswer} questions={questions} answers={answers2} answerID={answerID} bind:answeredID = {answeredID} i={i}/>
     <Exitquiz on:click={handleQuizExit}/>
