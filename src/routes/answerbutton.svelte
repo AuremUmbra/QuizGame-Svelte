@@ -69,8 +69,11 @@
 <!-- Creating a button with a on:click event that will be used by a different component and a text that will be defined by another component with the default being 'answer' -->
 <!-- <div class="buttons"><button id={answerID} class="button" on:click={() => handleScore({answerID})}>{answer}</button></div> -->
 
+<!-- List item -->
 <li>
+  <!-- Radio button input. ID matches label. Class to make radio button part hidden. -->
   <input type="radio" id={answerID} name="hosting" value={answerID} bind:group={answered} class="hidden peer" required>
+  <!-- Label for radio button. Styled in class part using flowbite. -->
   <label for={answerID} class="inline-flex items-center justify-between w-full p-5 text-black bg-sky-500 border-none rounded-lg cursor-pointer peer-checked:text-blue-600 peer-checked:bg-orange-500 hover:text-gray-600 hover:bg-sky-300">                           
       <div class="block">
           <div class="w-full text-lg font-semibold">{answer}</div>

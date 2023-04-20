@@ -3,7 +3,6 @@
     import Startbutton from "./startbutton.svelte";
     import Title from "./title.svelte";
     import Logos from "./Logos.svelte";
-    // Defining Title variable
 </script>
 
 <style>

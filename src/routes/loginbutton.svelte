@@ -1,4 +1,5 @@
 <script>
+    // Allows Button to display different text from other components
     export let login;
 </script>
 
@@ -26,4 +27,5 @@
     }
 </style>
 
+<!-- Create button that has a click event and text that is chosen by the importing component  -->
 <button class="login button" on:click>{login}</button>
