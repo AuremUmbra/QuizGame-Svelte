@@ -3,12 +3,13 @@
     export let questions = ['In which suburb is the Digital Traineeship Programme being run?','Which Train Station is the closest to the Cremorne Campus of Kangan Institute?','What is the capital city of Australia?'];
     export let i = 0
     export let answeredID;
-    
+    export let answers;
+    export let answerID;
+
     //Importing component 
     import Answerblock from "./answerblock.svelte";
 
-    export let answers;
-    export let answerID;
+    
 
 </script>
 
@@ -20,6 +21,7 @@ h2 {
     font: sans-serif;
     font-weight: bold;
 }
+/* Answer Block Styling */
 
 .ansblock {
     background-color: white;
@@ -27,6 +29,7 @@ h2 {
     margin-top: 55px;
     box-shadow: 5px 5px 18px black;
 }
+/* Background color */
 
 body {
         background-color:  #298fbf;
