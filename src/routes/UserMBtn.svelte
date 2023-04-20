@@ -1,12 +1,18 @@
 <script>
-    // Allows Button to display different text from other components
-    export let login;
+    export let User_Manager;
 </script>
 
 <style>
-    .login {
-        /*Button background color*/
-        background-color: black;
+    .UserMButton{
+        /*Puts button at top right of screen underneath logout button*/
+        display:flex;
+        justify-content:flex-end;
+    }
+
+    .UmBtn {
+        /* Same styling as logout/in button */
+         /*Button background color*/
+         background-color: black;
         /*Button text color*/
         color: white;
         /*Centering text inside button*/
@@ -27,5 +33,6 @@
     }
 </style>
 
-<!-- Create button that has a click event and text that is chosen by the importing component  -->
-<button class="login button" on:click>{login}</button>
+<div class=UserMButton>
+    <button class=UmBtn on:click>{User_Manager}</button>
+</div>
