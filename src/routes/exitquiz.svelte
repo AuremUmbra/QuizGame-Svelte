@@ -33,6 +33,7 @@
     }
 </style>
 
+<!-- Creates Div and button that can be clicked -->
 <div class="exit">
 <button class="exitbutton" on:click>Exit</button>
 </div>
