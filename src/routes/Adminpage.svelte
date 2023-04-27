@@ -28,8 +28,8 @@ function handleAdminHome() {
 
 <style>
     .create{
-        margin-top: 325px;
-        margin-left: 1090px;
+        margin-top: 50px;
+        margin-left: 565px;
     }
 </style>
 

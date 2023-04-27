@@ -1,7 +1,18 @@
 <script>
+    //Define variables for the Admin's input
     let newName;
     let newEmail;
 
+    //Define array for the table headers
+    let columns = ["Name", "Email", "Date Created", "Last Updated"];
+
+    //Array to store data objects
+    let data = [
+        {name: "Admin", email:"admin@gmail.com", datecreated: new Date(), lastupdated: new Date()},
+        {name: "User", email:"user@gmail.com", datecreated: new Date(), lastupdated: new Date()}
+    ];
+
+    //Function to add a new row of user information
     function addRow() {
         let newUser =  {name: "", email:"", datecreated:"", lastupdated:""}
         newUser.name = newName;
@@ -11,15 +22,10 @@
         data = [...data, newUser];
     };
 
+    //Function to delete a row of user information from the table (not the database)
     function deleteRow(rowToBeDeleted) {
         data = data.filter(row => row != rowToBeDeleted)
     };
-
-    let columns = ["Name", "Email", "Date Created", "Last Updated"];
-    let data = [
-        {name: "Admin", email:"admin@gmail.com", datecreated: new Date(), lastupdated: new Date()},
-        {name: "User", email:"user@gmail.com", datecreated: new Date(), lastupdated: new Date()}
-    ];
 </script>
 
 <!-- The table holding each user's information, including the Admin's information -->
@@ -38,7 +44,7 @@
             <td>{row.datecreated}</td>
             <td>{row.lastupdated}</td>
             <!-- button to delete user from table -->
-<button class="DeleteUser" on:click={() => deleteRow(row)}>X</button>
+            <button class="DeleteUser" on:click={() => deleteRow(row)}>X</button>
         </tr>
     {/each}
 </table>
