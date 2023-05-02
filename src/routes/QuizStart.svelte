@@ -7,72 +7,82 @@
     
 
     // Defining variables
-    export let question_visibility = 0
+    let question_visibility = 0
     let score_visibility = 0
     let i = 0 
-    let questions = ['In which suburb is the Digital Traineeship Programme being run?','Which Train Station is the closest to the Cremorne Campus of Kangan Institute?','What is the capital city of Australia?']
-    let correct_answers = ['Cremorne','Richmond','Canberra']
-    let incorrect_answers = ['South Yarra','Bendigo','Dandenong','Frankston','Cranburne','Berwick','Beaconsfield','Adelaide','Brisbane','Perth','Paris','Melbourne','Sydney','Newcastle']
-    let answerID = [0,1,2,3];
+    // let questions = ['In which suburb is the Digital Traineeship Programme being run?','Which Train Station is the closest to the Cremorne Campus of Kangan Institute?','What is the capital city of Australia?']
+    // let correct_answers = ['Cremorne','Richmond','Canberra']
+    // let incorrect_answers = ['South Yarra','Bendigo','Dandenong','Frankston','Cranburne','Berwick','Beaconsfield','Adelaide','Brisbane','Perth','Paris','Melbourne','Sydney','Newcastle']
+    // // let answerID = [0,1,2,3];
     let score = 0;
     let answeredID;
     
     //Creating answers for this question array
-    $: answers =[
-        correct_answers[i],
-        incorrect_answers[i*3],
-        incorrect_answers[(i*3+1)],
-        incorrect_answers[(i*3+2)]
-    ]
-    //Define shuffled answers array
-    let answers2;
+    // $: answers =[
+    //     correct_answers[i],
+    //     incorrect_answers[i*3],
+    //     incorrect_answers[(i*3+1)],
+    //     incorrect_answers[(i*3+2)]
+    // ]
+    // //Define shuffled answers array
+    // let answers2;
 
-    //Function to shuffle answers array
-    function shuffle(a) {
-    var y, x, z;
-    for (z = a.length - 1; z > 0; z--) {
-        y = Math.floor(Math.random() * (z + 1));
-        x = a[z];
-        a[z] = a[y];
-        a[y] = x;
-    }
-    return a;
-    }
+    // //Function to shuffle answers array
+    // function shuffle(a) {
+    // var y, x, z;
+    // for (z = a.length - 1; z > 0; z--) {
+    //     y = Math.floor(Math.random() * (z + 1));
+    //     x = a[z];
+    //     a[z] = a[y];
+    //     a[y] = x;
+    // }
+    // return a;
+    // }
 
     // Function to start quiz
     function handleStartClick() {
-        question_visibility = 1
-        answers2 = shuffle(answers)
+        question_visibility = 1;
+        handleQuestionClick();
+        // answers2 = shuffle(answers)
     }
 
     // Function to leave quiz early
     function handleQuizExit() {
-        score_visibility=0
-        question_visibility = 0
-        i=0
-        score=0
-        answeredID=0
+        score_visibility=0;
+        question_visibility = 0;
+        i=0;
+        score=0;
+        answers = [];
+        answerID = [];
+        answeredID = 0;
     }
 
     //Function to move to next question and end quiz at end
     function handleClickAnswer() {
-        
+        answers = [];
+        answerID = [];
         
         //If statement to check for score and add score if correct
-        if (answers2[answeredID] === correct_answers[i]) {
-            score += 1;
-        };
+        // if (answers2[answeredID] === correct_answers[i]) {
+        //     score += 1;
+        // };
         //Change variables
-        answeredID=0
+
+        //Remove Later if get whole question list at beginning 
+        handleQuestionClick();
+
+
+        answeredID = 0;
+
         i += 1;
-        answers =[
-            correct_answers[i],
-            incorrect_answers[i*3],
-            incorrect_answers[(i*3+1)],
-            incorrect_answers[(i*3+2)]
-        ];
+        // answers =[
+        //     correct_answers[i],
+        //     incorrect_answers[i*3],
+        //     incorrect_answers[(i*3+1)],
+        //     incorrect_answers[(i*3+2)]
+        // ];
         //Shuffle new answers array
-        answers2 = shuffle(answers);
+        // answers2 = shuffle(answers);
 
         //End quiz if finished
         if (i >= questions.length) {
@@ -83,18 +93,60 @@
         };
         
     }
+
+    async function QuestionGet() {
+        const res = await fetch("https://dtpkanganwebapi.azurewebsites.net/Question");
+        const data = await res.json();
+
+        if (res.ok) {
+            data.options.forEach((q) => {
+                answers = [...answers, q.answerText];
+                answerID = [...answerID,q.answerID];
+            })
+            console.log(data)
+            return data;
+        } else {
+            throw new Error(data);
+        }
+    }
+
+    let questionPromise;
+    let answers = []; 
+    let answerID = [];
+    let questions = [1,2,3];
+    
+    function handleQuestionClick() {
+        questionPromise = QuestionGet();
+        console.log(questionPromise)
+        
+    }
+
 </script>
 
 <style>
     /* Background color -- Currently Unused*/
-    body {
+    /* body {
         background-color:  #298fbf;
+    } */
+
+    
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        font: sans-serif;
+        font-weight: bold;
     }
 </style>
 
 <!-- Shows Question page or ScorePage or Homepage -->
 {#if (question_visibility===1)}
-    <Question_page  on:click={handleClickAnswer} questions={questions} answers={answers2} answerID={answerID} bind:answeredID = {answeredID} i={i}/>
+    {#await questionPromise}
+        <h2>Loading Question</h2>
+    {:then question}
+        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} i={i}/>
+    {:catch error}
+        <p style="color:red">{error.message}</p>
+    {/await}
     <Exitquiz on:click={handleQuizExit}/>
 {:else if (score_visibility===1)}
     <Scorepage score={score} questionslength={questions.length}/>

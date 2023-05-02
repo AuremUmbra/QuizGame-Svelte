@@ -1,5 +1,8 @@
 <script>
-
+    export let answeredID;
+    function buttonDisabled(answeredID) {
+        return answeredID == null;
+    }
 </script>
 
 <style>
@@ -33,4 +36,4 @@
 </style>
 
 <!-- Button for submiting answer -->
-<div class="buttons"><button class="button" on:click>Submit</button></div>
+<div class="buttons" disabled='{buttonDisabled(answeredID)}'><button class="button" on:click>Submit</button></div>
