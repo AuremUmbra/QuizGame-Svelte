@@ -16,6 +16,7 @@
     let answers = []; 
     let answerID = [];
     let questions = [1,2,3];
+    let question_id
 
     // Function to start quiz
     function handleStartClick() {
@@ -40,11 +41,8 @@
         answers = [];
         answerID = [];
         
-        //If statement to check for score and add score if correct
-        // if (answers2[answeredID] === correct_answers[i]) {
-        //     score += 1;
-        // };
-        //Change variables
+        //Call ScoreUpdate function when it is finished
+        ScoreUpdate(question_id,answeredID)
 
         //Remove Later if get whole question list at beginning 
         handleQuestionClick();
@@ -74,12 +72,12 @@
                 answerID = [...answerID,q.answerID];
             })
             console.log(data)
+            question_id = data.questionID;
             return data;
         } else {
             throw new Error(data);
         }
     }
-
 
     //Function to call QuestionGet function when needed
     function handleQuestionClick() {
@@ -88,15 +86,27 @@
         
     }
 
+    //Function to check answers and update score
+    async function ScoreUpdate(question_id,answeredID) {
+
+        const res_check = await fetch(`https://dtpkanganwebapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`); // -- Output will be Boolian Value
+        const data_check = await res_check.json();
+        console.log(answeredID)
+        console.log(question_id)
+        console.log(data_check)
+        if (res_check.ok) {
+            if (data_check === true) {
+            score += 1
+            }
+        } else {
+            throw new Error(data_check);
+        }
+
+        
+    }  
 </script>
 
 <style>
-    /* Background color -- Currently Unused*/
-    /* body {
-        background-color:  #298fbf;
-    } */
-
-    
     h2 {
         text-align: center;
         font-size: 28px;
