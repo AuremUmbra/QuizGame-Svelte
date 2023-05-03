@@ -10,34 +10,12 @@
     let question_visibility = 0
     let score_visibility = 0
     let i = 0 
-    // let questions = ['In which suburb is the Digital Traineeship Programme being run?','Which Train Station is the closest to the Cremorne Campus of Kangan Institute?','What is the capital city of Australia?']
-    // let correct_answers = ['Cremorne','Richmond','Canberra']
-    // let incorrect_answers = ['South Yarra','Bendigo','Dandenong','Frankston','Cranburne','Berwick','Beaconsfield','Adelaide','Brisbane','Perth','Paris','Melbourne','Sydney','Newcastle']
-    // // let answerID = [0,1,2,3];
     let score = 0;
     let answeredID;
-    
-    //Creating answers for this question array
-    // $: answers =[
-    //     correct_answers[i],
-    //     incorrect_answers[i*3],
-    //     incorrect_answers[(i*3+1)],
-    //     incorrect_answers[(i*3+2)]
-    // ]
-    // //Define shuffled answers array
-    // let answers2;
-
-    // //Function to shuffle answers array
-    // function shuffle(a) {
-    // var y, x, z;
-    // for (z = a.length - 1; z > 0; z--) {
-    //     y = Math.floor(Math.random() * (z + 1));
-    //     x = a[z];
-    //     a[z] = a[y];
-    //     a[y] = x;
-    // }
-    // return a;
-    // }
+    let questionPromise;
+    let answers = []; 
+    let answerID = [];
+    let questions = [1,2,3];
 
     // Function to start quiz
     function handleStartClick() {
@@ -75,18 +53,9 @@
         answeredID = 0;
 
         i += 1;
-        // answers =[
-        //     correct_answers[i],
-        //     incorrect_answers[i*3],
-        //     incorrect_answers[(i*3+1)],
-        //     incorrect_answers[(i*3+2)]
-        // ];
-        //Shuffle new answers array
-        // answers2 = shuffle(answers);
 
         //End quiz if finished
         if (i >= questions.length) {
-            // alert("Quiz Finished. You Scored "{score}"/"{questions.length})
             score_visibility = 1
             i = 0;
             question_visibility=0;
@@ -94,6 +63,7 @@
         
     }
 
+    //Function to get questions and answers from API
     async function QuestionGet() {
         const res = await fetch("https://dtpkanganwebapi.azurewebsites.net/Question");
         const data = await res.json();
@@ -110,14 +80,11 @@
         }
     }
 
-    let questionPromise;
-    let answers = []; 
-    let answerID = [];
-    let questions = [1,2,3];
-    
+
+    //Function to call QuestionGet function when needed
     function handleQuestionClick() {
         questionPromise = QuestionGet();
-        console.log(questionPromise)
+        //console.log(questionPromise)
         
     }
 
