@@ -10,6 +10,7 @@
     /*Puts buttons in the center of screen horizontally*/
     display: flex;
     justify-content: center;
+    width:100%;
 }
 
 
@@ -20,6 +21,6 @@
     <Logos />
     <Title/>
     <!-- Using imported component and passing on:click event on to another component -->
-    <div class=buttons>
+    <!-- <div class=buttons> -->
         <Startbutton on:click/>
-    </div>
+    <!-- </div> -->
