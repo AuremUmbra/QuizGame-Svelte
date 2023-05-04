@@ -22,7 +22,7 @@
     function handleStartClick() {
         question_visibility = 1;
         handleQuestionClick();
-        // answers2 = shuffle(answers)
+        
     }
 
     // Function to leave quiz early
@@ -63,7 +63,7 @@
 
     //Function to get questions and answers from API
     async function QuestionGet() {
-        const res = await fetch("https://dtpkanganwebapi.azurewebsites.net/Question");
+        const res = await fetch("https://dtpkanganquestionapi.azurewebsites.net/Question");
         const data = await res.json();
 
         if (res.ok) {
@@ -71,7 +71,6 @@
                 answers = [...answers, q.answerText];
                 answerID = [...answerID,q.answerID];
             })
-            console.log(data)
             question_id = data.questionID;
             return data;
         } else {
@@ -89,11 +88,8 @@
     //Function to check answers and update score
     async function ScoreUpdate(question_id,answeredID) {
 
-        const res_check = await fetch(`https://dtpkanganwebapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`); // -- Output will be Boolian Value
+        const res_check = await fetch(`https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`); // -- Output will be Boolian Value
         const data_check = await res_check.json();
-        console.log(answeredID)
-        console.log(question_id)
-        console.log(data_check)
         if (res_check.ok) {
             if (data_check === true) {
             score += 1
