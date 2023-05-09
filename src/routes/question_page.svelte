@@ -1,10 +1,11 @@
 <script>
     // Defining variables and allowing them to be filled by other components
     export let questions;
-    export let i = 0
+    export let i = 0;
     export let answeredID;
     export let answers;
     export let answerID;
+
 
     //Importing component 
     import Answerblock from "./answerblock.svelte";

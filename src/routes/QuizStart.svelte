@@ -7,16 +7,17 @@
     
 
     // Defining variables
-    let question_visibility = 0
-    let score_visibility = 0
-    let i = 0 
+    let question_visibility = 0;
+    let score_visibility = 0;
+    let i = 0;
     let score = 0;
     let answeredID;
     let questionPromise;
     let answers = []; 
     let answerID = [];
     let questions = [1,2,3];
-    let question_id
+    let question_id;
+    let questionsID = [];
 
     // Function to start quiz
     function handleStartClick() {
@@ -34,6 +35,7 @@
         answers = [];
         answerID = [];
         answeredID = 0;
+        questionsID = [];
     }
 
     //Function to move to next question and end quiz at end
@@ -43,13 +45,8 @@
         
         //Call ScoreUpdate function when it is finished
         ScoreUpdate(question_id,answeredID)
-
-        //Remove Later if get whole question list at beginning 
-        handleQuestionClick();
-
-
+        
         answeredID = 0;
-
         i += 1;
 
         //End quiz if finished
@@ -57,8 +54,10 @@
             score_visibility = 1
             i = 0;
             question_visibility=0;
-        };
-        
+        } else {
+            //Remove Later if get whole question list at beginning 
+            handleQuestionClick();   
+        }     
     }
 
     //Function to get questions and answers from API
@@ -67,10 +66,16 @@
         const data = await res.json();
 
         if (res.ok) {
-            data.options.forEach((q) => {
-                answers = [...answers, q.answerText];
-                answerID = [...answerID,q.answerID];
-            })
+            if (questionsID.includes(data.questionID)) {
+                handleQuestionClick()
+            } else {
+                data.options.forEach((q) => {
+                    answers = [...answers, q.answerText];
+                    answerID = [...answerID,q.answerID];
+                })
+                questionsID = [...questionsID,data.questionID];
+                console.log(questionsID)
+            }
             question_id = data.questionID;
             return data;
         } else {
