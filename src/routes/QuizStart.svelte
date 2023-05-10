@@ -21,13 +21,14 @@
     let length = 10;
     let maxlength = 10;
     let duplicate;
+    let duplicatedisabled = true;
 
     // Function to start quiz
     function handleStartClick() {
         question_visibility = 1;
         QuizLength();
         handleQuestionClick();
-        
+        duplicatedisabled = true;
     }
 
     // Function to leave quiz early
@@ -53,6 +54,7 @@
         Duplicatecheck(duplicate);
 
         duplicate = false;
+        duplicatedisabled = false;
         answeredID = 0;
         i += 1;
 
@@ -147,7 +149,7 @@
     {#await questionPromise}
         <h2>Loading Question</h2>
     {:then question}
-        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} i={i} length={length}/>
+        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
     {:catch error}
         <p style="color:red">{error.message}</p>
     {/await}

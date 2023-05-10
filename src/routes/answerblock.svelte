@@ -9,6 +9,7 @@
     export let answeredID;
     let duplicatetext = "Has this question appeared multiple times in this quiz?";
     export let duplicate;
+    export let duplicatedisabled;
 </script>
 
 <style>
@@ -32,9 +33,11 @@
     <Answer_button answer = {answer[2]} answerID = {answerID[2]} bind:answered = {answeredID} />
     <Answer_button answer = {answer[3]} answerID = {answerID[3]} bind:answered = {answeredID} />
 </ul>
+
 <div class="checkbox">
-    <Duplicatecheckbox duplicatetext = {duplicatetext} bind:duplicate/>
+    <Duplicatecheckbox {duplicatetext} bind:duplicate {duplicatedisabled}/>
 </div>
+
 <!-- Get Submit button -->
 <div class="buttons">
     <Submitbutton on:click answeredID = {answeredID}/>
