@@ -5,7 +5,7 @@
     export let answeredID;
     export let answers;
     export let answerID;
-
+    export let length;
 
     //Importing component 
     import Answerblock from "./answerblock.svelte";
@@ -39,7 +39,7 @@ body {
 </style>
 <body>
 <!-- Question number and number of total questions -->
-        <h2>Question {i+1}/{questions.length}</h2>
+        <h2>Question {i+1}/{length}</h2>
         <!-- Asking the question -->
         <h2>{questions}</h2>
 

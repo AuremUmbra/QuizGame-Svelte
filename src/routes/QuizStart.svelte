@@ -15,13 +15,15 @@
     let questionPromise;
     let answers = []; 
     let answerID = [];
-    let questions = [1,2,3];
     let question_id;
     let questionsID = [];
+    let length = 10;
+    let maxlength = 10;
 
     // Function to start quiz
     function handleStartClick() {
         question_visibility = 1;
+        QuizLength();
         handleQuestionClick();
         
     }
@@ -50,12 +52,12 @@
         i += 1;
 
         //End quiz if finished
-        if (i >= questions.length) {
+        if (i >= length) {
             score_visibility = 1
             i = 0;
             question_visibility=0;
         } else {
-            //Remove Later if get whole question list at beginning 
+            
             handleQuestionClick();   
         }     
     }
@@ -105,6 +107,19 @@
 
         
     }  
+
+    async function QuizLength() {
+        const res_length = await fetch('https://dtpkanganquestionapi.azurewebsites.net/Question/GetAll')
+        const data_length = await res_length.json();
+        if (res_length.ok) {
+            if (data_length.length <= 10) {
+                length = data_length.length
+            } else {
+                length = maxlength
+            }
+            
+        }
+    }
 </script>
 
 <style>
@@ -121,13 +136,13 @@
     {#await questionPromise}
         <h2>Loading Question</h2>
     {:then question}
-        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} i={i}/>
+        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} i={i} length={length}/>
     {:catch error}
         <p style="color:red">{error.message}</p>
     {/await}
     <Exitquiz on:click={handleQuizExit}/>
 {:else if (score_visibility===1)}
-    <Scorepage score={score} questionslength={questions.length}/>
+    <Scorepage score={score} questionslength={length}/>
     <Exitquiz on:click={handleQuizExit}/>
 {:else}
     <Homepage on:click={handleStartClick}/>
