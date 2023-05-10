@@ -7,94 +7,124 @@
     
 
     // Defining variables
-    export let question_visibility = 0
-    let score_visibility = 0
-    let i = 0 
-    let questions = ['In which suburb is the Digital Traineeship Programme being run?','Which Train Station is the closest to the Cremorne Campus of Kangan Institute?','What is the capital city of Australia?']
-    let correct_answers = ['Cremorne','Richmond','Canberra']
-    let incorrect_answers = ['South Yarra','Bendigo','Dandenong','Frankston','Cranburne','Berwick','Beaconsfield','Adelaide','Brisbane','Perth','Paris','Melbourne','Sydney','Newcastle']
-    let answerID = [0,1,2,3];
+    let question_visibility = 0;
+    let score_visibility = 0;
+    let i = 0;
     let score = 0;
     let answeredID;
-    
-    //Creating answers for this question array
-    $: answers =[
-        correct_answers[i],
-        incorrect_answers[i*3],
-        incorrect_answers[(i*3+1)],
-        incorrect_answers[(i*3+2)]
-    ]
-    //Define shuffled answers array
-    let answers2;
-
-    //Function to shuffle answers array
-    function shuffle(a) {
-    var y, x, z;
-    for (z = a.length - 1; z > 0; z--) {
-        y = Math.floor(Math.random() * (z + 1));
-        x = a[z];
-        a[z] = a[y];
-        a[y] = x;
-    }
-    return a;
-    }
+    let questionPromise;
+    let answers = []; 
+    let answerID = [];
+    let questions = [1,2,3];
+    let question_id;
+    let questionsID = [];
 
     // Function to start quiz
     function handleStartClick() {
-        question_visibility = 1
-        answers2 = shuffle(answers)
+        question_visibility = 1;
+        handleQuestionClick();
+        
     }
 
     // Function to leave quiz early
     function handleQuizExit() {
-        score_visibility=0
-        question_visibility = 0
-        i=0
-        score=0
-        answeredID=0
+        score_visibility=0;
+        question_visibility = 0;
+        i=0;
+        score=0;
+        answers = [];
+        answerID = [];
+        answeredID = 0;
+        questionsID = [];
     }
 
     //Function to move to next question and end quiz at end
     function handleClickAnswer() {
+        answers = [];
+        answerID = [];
         
+        //Call ScoreUpdate function when it is finished
+        ScoreUpdate(question_id,answeredID)
         
-        //If statement to check for score and add score if correct
-        if (answers2[answeredID] === correct_answers[i]) {
-            score += 1;
-        };
-        //Change variables
-        answeredID=0
+        answeredID = 0;
         i += 1;
-        answers =[
-            correct_answers[i],
-            incorrect_answers[i*3],
-            incorrect_answers[(i*3+1)],
-            incorrect_answers[(i*3+2)]
-        ];
-        //Shuffle new answers array
-        answers2 = shuffle(answers);
 
         //End quiz if finished
         if (i >= questions.length) {
-            // alert("Quiz Finished. You Scored "{score}"/"{questions.length})
             score_visibility = 1
             i = 0;
             question_visibility=0;
-        };
+        } else {
+            //Remove Later if get whole question list at beginning 
+            handleQuestionClick();   
+        }     
+    }
+
+    //Function to get questions and answers from API
+    async function QuestionGet() {
+        const res = await fetch("https://dtpkanganquestionapi.azurewebsites.net/Question");
+        const data = await res.json();
+
+        if (res.ok) {
+            if (questionsID.includes(data.questionID)) {
+                handleQuestionClick()
+            } else {
+                data.options.forEach((q) => {
+                    answers = [...answers, q.answerText];
+                    answerID = [...answerID,q.answerID];
+                })
+                questionsID = [...questionsID,data.questionID];
+                console.log(questionsID)
+            }
+            question_id = data.questionID;
+            return data;
+        } else {
+            throw new Error(data);
+        }
+    }
+
+    //Function to call QuestionGet function when needed
+    function handleQuestionClick() {
+        questionPromise = QuestionGet();
+        //console.log(questionPromise)
         
     }
+
+    //Function to check answers and update score
+    async function ScoreUpdate(question_id,answeredID) {
+
+        const res_check = await fetch(`https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`); // -- Output will be Boolian Value
+        const data_check = await res_check.json();
+        if (res_check.ok) {
+            if (data_check === true) {
+            score += 1
+            }
+        } else {
+            throw new Error(data_check);
+        }
+
+        
+    }  
 </script>
 
 <style>
-    /* Background color -- Currently Unused*/
-    body {
-        background-color:  #298fbf;
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        font: sans-serif;
+        font-weight: bold;
     }
 </style>
 
 <!-- Shows Question page or ScorePage or Homepage -->
 {#if (question_visibility===1)}
-    <Question_page  on:click={handleClickAnswer} questions={questions} answers={answers2} answerID={answerID} bind:answeredID = {answeredID} i={i}/>
+    {#await questionPromise}
+        <h2>Loading Question</h2>
+    {:then question}
+        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} i={i}/>
+    {:catch error}
+        <p style="color:red">{error.message}</p>
+    {/await}
     <Exitquiz on:click={handleQuizExit}/>
 {:else if (score_visibility===1)}
     <Scorepage score={score} questionslength={questions.length}/>

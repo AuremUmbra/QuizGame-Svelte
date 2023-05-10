@@ -1,10 +1,11 @@
 <script>
     // Defining variables and allowing them to be filled by other components
-    export let questions = ['In which suburb is the Digital Traineeship Programme being run?','Which Train Station is the closest to the Cremorne Campus of Kangan Institute?','What is the capital city of Australia?'];
-    export let i = 0
+    export let questions;
+    export let i = 0;
     export let answeredID;
     export let answers;
     export let answerID;
+
 
     //Importing component 
     import Answerblock from "./answerblock.svelte";
@@ -40,7 +41,7 @@ body {
 <!-- Question number and number of total questions -->
         <h2>Question {i+1}/{questions.length}</h2>
         <!-- Asking the question -->
-        <h2>{questions[i]}</h2>
+        <h2>{questions}</h2>
 
     
     <!-- Using component,

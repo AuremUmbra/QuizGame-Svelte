@@ -6,11 +6,12 @@
 </script>
 
 <style>
-    .buttons {
+    /* .buttons { */
     /*Puts buttons in the center of screen horizontally*/
-    display: flex;
+    /* display: flex;
     justify-content: center;
-}
+    width:30%; */
+/* } */
 
 
 </style>

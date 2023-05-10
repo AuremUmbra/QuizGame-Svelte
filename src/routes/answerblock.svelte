@@ -31,5 +31,5 @@
 </ul>
 <!-- Get Submit button -->
 <div class="buttons">
-    <Submitbutton on:click/>
+    <Submitbutton on:click answeredID = {answeredID}/>
 </div>

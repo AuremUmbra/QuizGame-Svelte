@@ -20,7 +20,7 @@
     /*Text size*/
     font-size: 20px;
     /*Width of the button*/
-    width: 25%;
+    width: 100%;
     /*How fast the color changes*/
     margin: 80px;
     height: 85px;
@@ -38,7 +38,14 @@
   .button:active {
     background-color:  rgb(255, 155, 0);
   }
+
+  .startbutton { 
+    /*Puts buttons in the center of screen horizontally*/
+    width: 100%;
+    display:flex;
+    justify-self:center;
+  } 
 </style>
 
 <!-- Creating a button with an on:click event that can be used by another component -->
-<button class="button" on:click>Start</button>
+<div class="startbutton" ><button class="button" on:click>Start</button></div>
