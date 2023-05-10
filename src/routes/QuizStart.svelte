@@ -82,7 +82,6 @@
                     answerID = [...answerID,q.answerID];
                 })
                 questionsID = [...questionsID,data.questionID];
-                console.log(questionsID)
             }
             question_id = data.questionID;
             return data;
