@@ -6,7 +6,8 @@
     export let answers;
     export let answerID;
     export let length;
-
+    export let duplicate;
+    
     //Importing component 
     import Answerblock from "./answerblock.svelte";
 
@@ -49,6 +50,6 @@ body {
         Giving values for the different buttons to show
      -->
     <div class="ansblock">
-    <Answerblock answer = {answers} answerID = {answerID} bind:answeredID = {answeredID} on:click/>
+    <Answerblock answer = {answers} answerID = {answerID} bind:answeredID = {answeredID} bind:duplicate on:click/>
     </div>
 </body>

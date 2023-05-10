@@ -4,6 +4,7 @@
     import Homepage from "./homepage.svelte";
     import Exitquiz from "./exitquiz.svelte";
     import Scorepage from "./scorepage.svelte";
+    import Duplicatecheckbox from "./duplicatecheckbox.svelte";
     
 
     // Defining variables
@@ -19,6 +20,7 @@
     let questionsID = [];
     let length = 10;
     let maxlength = 10;
+    let duplicate;
 
     // Function to start quiz
     function handleStartClick() {
@@ -38,6 +40,7 @@
         answerID = [];
         answeredID = 0;
         questionsID = [];
+        duplicate = false;
     }
 
     //Function to move to next question and end quiz at end
@@ -47,7 +50,9 @@
         
         //Call ScoreUpdate function when it is finished
         ScoreUpdate(question_id,answeredID)
-        
+        Duplicatecheck(duplicate);
+
+        duplicate = false;
         answeredID = 0;
         i += 1;
 
@@ -120,6 +125,12 @@
             
         }
     }
+
+    function Duplicatecheck(duplicate) {
+        if (duplicate == true) {
+            //Do things
+        }
+    }
 </script>
 
 <style>
@@ -136,7 +147,7 @@
     {#await questionPromise}
         <h2>Loading Question</h2>
     {:then question}
-        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} i={i} length={length}/>
+        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} i={i} length={length}/>
     {:catch error}
         <p style="color:red">{error.message}</p>
     {/await}
