@@ -4,20 +4,19 @@
     import Homepage from "./homepage.svelte";
     import Exitquiz from "./exitquiz.svelte";
     import Scorepage from "./scorepage.svelte";
-    import Duplicatecheckbox from "./duplicatecheckbox.svelte";
     
 
     // Defining variables
-    let question_visibility = 0;
-    let score_visibility = 0;
-    let i = 0;
-    let score = 0;
-    let answeredID;
-    let questionPromise;
-    let answers = []; 
-    let answerID = [];
-    let question_id;
-    let questionsID = [];
+    export let question_visibility = 0;
+    export let score_visibility = 0;
+    export let i = 0;
+    export let score = 0;
+    export let answeredID;
+    export let questionPromise;
+    export let answers = []; 
+    export let answerID = [];
+    export let question_id;
+    export let questionsID = [];
     let length = 10;
     let maxlength = 10;
     let duplicate;

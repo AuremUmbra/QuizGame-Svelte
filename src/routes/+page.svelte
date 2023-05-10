@@ -7,6 +7,16 @@
     let quiz_visibility = 0;
     let username;
     let password;
+    let question_visibility = 0;
+    let score_visibility = 0;
+    let i = 0;
+    let score = 0;
+    let answeredID;
+    let questionPromise;
+    let answers = []; 
+    let answerID = [];
+    let question_id;
+    let questionsID = [];
 
     //temporary username and password
     let tempusername = 'Admin';
@@ -38,6 +48,15 @@
         question_visibility = 0
         username=""
         password=""
+        score_visibility = 0;
+        i = 0;
+        score = 0;
+        answeredID = null;
+        questionPromise = null;
+        answers = []; 
+        answerID = [];
+        question_id = null;
+        questionsID = [];
     }
 </script>
 
