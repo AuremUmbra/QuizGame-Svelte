@@ -8,13 +8,17 @@
     let username;
     let password;
 
+    //temporary username and password
+    let tempusername = 'Admin';
+    let temppassword = 'password';
+
     function handleLogIn() {
-        if (username === 'Admin' && password === 'password') {
+        if (username === tempusername && password === temppassword) {
             username = "";
             password = "";
             admin_visibility = 1;
         }
-        else if (password === "password") {
+        else if (password === temppassword) {
             username="";
             password="";
             quiz_visibility = 1;
