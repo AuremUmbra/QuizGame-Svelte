@@ -66,11 +66,11 @@
     input {
         padding: 15px 32px;
     }
-    .NewUserInput {
+    /* .NewUserInput {
         margin-left: auto;
         margin-right: auto;
         text-align: center;
-    }
+    } */
     .Add {
         /*Button background color*/
         background-color: #b88103;
@@ -116,9 +116,9 @@
         max-width: 1500px;
     }
 
-    #column-right {
+    /* #column-right {
         border: none;
-    }
+    } */
 
     .QuestionInput {
         text-align: center;
