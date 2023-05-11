@@ -70,15 +70,20 @@
 
     //Function to get questions and answers from API
     async function QuestionGet() {
-        const res = await fetch("https://dtpkanganquestionapi.azurewebsites.net/Question");
+        const res = await fetch("https://dotnetcore78277kangan.azurewebsites.net/question", {
+            //mode: 'no-cors'
+        });
         const data = await res.json();
+
+        // Ahn's API -> "https://dtpkanganquestionapi.azurewebsites.net/Question"
+        // Team's API -> https://dotnetcore78277kangan.azurewebsites.net/Question
 
         if (res.ok) {
             if (questionsID.includes(data.questionID)) {
                 handleQuestionClick()
             } else {
-                data.options.forEach((q) => {
-                    answers = [...answers, q.answerText];
+                data.questionAnswers.forEach((q) => { //questionAnswers for Team / options for Ahn's API
+                    answers = [...answers, q.answerDescription]; //Text for Ahn's API, Description for Team's API
                     answerID = [...answerID,q.answerID];
                 })
                 questionsID = [...questionsID,data.questionID];
@@ -99,11 +104,16 @@
 
     //Function to check answers and update score
     async function ScoreUpdate(question_id,answeredID) {
-
-        const res_check = await fetch(`https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`); // -- Output will be Boolian Value
+        // Need to update this later to get actual result.
+        const res_check = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer`); // -- Output will be Boolian Value
+        // Change back to this later -> const data_check = await res_check.json();
         const data_check = await res_check.json();
+
+        // Ahn's API -> `https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`
+        // Team's API -> https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer
+
         if (res_check.ok) {
-            if (data_check === true) {
+            if (data_check == true) {
             score += 1
             }
         } else {
@@ -114,11 +124,17 @@
     }  
 
     async function QuizLength() {
-        const res_length = await fetch('https://dtpkanganquestionapi.azurewebsites.net/Question/GetAll')
+        //Need to change when API Endpoint exitsts/know what it is. 
+        const res_length = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions')
         const data_length = await res_length.json();
+        console.log(data_length)
+        console.log(data_length.questions.length)
+        // Ahn's API -> 'https://dtpkanganquestionapi.azurewebsites.net/Question/GetAll'
+        // Team's API -> 
+
         if (res_length.ok) {
-            if (data_length.length <= 10) {
-                length = data_length.length
+            if (data_length.questions.length <= 10) {
+                length = data_length.questions.length
             } else {
                 length = maxlength
             }
@@ -147,7 +163,7 @@
     {#await questionPromise}
         <h2>Loading Question</h2>
     {:then question}
-        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
+        <Question_page  on:click={handleClickAnswer} questions={question.questionDescription} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
     {:catch error}
         <p style="color:red">{error.message}</p>
     {/await}
