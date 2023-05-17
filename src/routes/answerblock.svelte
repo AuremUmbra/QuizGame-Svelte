@@ -2,10 +2,14 @@
     // Importing component
     import Answer_button from "./answerbutton.svelte";
     import Submitbutton from "./submitbutton.svelte";
+    import Duplicatecheckbox from "./duplicatecheckbox.svelte";
     // Defining variable, giving default values and allowing values to be filled by other components
     export let answer = ['answer','answer','answer','answer'];
     export let answerID = [0,1,2,3];
     export let answeredID;
+    let duplicatetext = "Has this question appeared multiple times in this quiz?";
+    export let duplicate;
+    export let duplicatedisabled;
 </script>
 
 <style>
@@ -29,6 +33,11 @@
     <Answer_button answer = {answer[2]} answerID = {answerID[2]} bind:answered = {answeredID} />
     <Answer_button answer = {answer[3]} answerID = {answerID[3]} bind:answered = {answeredID} />
 </ul>
+
+<div class="checkbox">
+    <Duplicatecheckbox {duplicatetext} bind:duplicate {duplicatedisabled}/>
+</div>
+
 <!-- Get Submit button -->
 <div class="buttons">
     <Submitbutton on:click answeredID = {answeredID}/>

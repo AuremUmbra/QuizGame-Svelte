@@ -7,25 +7,27 @@
     
 
     // Defining variables
-    let question_visibility = 0;
-    let score_visibility = 0;
-    let i = 0;
-    let score = 0;
-    let answeredID;
-    let questionPromise;
-    let answers = []; 
-    let answerID = [];
-    let question_id;
-    let questionsID = [];
+    export let question_visibility = 0;
+    export let score_visibility = 0;
+    export let i = 0;
+    export let score = 0;
+    export let answeredID;
+    export let questionPromise;
+    export let answers = []; 
+    export let answerID = [];
+    export let question_id;
+    export let questionsID = [];
     let length = 10;
     let maxlength = 10;
+    let duplicate;
+    let duplicatedisabled = true;
 
     // Function to start quiz
     function handleStartClick() {
         question_visibility = 1;
         QuizLength();
         handleQuestionClick();
-        
+        duplicatedisabled = true;
     }
 
     // Function to leave quiz early
@@ -38,6 +40,7 @@
         answerID = [];
         answeredID = 0;
         questionsID = [];
+        duplicate = false;
     }
 
     //Function to move to next question and end quiz at end
@@ -47,7 +50,10 @@
         
         //Call ScoreUpdate function when it is finished
         ScoreUpdate(question_id,answeredID)
-        
+        Duplicatecheck(duplicate);
+
+        duplicate = false;
+        duplicatedisabled = false;
         answeredID = 0;
         i += 1;
 
@@ -64,19 +70,23 @@
 
     //Function to get questions and answers from API
     async function QuestionGet() {
-        const res = await fetch("https://dtpkanganquestionapi.azurewebsites.net/Question");
+        const res = await fetch("https://dotnetcore78277kangan.azurewebsites.net/question", {
+            //mode: 'no-cors'
+        });
         const data = await res.json();
+
+        // Ahn's API -> "https://dtpkanganquestionapi.azurewebsites.net/Question"
+        // Team's API -> https://dotnetcore78277kangan.azurewebsites.net/Question
 
         if (res.ok) {
             if (questionsID.includes(data.questionID)) {
                 handleQuestionClick()
             } else {
-                data.options.forEach((q) => {
-                    answers = [...answers, q.answerText];
+                data.questionAnswers.forEach((q) => { //questionAnswers for Team / options for Ahn's API
+                    answers = [...answers, q.answerDescription]; //Text for Ahn's API, Description for Team's API
                     answerID = [...answerID,q.answerID];
                 })
                 questionsID = [...questionsID,data.questionID];
-                console.log(questionsID)
             }
             question_id = data.questionID;
             return data;
@@ -94,30 +104,48 @@
 
     //Function to check answers and update score
     async function ScoreUpdate(question_id,answeredID) {
+        // Need to update this later to get actual result.
+        const res_check = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer`) // -- Output will be Boolian Value
+        const data_check = await res_check.text();
 
-        const res_check = await fetch(`https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`); // -- Output will be Boolian Value
-        const data_check = await res_check.json();
+        // Ahn's API -> `https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`
+        // Team's API -> https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer
+
         if (res_check.ok) {
-            if (data_check === true) {
+            if (data_check == true) {
             score += 1
+            } else if (data_check == 'True' ) {
+                score += 1
+            } else if (data_check == 'true') {
+                score += 1
             }
         } else {
             throw new Error(data_check);
         }
-
-        
     }  
 
     async function QuizLength() {
-        const res_length = await fetch('https://dtpkanganquestionapi.azurewebsites.net/Question/GetAll')
+        //Need to change when API Endpoint exitsts/know what it is. 
+        const res_length = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions')
         const data_length = await res_length.json();
+        console.log(data_length)
+        console.log(data_length.questions.length)
+        // Ahn's API -> 'https://dtpkanganquestionapi.azurewebsites.net/Question/GetAll'
+        // Team's API -> 
+
         if (res_length.ok) {
-            if (data_length.length <= 10) {
-                length = data_length.length
+            if (data_length.questions.length <= 10) {
+                length = data_length.questions.length
             } else {
                 length = maxlength
             }
             
+        }
+    }
+
+    function Duplicatecheck(duplicate) {
+        if (duplicate == true) {
+            //Do things
         }
     }
 </script>
@@ -136,7 +164,7 @@
     {#await questionPromise}
         <h2>Loading Question</h2>
     {:then question}
-        <Question_page  on:click={handleClickAnswer} questions={question.questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} i={i} length={length}/>
+        <Question_page  on:click={handleClickAnswer} questions={question.questionDescription} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
     {:catch error}
         <p style="color:red">{error.message}</p>
     {/await}
