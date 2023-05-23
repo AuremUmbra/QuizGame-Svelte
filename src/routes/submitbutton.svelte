@@ -1,7 +1,11 @@
 <script>
     export let answeredID;
     function buttonDisabled(answeredID) {
-        return answeredID == null;
+        if (answeredID.length != 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 </script>
 
