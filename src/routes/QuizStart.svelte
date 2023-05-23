@@ -128,10 +128,8 @@
         //Need to change when API Endpoint exitsts/know what it is. 
         const res_length = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions')
         const data_length = await res_length.json();
-        console.log(data_length)
-        console.log(data_length.questions.length)
         // Ahn's API -> 'https://dtpkanganquestionapi.azurewebsites.net/Question/GetAll'
-        // Team's API -> 
+        // Team's API -> 'https://dotnetcore78277kangan.azurewebsites.net/AllQuestions'
 
         if (res_length.ok) {
             if (data_length.questions.length <= 10) {
