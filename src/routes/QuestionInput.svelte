@@ -1,10 +1,14 @@
 <script>
     // define variables
-    let newQuestion;
-    let newcorrectAnswer;
-    let newincorrectAnswer1;
-    let newincorrectAnswer2;
-    let newincorrectAnswer3;
+    export let newQuestion;
+    export let newcorrectAnswer;
+    export let newincorrectAnswer1;
+    export let newincorrectAnswer2;
+    export let newincorrectAnswer3;
+    // Array to hold all question objects
+    export let question_array = [];
+    export let question_list = []; 
+    
 
     // existing arrays for questions, correct answers and incorrect answers.
     // let questions = ['In which suburb is the Digital Traineeship Programme being run?','Which Train Station is the closest to the Cremorne Campus of Kangan Institute?','What is the capital city of Australia?'];
@@ -14,33 +18,12 @@
     // Array for the headers of each column for the table holding the questions and answers
     let columns = ["Question", "Correct Answer", "Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"];
 
-    // Array to hold all qNew objects
-    let question_array = [
-        {question:"In which suburb is the Digital Traineeship Programme being run?", correctAnswer:"Cremorne", incorrectAnswer1:"South Yarra", incorrectAnswer2:"Cranburne", incorrectAnswer3:"Adelaide"},
-        {question:"Which Train Station is the closest to the Cremorne Campus of Kangan Institute?", correctAnswer:"Richmond", incorrectAnswer1:"Bendigo", incorrectAnswer2:"Berwick", incorrectAnswer3:"Brisbane"},
-        {question:"What is the capital city of Australia?", correctAnswer:"Canberra", incorrectAnswer1:"Dandenong", incorrectAnswer2:"Frankston", incorrectAnswer3:"Beaconsfield"}
-    ];
-
-    // function to add a new object consisting of a question and its corresponding answer and incorrect answers
-    function addNewQuestion() {
-        let qNew = {question:"", correctAnswer:"", incorrectAnswer1:"", incorrectAnswer2:"", incorrectAnswer3:""};
-        qNew.question = newQuestion;
-        qNew.correctAnswer = newcorrectAnswer;
-        qNew.incorrectAnswer1 = newincorrectAnswer1;
-        qNew.incorrectAnswer2 = newincorrectAnswer2;
-        qNew.incorrectAnswer3 = newincorrectAnswer3;
-        question_array = [...question_array, qNew];
-
-        // function to add a question, correct answer and incorrect answers to their respective arrays
-        // questions = [...questions, question];
-        // incorrect_answers = [...incorrect_answers, incorrectAnswer1, incorrectAnswer2, incorrectAnswer3];
-        // correct_answers = [...correct_answers, correctAnswer];
-    }
-
     //function to delete a question, answer and incorrect answers
     function deleteRow(rowToBeDeleted) {
         question_array = question_array.filter(row => row != rowToBeDeleted)
     };
+
+
 </script>
 
 <style>
@@ -166,7 +149,7 @@
     </div>
 
     <!-- A button to add a new row consisting of a question, the correct answer and 3 incorrect answers -->
-    <div class="AddBtnDiv"><button class="Add" on:click={addNewQuestion}>Add</button></div>
+    <div class="AddBtnDiv"><button class="Add" on:click>Add</button></div>
 </div>
 
 <!-- A table to hold all the questions, answers and incorrect answers -->
@@ -178,9 +161,9 @@
         {/each}
     </tr>
     <!-- The table data -->
-    {#each question_array as row}
+    {#each question_list as row}
         <tr>
-            <td>{row.question}</td>
+            <td>{row.questionDescription}</td>
             <td>{row.correctAnswer}</td>
             <td>{row.incorrectAnswer1}</td>
             <td>{row.incorrectAnswer2}</td>
