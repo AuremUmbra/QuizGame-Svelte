@@ -50,6 +50,7 @@
 <style>
         input {
         padding: 15px 32px;
+        width: 80%; 
     }
     .Add {
         /*Button background color*/
@@ -67,7 +68,8 @@
         text-decoration:none;
         display: inline-block;
         /*Text size*/
-        font-size: 14px;
+        font-size: 1.1rem;
+        width:25%;
     }
     .Add:hover {
         background-color: #d68e10;
@@ -81,20 +83,25 @@
         width: 245px;
         margin-right: auto;
         margin-left: 30px;
+        display:contents;
+        justify-content: center;
     }
 
     .InputBox {
         padding: 8px;
+        
     }
 
     /* Aligning the add question and answers button to the left of the divider holding the inputs */
     .AddBtnDiv {
         padding: 8px;
-        text-align: left;
+        text-align: inherit;
+        
     }
     
     p {
-        text-align: left;
+        text-align: inherit;
+        font-size: 1.2em;
     }
 </style>
 

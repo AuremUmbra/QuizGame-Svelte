@@ -1,4 +1,5 @@
 <script>
+    import CreatequizBtn from "./CreatequizBtn.svelte";
     import QuestionInput from "./QuestionInput.svelte";
     import QuestionTable from "./QuestionTable.svelte";
     export let question_array = [];
@@ -11,7 +12,9 @@
     let newincorrectAnswer3;
     let qNew;
     let qNew_json;
-    let answer_list = []
+    let answer_list = [];
+    let showNewQuestion = false;
+    let createbtn = "Make New Question";
 
 
 
@@ -70,25 +73,25 @@
             })
     }
 
+    function MakeNewQuestion() {
+        if (showNewQuestion == false) {
+            createbtn = "Exit";
+            showNewQuestion = true;
+        } else {
+            showNewQuestion = false;
+            createbtn = "Make New Question";
+        }
+    }
     
 </script>
 
 <style>
-    p {
-        text-align:center;
-        font-size:2em;
-        font:sans-serif;
-    }
+    
 </style>
 
-{#await questionListPromise}
-    <h2>Loading Question List</h2>
-{:then}
-    <p>Create questions below table</p>
-    <QuestionTable 
-        {question_array} 
-        {question_list} 
-    />
+<CreatequizBtn {createbtn} on:click = {() => MakeNewQuestion()}/>
+
+{#if showNewQuestion == true } 
     <QuestionInput 
         on:click={() => handleAddNewQuestion()}
         bind:newQuestion={newQuestion} 
@@ -97,7 +100,18 @@
         bind:newincorrectAnswer2={newincorrectAnswer2} 
         bind:newincorrectAnswer3={newincorrectAnswer3}
     />
+
+{:else}
+    {#await questionListPromise}
+        <h2>Loading Question List</h2>
+    {:then}
+        <QuestionTable 
+            {question_array} 
+            {question_list} 
+        />
     
-{:catch error}
-    <p style="color:red">{error.message}</p>
-{/await}
+    
+    {:catch error}
+        <p style="color:red">{error.message}</p>
+    {/await}
+{/if}

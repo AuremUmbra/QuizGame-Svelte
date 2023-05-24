@@ -19,7 +19,7 @@
         display: inline-block;
         /*Text size*/
         font-size: 14px;
-        margin: 0px;
+        margin: 10px;
         /*Button space around text*/
         padding: 0px 0px;
         width: 120px;
