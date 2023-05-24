@@ -5,9 +5,6 @@
     export let newincorrectAnswer1;
     export let newincorrectAnswer2;
     export let newincorrectAnswer3;
-    // Array to hold all question objects
-    export let question_array = [];
-    export let question_list = []; 
     
 
     // existing arrays for questions, correct answers and incorrect answers.
@@ -15,15 +12,39 @@
     // let correct_answers = ['Cremorne','Richmond','Canberra'];
     // let incorrect_answers = ['South Yarra','Bendigo','Dandenong','Frankston','Cranburne','Berwick','Beaconsfield','Adelaide','Brisbane','Perth','Paris','Melbourne','Sydney','Newcastle'];
 
-    // Array for the headers of each column for the table holding the questions and answers
-    let columns = ["Question", "Correct Answer", "Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"];
-
-    //function to delete a question, answer and incorrect answers
-    function deleteRow(rowToBeDeleted) {
-        question_array = question_array.filter(row => row != rowToBeDeleted)
-    };
-
-
+    function NewQuestionDisabled(Q,CA,IA1,IA2,IA3) {
+        if (Q == null) {
+            return true
+        }
+        if (Q == "") {
+            return true
+        }
+        if (CA == null) {
+            return true
+        } 
+        if (CA == "") {
+            return true
+        }
+        if (IA1 == null) {
+            return true
+        } 
+        if (IA1 == "") {
+            return true
+        }
+        if (IA2 == null) {
+            return true
+        } 
+        if (IA2 == "") {
+            return true
+        }
+        if (IA3 == null) {
+            return true
+        } 
+        if (IA3 == "") {
+            return true
+        }
+        return false
+    }
 </script>
 
 <style>
@@ -74,6 +95,10 @@
     }
     .Add:hover {
         background-color: #d68e10;
+    }
+
+    .Add:disabled {
+        background-color: grey;
     }
 
     tr td {
@@ -149,27 +174,6 @@
     </div>
 
     <!-- A button to add a new row consisting of a question, the correct answer and 3 incorrect answers -->
-    <div class="AddBtnDiv"><button class="Add" on:click>Add</button></div>
+    <div class="AddBtnDiv"><button disabled={NewQuestionDisabled(newQuestion,newcorrectAnswer,newincorrectAnswer1,newincorrectAnswer2,newincorrectAnswer3)} class="Add" on:click>Add</button></div>
 </div>
 
-<!-- A table to hold all the questions, answers and incorrect answers -->
-<table>
-    <!-- The column headers -->
-    <tr>
-        {#each columns as column}
-            <th>{column}</th>
-        {/each}
-    </tr>
-    <!-- The table data -->
-    {#each question_list as row}
-        <tr>
-            <td>{row.questionDescription}</td>
-            <td>{row.correctAnswer}</td>
-            <td>{row.incorrectAnswer1}</td>
-            <td>{row.incorrectAnswer2}</td>
-            <td>{row.incorrectAnswer3}</td>
-            <!-- button to delete user from table -->
-            <button class="DeleteUser" on:click={() => deleteRow(row)}>X</button>
-        </tr>
-    {/each}
-</table>

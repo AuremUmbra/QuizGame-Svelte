@@ -1,32 +1,103 @@
 <script>
     import QuestionInput from "./QuestionInput.svelte";
+    import QuestionTable from "./QuestionTable.svelte";
     export let question_array = [];
     export let questionListPromise;
     export let question_list = [];
-    export let newQuestion;
-    export let newcorrectAnswer;
-    export let newincorrectAnswer1;
-    export let newincorrectAnswer2;
-    export let newincorrectAnswer3;
+    let newQuestion;
+    let newcorrectAnswer;
+    let newincorrectAnswer1;
+    let newincorrectAnswer2;
+    let newincorrectAnswer3;
+    let qNew;
+    let qNew_json;
+    let answer_list = []
+
+
+
+    async function handleAddNewQuestion() {
+        qNew = {
+            "questionDescription":"", "questionAnswers": [
+            {"answerDescription":"", "isCorrect": true}, 
+            {"answerDescription":"", "isCorrect": false}, 
+            {"answerDescription":"", "isCorrect": false}, 
+            {"answerDescription":"", "isCorrect": false}]};
+        qNew.questionDescription = newQuestion;
+        qNew.questionAnswers[0].answerDescription = newcorrectAnswer;
+        qNew.questionAnswers[1].answerDescription = newincorrectAnswer1;
+        qNew.questionAnswers[2].answerDescription = newincorrectAnswer2;
+        qNew.questionAnswers[3].answerDescription = newincorrectAnswer3;
+        
+        console.log(qNew)
+        
+        qNew_json = JSON.stringify(qNew)
+        console.log(qNew_json)
+
+        const res = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/newquestion`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: qNew_json
+        })
+
+        const data_list = await res.json();
+
+        question_array = [];
+        if (res_list.ok) {
+            data_list.questions.forEach((q) => {
+                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionDescription, "questionAnswers": q.questionAnswers}]
+            })
+        } else {
+            return error;
+        }
+
+        question_list = [];
+            question_array.forEach((q) => {
+                answer_list = [];
+                q.questionAnswers.forEach((a) => {
+                    answer_list = [...answer_list,{"answerDescription": a.answerDescription, "isCorrect": a.isCorrect}]
+                })
+                answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
+                    if (a.isCorrect) return -1;
+                    if (b.isCorrect) return 1;
+                })
+                question_list = [...question_list,
+                    {"questionID": q.questionID,
+                    "questionDescription": q.questionDescription, 
+                    "correctAnswer": answer_list[0].answerDescription, 
+                    "incorrectAnswer1": answer_list[1].answerDescription, 
+                    "incorrectAnswer2": answer_list[2].answerDescription, 
+                    "incorrectAnswer3": answer_list[3].answerDescription}]
+            })
+    }
+
+    
 </script>
 
 <style>
-
+    p {
+        text-align:center;
+        font-size:2em;
+        font:sans-serif;
+    }
 </style>
 
 {#await questionListPromise}
     <h2>Loading Question List</h2>
 {:then}
-    <QuestionInput 
+    <p>Create questions below table</p>
+    <QuestionTable 
         {question_array} 
         {question_list} 
-        on:click 
+    />
+    <QuestionInput 
+        on:click={() => handleAddNewQuestion()}
         bind:newQuestion={newQuestion} 
         bind:newcorrectAnswer={newcorrectAnswer} 
         bind:newincorrectAnswer1={newincorrectAnswer1} 
         bind:newincorrectAnswer2={newincorrectAnswer2} 
         bind:newincorrectAnswer3={newincorrectAnswer3}
     />
+    
 {:catch error}
     <p style="color:red">{error.message}</p>
 {/await}
