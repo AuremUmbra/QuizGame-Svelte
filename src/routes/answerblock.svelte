@@ -28,7 +28,7 @@
 <!-- Unordered List -->
 <ul class="grid w-full gap-6 md:grid-cols-2">
     <!-- Get the four answer radio buttons -->
-    <Answer_button answer = {answer[0]} answerID = {answerID[0]} bind:answered = {answeredID} />
+    <Answer_button answer = {answer[0]} answerID = {answerID[0]} bind:answered = {answeredID}/>
     <Answer_button answer = {answer[1]} answerID = {answerID[1]} bind:answered = {answeredID} />
     <Answer_button answer = {answer[2]} answerID = {answerID[2]} bind:answered = {answeredID} />
     <Answer_button answer = {answer[3]} answerID = {answerID[3]} bind:answered = {answeredID} />
