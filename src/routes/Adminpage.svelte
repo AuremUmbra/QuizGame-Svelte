@@ -74,10 +74,7 @@ function handleAdminHome() {
 </script>
 
 <style>
-    .create{
-        margin-top: 50px;
-        margin-left: 565px;
-    }
+
 </style>
 
 

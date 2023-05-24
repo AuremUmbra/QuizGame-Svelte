@@ -74,36 +74,6 @@
         /*Text size*/
         font-size: 14px;
     }
-    input {
-        padding: 15px 32px;
-    }
-    /* .NewUserInput {
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-    } */
-    .Add {
-        /*Button background color*/
-        background-color: #b88103;
-        /*Button text color*/
-        color: white;
-        /*Button space around text*/
-        padding: 15px 32px;
-        /*Centering text inside button*/
-        text-align: center;
-        /*Button rounding*/
-        border-radius: 8px;
-        /*Button border*/
-        border: none;
-        text-decoration:none;
-        display: inline-block;
-        /*Text size*/
-        font-size: 14px;
-    }
-    .Add:hover {
-        background-color: #d68e10;
-    }
-
     tr td {
         background: #eee;
         vertical-align: middle;
@@ -125,31 +95,6 @@
         margin-top: 60px;
         margin-bottom: 30px;
         max-width: 1500px;
-    }
-
-    /* #column-right {
-        border: none;
-    } */
-
-    .QuestionInput {
-        text-align: center;
-        width: 245px;
-        margin-right: auto;
-        margin-left: 30px;
-    }
-
-    .InputBox {
-        padding: 8px;
-    }
-
-    /* Aligning the add question and answers button to the left of the divider holding the inputs */
-    .AddBtnDiv {
-        padding: 8px;
-        text-align: left;
-    }
-    
-    p {
-        text-align: left;
     }
 </style>
 
