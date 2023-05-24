@@ -3,10 +3,7 @@
     // Defining variable, giving default value and allowing value to be filled by other components
     export let answer = 'answer';
     export let answerID;
-    export let answered;
-
-  
-
+    export let answered = [];
 </script>
 
 <style>
@@ -72,7 +69,7 @@
 <!-- List item -->
 <li>
   <!-- Radio button input. ID matches label. Class to make radio button part hidden. -->
-  <input type="radio" id={answerID} name="hosting" value={answerID} bind:group={answered} class="hidden peer" required>
+  <input type="checkbox" id={answerID} value={answerID} bind:group={answered} class="hidden peer">
   <!-- Label for radio button. Styled in class part using flowbite. -->
   <label for={answerID} class="inline-flex items-center justify-between w-full p-5 text-black bg-sky-500 border-none rounded-lg cursor-pointer peer-checked:text-blue-600 peer-checked:bg-orange-500 hover:text-gray-600 hover:bg-sky-300">                           
       <div class="block">

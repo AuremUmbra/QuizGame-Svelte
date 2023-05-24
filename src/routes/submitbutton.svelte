@@ -1,11 +1,16 @@
 <script>
     export let answeredID;
     function buttonDisabled(answeredID) {
-        if (answeredID.length != 1) {
-            return true;
-        } else {
-            return false;
+
+        if (answeredID == undefined) {
+            return answeredID == undefined
         }
+
+        if (answeredID.length != 1) {
+            return answeredID.length != 1
+        }
+
+        return (answeredID <= 0)
     }
 </script>
 
@@ -38,8 +43,14 @@
         background-color: #d68e10;
     }
 
+    .button:disabled {
+        background-color: grey;
+    }
+
     
 </style>
 
 <!-- Button for submiting answer -->
-<div class="buttons" disabled='{buttonDisabled(answeredID)}'><button class="button" on:click>Submit</button></div>
+<div class="buttons" >
+    <button class="button" disabled={buttonDisabled(answeredID)} on:click>Submit</button>
+</div>
