@@ -14,16 +14,16 @@
         /*Button rounding*/
         border-radius: 8px;
         /*Button border*/
-        border: 2px solid black;
+        border: 0px solid black;
         text-decoration:none;
         display: inline-block;
         /*Text size*/
         font-size: 14px;
-        margin: 10px;
+        margin: 0px;
         /*Button space around text*/
-        padding: 1px 1px;
+        padding: 0px 0px;
         width: 120px;
-        height: 55px;
+        height: 45px;
     }
 </style>
 

@@ -8,6 +8,10 @@
     .login {
         text-align:center;
         border-radius: 8px;
+        margin:0px;
+        padding:0px 0px;
+        width:220px;
+        height:45px;
     }
 </style>
 

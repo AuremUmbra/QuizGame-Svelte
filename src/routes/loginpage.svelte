@@ -46,8 +46,10 @@
 <body>
     <!-- Creating form for password, username and login button -->
     <form class = "login">
+        <div>
         <Logintextinput placeholder="Username" bind:value={username}/>
         <Passwordtextinput placeholder="Password" bind:value={password}/>
         <Loginbutton on:click login="Log In"/><!--={handleLogIn}-->
+        </div>
     </form>
 </body>
