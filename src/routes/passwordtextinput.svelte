@@ -5,6 +5,7 @@
 <style>
     .login {
         text-align:center;
+        border-radius: 8px;
     }
 </style>
 

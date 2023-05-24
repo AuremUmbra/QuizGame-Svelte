@@ -7,6 +7,7 @@
     /* Aligning text to center of input */
     .login {
         text-align:center;
+        border-radius: 8px;
     }
 </style>
 
