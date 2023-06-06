@@ -28,38 +28,6 @@
     };
 </script>
 
-<!-- The table holding each user's information, including the Admin's information -->
-<table>
-    <!-- The column headers -->
-    <tr>
-        {#each columns as column}
-            <th>{column}</th>
-        {/each}
-    </tr>
-    <!-- The table data -->
-    {#each data as row}
-        <tr>
-            <td>{row.name}</td>
-            <td>{row.email}</td>
-            <td>{row.datecreated}</td>
-            <td>{row.lastupdated}</td>
-            <!-- button to delete user from table -->
-            <button class="DeleteUser" on:click={() => deleteRow(row)}>X</button>
-        </tr>
-    {/each}
-</table>
-
-
-
-<!-- New user input -->
-<div class="NewUserInput">
-    <input placeholder="Name" type="text" bind:value={newName} /> 
-    <input placeholder="Email" type="text" bind:value={newEmail} /> 
-
-<!-- Button to add new user row to table -->
-    <button class="Add" on:click={addRow}>Add</button>
-</div>
-
 <style>
     .DeleteUser {
         /*Button background color*/
@@ -137,3 +105,39 @@
         border: none;
     }
 </style>
+
+<br>
+<!-- New user input -->
+<div class="NewUserInput">
+    <input placeholder="Name" type="text" bind:value={newName} /> 
+    <input placeholder="Email" type="text" bind:value={newEmail} /> 
+
+<!-- Button to add new user row to table -->
+    <button class="Add" on:click={addRow}>Add</button>
+</div>
+
+
+
+<!-- The table holding each user's information, including the Admin's information -->
+<table>
+    <!-- The column headers -->
+    <tr>
+        {#each columns as column}
+            <th>{column}</th>
+        {/each}
+    </tr>
+    <!-- The table data -->
+    {#each data as row}
+        <tr>
+            <td>{row.name}</td>
+            <td>{row.email}</td>
+            <td>{row.datecreated}</td>
+            <td>{row.lastupdated}</td>
+            <!-- button to delete user from table -->
+            <button class="DeleteUser" on:click={() => deleteRow(row)}>X</button>
+        </tr>
+    {/each}
+</table>
+
+
+
