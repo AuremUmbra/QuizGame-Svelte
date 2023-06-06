@@ -92,7 +92,6 @@
             headers: {'Content-Type': 'application/json'},
             body: qUpdate_json
         })
-        console.log(res_update)
 
         QuestionList()
         update_visibility = false;
