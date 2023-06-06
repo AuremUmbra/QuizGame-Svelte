@@ -107,7 +107,7 @@
         // Need to update this later to get actual result.
         const res_check = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer`) // -- Output will be Boolian Value
         const data_check = await res_check.json();
-        console.log(data_check)
+
         // Ahn's API -> `https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`
         // Team's API -> https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer
 

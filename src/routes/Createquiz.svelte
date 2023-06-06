@@ -33,10 +33,7 @@
         qNew.questionAnswers[2].answerDescription = newincorrectAnswer2;
         qNew.questionAnswers[3].answerDescription = newincorrectAnswer3;
         
-        console.log(qNew)
-        
         qNew_json = JSON.stringify(qNew)
-        console.log(qNew_json)
 
         const res = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/newquestion`, {
             method: 'POST',

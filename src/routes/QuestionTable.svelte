@@ -94,35 +94,16 @@
         })
         console.log(res_update)
 
-        const data_list = await res_update.json();
-
-        question_array = [];
-        if (res_update.ok) {
-            data_list.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionDescription, "questionAnswers": q.questionAnswers}]
-            })
-        } else {
-            return error;
-        }
-
-        question_list = [];
-            question_array.forEach((q) => {
-                answer_list = [];
-                q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerDescription, "isCorrect": a.isCorrect}]
-                })
-                answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
-                    if (a.isCorrect) return -1;
-                    if (b.isCorrect) return 1;
-                })
-                question_list = [...question_list,
-                    {"questionID": q.questionID,
-                    "questionDescription": q.questionDescription, 
-                    "correctAnswer": answer_list[0].answerDescription, 
-                    "incorrectAnswer1": answer_list[1].answerDescription, 
-                    "incorrectAnswer2": answer_list[2].answerDescription, 
-                    "incorrectAnswer3": answer_list[3].answerDescription}]
-            })
+        QuestionList()
+        update_visibility = false;
+        qUpdate = null;
+        qUpdate_json = null;
+        question_description = null;
+        question_id = null;
+        correct_answer = null;
+        incorrect_answer1 = null;
+        incorrect_answer2 = null;
+        incorrect_answer3 = null;
     }
 </script>
 
