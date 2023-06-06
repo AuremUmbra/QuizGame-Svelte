@@ -20,11 +20,13 @@
 
     async function handleAddNewQuestion() {
         qNew = {
+            "questionID":"",
             "questionDescription":"", "questionAnswers": [
             {"answerDescription":"", "isCorrect": true}, 
             {"answerDescription":"", "isCorrect": false}, 
             {"answerDescription":"", "isCorrect": false}, 
             {"answerDescription":"", "isCorrect": false}]};
+        qNew.questionID = (question_array.length + 1);
         qNew.questionDescription = newQuestion;
         qNew.questionAnswers[0].answerDescription = newcorrectAnswer;
         qNew.questionAnswers[1].answerDescription = newincorrectAnswer1;
@@ -45,7 +47,7 @@
         const data_list = await res.json();
 
         question_array = [];
-        if (res_list.ok) {
+        if (res.ok) {
             data_list.questions.forEach((q) => {
                 question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionDescription, "questionAnswers": q.questionAnswers}]
             })
@@ -71,6 +73,9 @@
                     "incorrectAnswer2": answer_list[2].answerDescription, 
                     "incorrectAnswer3": answer_list[3].answerDescription}]
             })
+
+        showNewQuestion = false;
+        createbtn = "Make New Question"
     }
 
     function MakeNewQuestion() {
@@ -86,7 +91,9 @@
 </script>
 
 <style>
-    
+    h2 {
+        text-align: center;
+    }
 </style>
 
 <CreatequizBtn {createbtn} on:click = {() => MakeNewQuestion()}/>

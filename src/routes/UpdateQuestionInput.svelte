@@ -1,10 +1,10 @@
 <script>
     // define variables
-    export let newQuestion;
-    export let newcorrectAnswer;
-    export let newincorrectAnswer1;
-    export let newincorrectAnswer2;
-    export let newincorrectAnswer3;
+    export let UpdateQuestion;
+    export let UpdateCorrectAnswer;
+    export let UpdateIncorrectAnswer1;
+    export let UpdateIncorrectAnswer2;
+    export let UpdateIncorrectAnswer3;
     
 
     // existing arrays for questions, correct answers and incorrect answers.
@@ -12,8 +12,8 @@
     // let correct_answers = ['Cremorne','Richmond','Canberra'];
     // let incorrect_answers = ['South Yarra','Bendigo','Dandenong','Frankston','Cranburne','Berwick','Beaconsfield','Adelaide','Brisbane','Perth','Paris','Melbourne','Sydney','Newcastle'];
 
-    function NewQuestionDisabled(Q,CA,IA1,IA2,IA3) {
-        if (Q == null || Q == "") {
+    function UpdateQuestionDisabled(Q,CA,IA1,IA2,IA3) {
+        if (Q == null || Q == "" ) {
             return true
         }
         if (CA == null || CA == "") {
@@ -94,26 +94,26 @@
 <div class="QuestionInput">
     <div class="InputBox">
         <p>Question:</p>
-        <input class="question" bind:value={newQuestion}>
+        <input class="question" bind:value={UpdateQuestion}>
     </div>
 
     <div class="InputBox">
-        <p>Correct Answer:</p><input class="correct_answer" bind:value={newcorrectAnswer}>
+        <p>Correct Answer:</p><input class="correct_answer" bind:value={UpdateCorrectAnswer}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 1:</p><input class="incorrect_answer" bind:value={newincorrectAnswer1}>
+        <p>Incorrect Answer 1:</p><input class="incorrect_answer" bind:value={UpdateIncorrectAnswer1}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 2:</p><input class="incorrect_answer" bind:value={newincorrectAnswer2}>
+        <p>Incorrect Answer 2:</p><input class="incorrect_answer" bind:value={UpdateIncorrectAnswer2}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 3:</p><input class="incorrect_answer" bind:value={newincorrectAnswer3}>
+        <p>Incorrect Answer 3:</p><input class="incorrect_answer" bind:value={UpdateIncorrectAnswer3}>
     </div>
 
     <!-- A button to add a new row consisting of a question, the correct answer and 3 incorrect answers -->
-    <div class="AddBtnDiv"><button disabled={NewQuestionDisabled(newQuestion,newcorrectAnswer,newincorrectAnswer1,newincorrectAnswer2,newincorrectAnswer3)} class="Add" on:click>Add</button></div>
+    <div class="AddBtnDiv"><button disabled={UpdateQuestionDisabled(UpdateQuestion,UpdateCorrectAnswer,UpdateIncorrectAnswer1,UpdateIncorrectAnswer2,UpdateIncorrectAnswer3)} class="Add" on:click>Update</button></div>
 </div>
 
