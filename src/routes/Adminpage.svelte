@@ -11,11 +11,14 @@ let usermanager_visibility = 0;
 let createquiz_visibility = 0;
 let question_array = [];
 let questionListPromise;
+let userListPromise;
 let question_list = [];
 let answer_list = [];
+let user_list = [];
 
 // Function to go to the user manager page
 function handleUserM() {
+    handleGetUserList()
     usermanager_visibility = 1;
 }
 
@@ -71,6 +74,23 @@ function handleAdminHome() {
         questionListPromise = QuestionList();
     }
 
+    async function GetUserList() {
+        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/allusers');
+        const data_user = await res_user.json();
+
+        user_list = [];
+        if (res_user.ok) {
+            data_user.users.forEach((u) => {
+                user_list = [...user_list,{"name":u.name,"userID":u.userId}]
+            })
+        } else {
+            return error;
+        }
+    }
+
+    function handleGetUserList() {
+        userListPromise = GetUserList()
+    }
 </script>
 
 <style>
@@ -82,7 +102,7 @@ function handleAdminHome() {
 {#if (usermanager_visibility===1)}
     <UserMBtn on:click={handleAdminHome} User_Manager="Home Page"/>
     <Adminhome title="User Manager"/>
-    <Usermanager/>
+    <Usermanager data={user_list} {userListPromise}/>
 
 {:else if (createquiz_visibility===1)}
     <UserMBtn on:click={handleAdminHome} User_Manager="Home Page"/>
