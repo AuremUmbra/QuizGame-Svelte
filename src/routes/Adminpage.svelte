@@ -66,12 +66,11 @@ function handleAdminHome() {
                     "incorrectAnswer1": answer_list[1].answerDescription, 
                     "incorrectAnswer2": answer_list[2].answerDescription, 
                     "incorrectAnswer3": answer_list[3].answerDescription}]
+                 if (newID < q.questionID) {
+                     newID = q.questionID + 1
+                }
             })
-        if (question_array.length < newID) {
-            return
-        }
-        newID = question_array.length;
-        
+       
     }
 
     //Function to start Above function which gets question list from API

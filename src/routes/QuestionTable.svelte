@@ -11,7 +11,8 @@
     let incorrect_answer3;
     let update_visibility = false;
     let qUpdate;
-    let qUpdate_json
+    let qUpdate_json;
+    export let newID;
 
     import QuestionInput from "./QuestionInput.svelte";
 
@@ -59,6 +60,9 @@
                     "incorrectAnswer1": answer_list[1].answerDescription, 
                     "incorrectAnswer2": answer_list[2].answerDescription, 
                     "incorrectAnswer3": answer_list[3].answerDescription}]
+                if (newID < q.questionID) {
+                    newID = q.questionID + 1
+                }
             })
     }
 

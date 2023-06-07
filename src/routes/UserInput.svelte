@@ -1,9 +1,14 @@
 <script>
     //Define variables for the Admin's input
     export let newName;
-    export let newEmail;
+    // export let newEmail;
 
-
+    function NewUserDisabled(Name) {
+        if (Name == null || Name == "") {
+            return true
+        } 
+        return false;
+    }
 </script>
 
 <style>
@@ -37,14 +42,18 @@
         background-color: #d68e10;
     }
 
+    .Add:disabled {
+        background-color: grey;
+
+    }
 </style>
 
 <!-- New user input -->
 <div class="NewUserInput">
     <input placeholder="Name" type="text" bind:value={newName} /> 
-    <input placeholder="Email" type="text" bind:value={newEmail} /> 
+    <!-- <input placeholder="Email" type="text" bind:value={newEmail} />  -->
 
 <!-- Button to add new user row to table -->
-    <button class="Add" on:click>Add</button>
+    <button disabled={NewUserDisabled(newName)} class="Add" on:click>Add</button>
 </div>
 
