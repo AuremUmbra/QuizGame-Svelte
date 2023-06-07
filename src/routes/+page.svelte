@@ -24,12 +24,12 @@
 
     async function handleLogIn() {
         //----This is Temporary - Remove When Proper Login Available
-        if (username === tempusername && password === temppassword) {
+        if (temppassword === password && tempusername === username) {
             username = "";
             password = "";
             admin_visibility = 1;
         }
-        else if (password === temppassword) {
+        else if (temppassword === password) {
             username="";
             password="";
             quiz_visibility = 1;
