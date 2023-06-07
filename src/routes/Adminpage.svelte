@@ -15,6 +15,7 @@ let userListPromise;
 let question_list = [];
 let answer_list = [];
 let user_list = [];
+let newID = 0;
 
 // Function to go to the user manager page
 function handleUserM() {
@@ -66,7 +67,11 @@ function handleAdminHome() {
                     "incorrectAnswer2": answer_list[2].answerDescription, 
                     "incorrectAnswer3": answer_list[3].answerDescription}]
             })
-
+        if (question_array.length < newID) {
+            return
+        }
+        newID = question_array.length;
+        
     }
 
     //Function to start Above function which gets question list from API
@@ -112,6 +117,7 @@ function handleAdminHome() {
         {question_array} 
         {questionListPromise} 
         {question_list} 
+        {newID}
     />
 
 

@@ -1,10 +1,10 @@
 <script>
     // define variables
-    export let newQuestion;
-    export let newcorrectAnswer;
-    export let newincorrectAnswer1;
-    export let newincorrectAnswer2;
-    export let newincorrectAnswer3;
+    export let Question;
+    export let CorrectAnswer;
+    export let IncorrectAnswer1;
+    export let IncorrectAnswer2;
+    export let IncorrectAnswer3;
     
 
     // existing arrays for questions, correct answers and incorrect answers.
@@ -94,26 +94,26 @@
 <div class="QuestionInput">
     <div class="InputBox">
         <p>Question:</p>
-        <input class="question" bind:value={newQuestion}>
+        <input class="question" bind:value={Question}>
     </div>
 
     <div class="InputBox">
-        <p>Correct Answer:</p><input class="correct_answer" bind:value={newcorrectAnswer}>
+        <p>Correct Answer:</p><input class="correct_answer" bind:value={CorrectAnswer}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 1:</p><input class="incorrect_answer" bind:value={newincorrectAnswer1}>
+        <p>Incorrect Answer 1:</p><input class="incorrect_answer" bind:value={IncorrectAnswer1}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 2:</p><input class="incorrect_answer" bind:value={newincorrectAnswer2}>
+        <p>Incorrect Answer 2:</p><input class="incorrect_answer" bind:value={IncorrectAnswer2}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 3:</p><input class="incorrect_answer" bind:value={newincorrectAnswer3}>
+        <p>Incorrect Answer 3:</p><input class="incorrect_answer" bind:value={IncorrectAnswer3}>
     </div>
 
     <!-- A button to add a new row consisting of a question, the correct answer and 3 incorrect answers -->
-    <div class="AddBtnDiv"><button disabled={NewQuestionDisabled(newQuestion,newcorrectAnswer,newincorrectAnswer1,newincorrectAnswer2,newincorrectAnswer3)} class="Add" on:click>Add</button></div>
+    <div class="AddBtnDiv"><button disabled={NewQuestionDisabled(Question,CorrectAnswer,IncorrectAnswer1,IncorrectAnswer2,IncorrectAnswer3)} class="Add" on:click>Add</button></div>
 </div>
 

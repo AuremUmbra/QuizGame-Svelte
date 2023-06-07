@@ -6,9 +6,30 @@
     export let data = [];
 
     //Function to delete a row of user information from the table (not the database)
-    function deleteRow(rowToBeDeleted) {
-        data = data.filter(row => row != rowToBeDeleted)
+
+
+    async function deleteRow(uID) {
+        const res = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/deletequestion/${uID}`, {
+            method: 'DELETE',
+        })
+
+
+        GetUserList()
     };
+
+    async function GetUserList() {
+        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/allusers');
+        const data_user = await res_user.json();
+
+        user_list = [];
+        if (res_user.ok) {
+            data_user.users.forEach((u) => {
+                user_list = [...user_list,{"name":u.name,"userID":u.userId}]
+            })
+        } else {
+            return error;
+        }
+    }
 </script>
 
 <style>

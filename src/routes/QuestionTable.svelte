@@ -13,7 +13,7 @@
     let qUpdate;
     let qUpdate_json
 
-    import UpdateQuestionInput from "./UpdateQuestionInput.svelte";
+    import QuestionInput from "./QuestionInput.svelte";
 
     // Array for the headers of each column for the table holding the questions and answers
     let columns = ["Question", "Correct Answer", "Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"];
@@ -173,12 +173,12 @@
 
 
 {#if update_visibility}
-    <UpdateQuestionInput 
-    bind:UpdateQuestion = {question_description} 
-    bind:UpdateCorrectAnswer = {correct_answer} 
-    bind:UpdateIncorrectAnswer1 = {incorrect_answer1}
-    bind:UpdateIncorrectAnswer2 = {incorrect_answer2}
-    bind:UpdateIncorrectAnswer3 = {incorrect_answer3}
+    <QuestionInput 
+    bind:Question = {question_description} 
+    bind:CorrectAnswer = {correct_answer} 
+    bind:IncorrectAnswer1 = {incorrect_answer1}
+    bind:IncorrectAnswer2 = {incorrect_answer2}
+    bind:IncorrectAnswer3 = {incorrect_answer3}
     on:click = {() => handleUpdateQuestionEnd()}
     />
 {/if}

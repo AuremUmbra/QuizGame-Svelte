@@ -15,6 +15,7 @@
     let answer_list = [];
     let showNewQuestion = false;
     let createbtn = "Make New Question";
+    export let newID;
 
 
 
@@ -26,13 +27,15 @@
             {"answerDescription":"", "isCorrect": false}, 
             {"answerDescription":"", "isCorrect": false}, 
             {"answerDescription":"", "isCorrect": false}]};
-        qNew.questionID = (question_array.length + 1);
+        qNew.questionID = newID
         qNew.questionDescription = newQuestion;
         qNew.questionAnswers[0].answerDescription = newcorrectAnswer;
         qNew.questionAnswers[1].answerDescription = newincorrectAnswer1;
         qNew.questionAnswers[2].answerDescription = newincorrectAnswer2;
         qNew.questionAnswers[3].answerDescription = newincorrectAnswer3;
         
+        newID += 1;
+
         qNew_json = JSON.stringify(qNew)
 
         const res = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/newquestion`, {
@@ -98,11 +101,11 @@
 {#if showNewQuestion == true } 
     <QuestionInput 
         on:click={() => handleAddNewQuestion()}
-        bind:newQuestion={newQuestion} 
-        bind:newcorrectAnswer={newcorrectAnswer} 
-        bind:newincorrectAnswer1={newincorrectAnswer1} 
-        bind:newincorrectAnswer2={newincorrectAnswer2} 
-        bind:newincorrectAnswer3={newincorrectAnswer3}
+        bind:Question={newQuestion} 
+        bind:CorrectAnswer={newcorrectAnswer} 
+        bind:IncorrectAnswer1={newincorrectAnswer1} 
+        bind:IncorrectAnswer2={newincorrectAnswer2} 
+        bind:IncorrectAnswer3={newincorrectAnswer3}
     />
 
 {:else}
@@ -113,7 +116,6 @@
             {question_array} 
             {question_list} 
         />
-    
     
     {:catch error}
         <p style="color:red">{error.message}</p>
