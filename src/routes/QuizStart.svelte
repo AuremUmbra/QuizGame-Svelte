@@ -7,8 +7,8 @@
     
 
     // Defining variables
-    export let question_visibility = 0;
-    export let score_visibility = 0;
+    export let question_visibility = false;
+    export let score_visibility = false;
     export let i = 0;
     export let score = 0;
     export let answeredID;
@@ -32,9 +32,9 @@
 
     // Function to leave quiz early
     function handleQuizExit() {
-        score_visibility=0;
-        question_visibility = 0;
-        i=0;
+        score_visibility = false;
+        question_visibility = false;
+        i = 0;
         score=0;
         answers = [];
         answerID = [];
@@ -59,9 +59,9 @@
 
         //End quiz if finished
         if (i >= length) {
-            score_visibility = 1
+            score_visibility = true
             i = 0;
-            question_visibility=0;
+            question_visibility = false;
         } else {
             
             handleQuestionClick();   
@@ -158,7 +158,7 @@
 </style>
 
 <!-- Shows Question page or ScorePage or Homepage -->
-{#if (question_visibility===1)}
+{#if question_visibility}
     {#await questionPromise}
         <h2>Loading Question</h2>
     {:then question}
@@ -167,7 +167,7 @@
         <p style="color:red">{error.message}</p>
     {/await}
     <Exitquiz on:click={handleQuizExit}/>
-{:else if (score_visibility===1)}
+{:else if score_visibility}
     <Scorepage score={score} questionslength={length}/>
     <Exitquiz on:click={handleQuizExit}/>
 {:else}

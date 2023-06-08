@@ -7,8 +7,8 @@ import UserMBtn from "./UserMBtn.svelte";
 import CreatequizBtn from "./CreatequizBtn.svelte";
 
 // Defining variables
-let usermanager_visibility = 0;
-let createquiz_visibility = 0;
+let usermanager_visibility = false;
+let createquiz_visibility = false;
 let question_array = [];
 let questionListPromise;
 let userListPromise;
@@ -21,19 +21,19 @@ let newUserID = 0;
 // Function to go to the user manager page
 function handleUserM() {
     handleGetUserList()
-    usermanager_visibility = 1;
+    usermanager_visibility = true;
 }
 
 // Function to go to create/modify quiz page
 function handleCreateQuiz() {
     handleGetQuestionList();
-    createquiz_visibility = 1;
+    createquiz_visibility = true;
 }
 
 // Function to return to home 
 function handleAdminHome() {
-    usermanager_visibility = 0;
-    createquiz_visibility = 0;
+    usermanager_visibility = false;
+    createquiz_visibility = false;
 }
 
     // Function to get Question List from API
@@ -108,7 +108,7 @@ function handleAdminHome() {
 
 
 <!-- Show user manager page, create/modify quiz page or admin home page -->
-{#if (usermanager_visibility===1)}
+{#if usermanager_visibility}
     <UserMBtn on:click={handleAdminHome} User_Manager="Home Page"/>
     <Adminhome title="User Manager"/>
     <Usermanager 
@@ -117,7 +117,7 @@ function handleAdminHome() {
         {newUserID}
     />
 
-{:else if (createquiz_visibility===1)}
+{:else if createquiz_visibility}
     <UserMBtn on:click={handleAdminHome} User_Manager="Home Page"/>
     <UserMBtn on:click={handleUserM} User_Manager="User Manager"/>
     <Adminhome title="Create or modify your quiz"/>

@@ -3,12 +3,12 @@
     import QuizStart from "./QuizStart.svelte";
     import Loginbutton from "./loginbutton.svelte";
     import Adminpage from "./Adminpage.svelte";
-    let admin_visibility = 0;
-    let quiz_visibility = 0;
+    let admin_visibility = false;
+    let quiz_visibility = false;
     let username;
     let password;
-    let question_visibility = 0;
-    let score_visibility = 0;
+    let question_visibility = false;
+    let score_visibility = false;
     let i = 0;
     let score = 0;
     let answeredID;
@@ -27,12 +27,12 @@
         if (temppassword === password && tempusername === username) {
             username = "";
             password = "";
-            admin_visibility = 1;
+            admin_visibility = true;
         }
         else if (temppassword === password) {
             username="";
             password="";
-            quiz_visibility = 1;
+            quiz_visibility = true;
             
         }
         else {
@@ -70,12 +70,12 @@
     }
 
     function handleLogOut() {
-        admin_visibility = 0
-        quiz_visibility = 0
-        question_visibility = 0
+        admin_visibility = false
+        quiz_visibility = false
+        question_visibility = false
         username=""
         password=""
-        score_visibility = 0;
+        score_visibility = false;
         i = 0;
         score = 0;
         answeredID = null;
@@ -95,13 +95,13 @@
 </style>
 
 
-{#if admin_visibility === 1}
+{#if admin_visibility}
     <div class="logout">
     <Loginbutton on:click={handleLogOut} login="Log Out"/>
     </div>
     <Adminpage/>
     
-{:else if quiz_visibility === 1}
+{:else if quiz_visibility}
     <div class="logout">
     <Loginbutton on:click={handleLogOut} login="Log Out"/>
     </div>
