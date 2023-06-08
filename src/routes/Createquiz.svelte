@@ -23,10 +23,12 @@
         qNew = {
             "questionID":"",
             "questionDescription":"", "questionAnswers": [
-            {"answerDescription":"", "isCorrect": true}, 
-            {"answerDescription":"", "isCorrect": false}, 
-            {"answerDescription":"", "isCorrect": false}, 
-            {"answerDescription":"", "isCorrect": false}]};
+                {"answerDescription":"", "isCorrect": true}, 
+                {"answerDescription":"", "isCorrect": false}, 
+                {"answerDescription":"", "isCorrect": false}, 
+                {"answerDescription":"", "isCorrect": false}
+            ]
+        };
         qNew.questionID = newID
         qNew.questionDescription = newQuestion;
         qNew.questionAnswers[0].answerDescription = newcorrectAnswer;
@@ -36,17 +38,17 @@
         
         qNew_json = JSON.stringify(qNew)
 
-        const res = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/newquestion`, {
+        const res_nQuestion = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/newquestion`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: qNew_json
-        })
+        });
 
-        const data_list = await res.json();
+        const data_nQuestion = await res_nQuestion.json();
 
         question_array = [];
-        if (res.ok) {
-            data_list.questions.forEach((q) => {
+        if (res_nQuestion.ok) {
+            data_nQuestion.questions.forEach((q) => {
                 question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionDescription, "questionAnswers": q.questionAnswers}]
             })
         } else {

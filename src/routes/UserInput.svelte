@@ -1,6 +1,7 @@
 <script>
     //Define variables for the Admin's input
     export let newName;
+    export let title = "New User"
     // export let newEmail;
 
     function NewUserDisabled(Name) {
@@ -46,8 +47,15 @@
         background-color: grey;
 
     }
+
+    h2 {
+        text-align:center;
+        font-size: 2em;
+        font:sans-serif;
+    }
 </style>
 
+<h2>{title}</h2>
 <!-- New user input -->
 <div class="NewUserInput">
     <input placeholder="Name" type="text" bind:value={newName} /> 

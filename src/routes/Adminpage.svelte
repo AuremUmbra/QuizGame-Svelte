@@ -15,7 +15,8 @@ let userListPromise;
 let question_list = [];
 let answer_list = [];
 let user_list = [];
-let newID = 0;
+let newQuestionID = 0;
+let newUserID = 0;
 
 // Function to go to the user manager page
 function handleUserM() {
@@ -66,8 +67,8 @@ function handleAdminHome() {
                     "incorrectAnswer1": answer_list[1].answerDescription, 
                     "incorrectAnswer2": answer_list[2].answerDescription, 
                     "incorrectAnswer3": answer_list[3].answerDescription}]
-                 if (newID < q.questionID) {
-                     newID = q.questionID + 1
+                 if (newQuestionID < q.questionID) {
+                     newQuestionID = q.questionID + 1
                 }
             })
        
@@ -83,9 +84,13 @@ function handleAdminHome() {
         const data_user = await res_user.json();
 
         user_list = [];
+        newUserID = 0;
         if (res_user.ok) {
             data_user.users.forEach((u) => {
                 user_list = [...user_list,{"name":u.name,"userID":u.userId}]
+                if (newUserID <= u.userId) {
+                    newUserID = (u.userId + 1)
+                }
             })
         } else {
             return error;
@@ -106,7 +111,11 @@ function handleAdminHome() {
 {#if (usermanager_visibility===1)}
     <UserMBtn on:click={handleAdminHome} User_Manager="Home Page"/>
     <Adminhome title="User Manager"/>
-    <Usermanager data={user_list} {userListPromise}/>
+    <Usermanager 
+        user_list={user_list} 
+        {userListPromise}
+        {newUserID}
+    />
 
 {:else if (createquiz_visibility===1)}
     <UserMBtn on:click={handleAdminHome} User_Manager="Home Page"/>
@@ -116,7 +125,7 @@ function handleAdminHome() {
         {question_array} 
         {questionListPromise} 
         {question_list} 
-        {newID}
+        newID={newQuestionID}
     />
 
 
