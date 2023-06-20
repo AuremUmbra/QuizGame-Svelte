@@ -105,7 +105,18 @@
     <div class="logout">
     <Loginbutton on:click={handleLogOut} login="Log Out"/>
     </div>
-    <QuizStart/>
+    <QuizStart
+        {question_visibility}
+        {score_visibility}
+        {i}
+        {score}
+        {answeredID}
+        {questionPromise}
+        {answers}
+        {answerID}
+        {question_id}
+        {questionsID}
+    />
     
 {:else}
     <LoginPage on:click={handleLogIn} bind:username={username} bind:password={password} />

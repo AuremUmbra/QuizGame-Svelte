@@ -82,6 +82,7 @@
             if (questionsID.includes(data.questionID)) {
                 handleQuestionClick()
             } else {
+                                
                 data.questionAnswers.forEach((q) => { //questionAnswers for Team / options for Ahn's API
                     answers = [...answers, q.answerDescription]; //Text for Ahn's API, Description for Team's API
                     answerID = [...answerID,q.answerID];
