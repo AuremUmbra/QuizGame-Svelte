@@ -5,6 +5,7 @@
     export let IncorrectAnswer1;
     export let IncorrectAnswer2;
     export let IncorrectAnswer3;
+    export let effect = "Add";
     
 
     // existing arrays for questions, correct answers and incorrect answers.
@@ -114,6 +115,6 @@
     </div>
 
     <!-- A button to add a new row consisting of a question, the correct answer and 3 incorrect answers -->
-    <div class="AddBtnDiv"><button disabled={NewQuestionDisabled(Question,CorrectAnswer,IncorrectAnswer1,IncorrectAnswer2,IncorrectAnswer3)} class="Add" on:click>Add</button></div>
+    <div class="AddBtnDiv"><button disabled={NewQuestionDisabled(Question,CorrectAnswer,IncorrectAnswer1,IncorrectAnswer2,IncorrectAnswer3)} class="Add" on:click>{effect}</button></div>
 </div>
 

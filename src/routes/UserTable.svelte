@@ -1,7 +1,6 @@
 <script>
     import UserInput from "./UserInput.svelte";
-    import UserMBtn from "./UserMBtn.svelte";
-
+    
     //Define array for the table headers
     let columns = ["Name", "User ID"/* , "Date Created", "Last Updated "*/];
 
@@ -16,6 +15,7 @@
     let uUpdate;
     let uUpdate_json;
     let title = "Update User";
+    let UpdateBtn = "Update";
     
     //Function to delete a row of user information from the table
     async function deleteUser(uID) {
@@ -147,6 +147,7 @@
     <UserInput
         bind:newName = {UpdateUserName}
         {title}
+        effect = {UpdateBtn}
         on:click={(() => UpdateUserEnd())}
     />
 {/if}

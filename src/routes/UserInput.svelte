@@ -1,7 +1,8 @@
 <script>
     //Define variables for the Admin's input
     export let newName;
-    export let title = "New User"
+    export let title = "New User";
+    export let effect = "Add";
     // export let newEmail;
 
     function NewUserDisabled(Name) {
@@ -62,6 +63,6 @@
     <!-- <input placeholder="Email" type="text" bind:value={newEmail} />  -->
 
 <!-- Button to add new user row to table -->
-    <button disabled={NewUserDisabled(newName)} class="Add" on:click>Add</button>
+    <button disabled={NewUserDisabled(newName)} class="Add" on:click>{effect}</button>
 </div>
 

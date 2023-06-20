@@ -13,6 +13,7 @@
     let qUpdate;
     let qUpdate_json;
     export let newID;
+    let UpdateBtn = "Update";
 
     import QuestionInput from "./QuestionInput.svelte";
 
@@ -178,12 +179,13 @@
 
 {#if update_visibility}
     <QuestionInput 
-    bind:Question = {question_description} 
-    bind:CorrectAnswer = {correct_answer} 
-    bind:IncorrectAnswer1 = {incorrect_answer1}
-    bind:IncorrectAnswer2 = {incorrect_answer2}
-    bind:IncorrectAnswer3 = {incorrect_answer3}
-    on:click = {() => handleUpdateQuestionEnd()}
+        bind:Question = {question_description} 
+        bind:CorrectAnswer = {correct_answer} 
+        bind:IncorrectAnswer1 = {incorrect_answer1}
+        bind:IncorrectAnswer2 = {incorrect_answer2}
+        bind:IncorrectAnswer3 = {incorrect_answer3}
+        on:click = {() => handleUpdateQuestionEnd()}
+        effect = {UpdateBtn}
     />
 {/if}
 
