@@ -16,6 +16,7 @@
     let showNewQuestion = false;
     let createbtn = "Make New Question";
     export let newID;
+    let newAID = 1;
 
 
 
@@ -23,10 +24,10 @@
         qNew = {
             "questionID":"",
             "questionDescription":"", "questionAnswers": [
-                {"answerDescription":"", "isCorrect": true}, 
-                {"answerDescription":"", "isCorrect": false}, 
-                {"answerDescription":"", "isCorrect": false}, 
-                {"answerDescription":"", "isCorrect": false}
+                {"answerDescription":"", "isCorrect": true, "answerID":""}, 
+                {"answerDescription":"", "isCorrect": false, "answerID":""}, 
+                {"answerDescription":"", "isCorrect": false, "answerID":""}, 
+                {"answerDescription":"", "isCorrect": false, "answerID":""}
             ]
         };
         qNew.questionID = newID
@@ -35,6 +36,15 @@
         qNew.questionAnswers[1].answerDescription = newincorrectAnswer1;
         qNew.questionAnswers[2].answerDescription = newincorrectAnswer2;
         qNew.questionAnswers[3].answerDescription = newincorrectAnswer3;
+
+        qNew.questionAnswers[0].answerID = newAID
+        newAID += 1;
+        qNew.questionAnswers[1].answerID = newAID
+        newAID += 1;
+        qNew.questionAnswers[2].answerID = newAID
+        newAID += 1;
+        qNew.questionAnswers[3].answerID = newAID
+        newAID += 1;
         
         qNew_json = JSON.stringify(qNew)
 

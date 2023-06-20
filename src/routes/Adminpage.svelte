@@ -67,7 +67,7 @@ function handleAdminHome() {
                     "incorrectAnswer1": answer_list[1].answerDescription, 
                     "incorrectAnswer2": answer_list[2].answerDescription, 
                     "incorrectAnswer3": answer_list[3].answerDescription}]
-                 if (newQuestionID < q.questionID) {
+                 if (newQuestionID <= q.questionID) {
                      newQuestionID = q.questionID + 1
                 }
             })
