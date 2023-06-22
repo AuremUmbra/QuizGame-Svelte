@@ -1,7 +1,9 @@
 <script>
+    import AiNewQuestionButton from "./AINewQuestionButton.svelte";
     import CreatequizBtn from "./CreatequizBtn.svelte";
     import QuestionInput from "./QuestionInput.svelte";
     import QuestionTable from "./QuestionTable.svelte";
+
     export let question_array = [];
     export let questionListPromise;
     export let question_list = [];
@@ -17,7 +19,7 @@
     let createbtn = "Make New Question";
     export let newID;
     let newAID = 1;
-
+    let AINewQuestion = "Get New Question From AI";
 
 
     async function handleAddNewQuestion() {
@@ -145,6 +147,10 @@
        
     }
 
+    async function GenerateNewAIQuestion () {
+        //Add stuff when API ready. 
+        console.log("Do Stuff Later");
+    }
 </script>
 
 <style>
@@ -154,6 +160,7 @@
 </style>
 
 <CreatequizBtn {createbtn} on:click = {() => MakeNewQuestion()}/>
+<CreatequizBtn createbtn = {AINewQuestion} on:click = {() => GenerateNewAIQuestion()}/>
 
 {#if showNewQuestion == true } 
     <QuestionInput 
