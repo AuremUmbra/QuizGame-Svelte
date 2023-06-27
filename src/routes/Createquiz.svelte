@@ -1,5 +1,4 @@
 <script>
-    import AiNewQuestionButton from "./AINewQuestionButton.svelte";
     import CreatequizBtn from "./CreatequizBtn.svelte";
     import QuestionInput from "./QuestionInput.svelte";
     import QuestionTable from "./QuestionTable.svelte";
