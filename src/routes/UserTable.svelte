@@ -2,14 +2,17 @@
     import UserInput from "./UserInput.svelte";
     
     //Define array for the table headers
-    let columns = ["Name", "User ID"/* , "Date Created", "Last Updated "*/];
+    let columns = ["Name", "User ID", "First Name", "Last Name"/* , "Date Created", "Last Updated "*/];
 
     //Array to store data objects
     export let user_list = [];
-    export let newUserID;
 
     let UpdateUserID;
     let UpdateUserName;
+    let UpdateUserFirstName;
+    let UpdateUserLastName;
+    let UpdateUserPassword;
+
     export let update_visibility = false;
 
     let uUpdate;
@@ -32,13 +35,9 @@
         const data_user = await res_user.json();
 
         user_list = [];
-        newUserID = 0;
         if (res_user.ok) {
             data_user.users.forEach((u) => {
-                user_list = [...user_list,{"name":u.name,"userID":u.userId}]
-                if (newUserID <= u.userId) {
-                    newUserID = (u.userId + 1)
-                }
+                user_list = [...user_list,{"name":u.name,"userID":u.userId,"firstname":u.firstname,"lastname":u.lastname}]
             })
         } else {
             return error;
@@ -48,16 +47,24 @@
     function updateUserStart(u) {
         UpdateUserID = u.userID;
         UpdateUserName = u.name
+        UpdateUserFirstName = u.firstname
+        UpdateUserLastName = u.lastname
         update_visibility = true;
     }
 
     async function UpdateUserEnd() {
         uUpdate = {
             "name":"",
-            "userId":0
+            "userId":0,
+            "firstname":"",
+            "lastname":"",
+            "password":""
         }
         uUpdate.name = UpdateUserName;
         uUpdate.userId = UpdateUserID;
+        uUpdate.firstname = UpdateUserFirstName;
+        uUpdate.lastname = UpdateUserLastName;
+        uUpdate.password = UpdateUserPassword
 
         uUpdate_json = JSON.stringify(uUpdate)
 
@@ -73,6 +80,9 @@
         uUpdate_json = null;
         UpdateUserID = null;
         UpdateUserName = null;
+        UpdateUserFirstName = null;
+        UpdateUserLastName = null;
+        UpdateUserPassword = null;
     }
 </script>
 
@@ -146,6 +156,8 @@
 {#if update_visibility}
     <UserInput
         bind:newName = {UpdateUserName}
+        bind:firstname = {UpdateUserFirstName}
+        bind:lastname = {UpdateUserLastName}
         {title}
         effect = {UpdateBtn}
         on:click={(() => UpdateUserEnd())}
@@ -166,6 +178,8 @@
         <tr>
             <td>{row.name}</td>
             <td>{row.userID}</td>
+            <td>{row.firstname}</td>
+            <td>{row.lastname}</td>
 <!--             <td>{row.datecreated}</td>
             <td>{row.lastupdated}</td> -->
             <!-- button to delete user from table -->

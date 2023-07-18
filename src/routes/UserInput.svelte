@@ -1,14 +1,27 @@
 <script>
     //Define variables for the Admin's input
     export let newName;
+    export let firstname;
+    export let lastname;
+    export let password;
+
     export let title = "New User";
     export let effect = "Add";
     // export let newEmail;
 
-    function NewUserDisabled(Name) {
+    function NewUserDisabled(Name,FName,LName,Password) {
         if (Name == null || Name == "") {
-            return true
+            return true;
         } 
+        if (FName == null || FName == "") {
+            return true;
+        }
+        if (LName == null || LName == "") {
+            return true;
+        }
+        if (Password == null || Password == "") {
+            return true;
+        }
         return false;
     }
 </script>
@@ -59,10 +72,13 @@
 <h2>{title}</h2>
 <!-- New user input -->
 <div class="NewUserInput">
-    <input placeholder="Name" type="text" bind:value={newName} /> 
+    <input placeholder="User Name" type="text" bind:value={newName} /> 
+    <input placeholder="First Name" type="text" bind:value={firstname} />
+    <input placeholder="Last Name" type="text" bind:value={lastname} />
+    <input placeholder="Password" type="text" bind:value={password} />
     <!-- <input placeholder="Email" type="text" bind:value={newEmail} />  -->
 
 <!-- Button to add new user row to table -->
-    <button disabled={NewUserDisabled(newName)} class="Add" on:click>{effect}</button>
+    <button disabled={NewUserDisabled(newName,firstname,lastname,password)} class="Add" on:click>{effect}</button>
 </div>
 

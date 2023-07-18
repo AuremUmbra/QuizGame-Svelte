@@ -16,7 +16,6 @@ let question_list = [];
 let answer_list = [];
 let user_list = [];
 let newQuestionID = 0;
-let newUserID = 0;
 
 // Function to go to the user manager page
 function handleUserM() {
@@ -84,13 +83,9 @@ function handleAdminHome() {
         const data_user = await res_user.json();
 
         user_list = [];
-        newUserID = 0;
         if (res_user.ok) {
             data_user.users.forEach((u) => {
                 user_list = [...user_list,{"name":u.name,"userID":u.userId}]
-                if (newUserID <= u.userId) {
-                    newUserID = (u.userId + 1)
-                }
             })
         } else {
             return error;
@@ -114,7 +109,6 @@ function handleAdminHome() {
     <Usermanager 
         user_list={user_list} 
         {userListPromise}
-        {newUserID}
     />
 
 {:else if createquiz_visibility}

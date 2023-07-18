@@ -4,7 +4,9 @@
 
     //Define variables for the Admin's input
     let newName;
-    export let newUserID;
+    let newFirstName;
+    let newLastName;
+    let newPassword;
     let newUser_json;
     let newUser;
     export let userListPromise;
@@ -17,12 +19,20 @@
     async function addUser() {
         newUser =  {
             "name": "",
-            "userId": 0
+            "firstname":"",
+            "lastname":"",
+            "password":""
         }
         newUser.name = newName;
-        newUser.userId = newUserID
-        
-        newName = null;
+        newUser.firstname = newFirstName;
+        newUser.lastname = newLastName;
+        newUser.password = newPassword
+
+        newName = "";
+        newFirstName = "";
+        newLastName = "";
+        newPassword = "";
+
 
         newUser_json = JSON.stringify(newUser)
 
@@ -35,13 +45,9 @@
         const data_nUser = await res_nUser.json();
 
         user_list = [];
-        newUserID = 0;
         if (res_nUser.ok) {
             data_nUser.users.forEach((u) => {
                 user_list = [...user_list,{"name":u.name,"userID":u.userId}]
-                if (newUserID <= u.userId) {
-                    newUserID = (u.userId + 1)
-                }
             })
         } else {
             return error;
@@ -60,6 +66,9 @@
 {#if ! update_visibility}
     <UserInput 
         bind:newName = {newName} 
+        bind:firstname = {newFirstName}
+        bind:lastname = {newLastName}
+        bind:password = {newPassword}
         on:click={(() => addUser())} 
     />
 {/if}
@@ -69,7 +78,6 @@
 {:then}
     <UserTable 
         user_list = {user_list} 
-        {newUserID}
         bind:update_visibility = {update_visibility}
     />
 
