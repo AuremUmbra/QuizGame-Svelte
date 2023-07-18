@@ -17,56 +17,44 @@
     let answerID = [];
     let question_id;
     let questionsID = [];
-
-    //temporary username and password
-    let tempusername = 'Admin';
-    let temppassword = 'password';
+    let passwordTest;
+    let passwordTest_json;
 
     async function handleLogIn() {
-        //----This is Temporary - Remove When Proper Login Available
-        if (temppassword === password && tempusername === username) {
-            username = "";
-            password = "";
-            admin_visibility = true;
+
+        passwordTest = {
+            "login_id":"",
+            "password":""
         }
-        else if (temppassword === password) {
-            username="";
-            password="";
-            quiz_visibility = true;
-            
-        }
-        else {
+       
+        passwordTest.login_id = username;
+        passwordTest.password = password;
+
+
+        passwordTest_json = JSON.stringify(passwordTest)
+
+        const login = await fetch("https://dtpkanganquestionapi.azurewebsites.net/userlogin", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: passwordTest_json
+            })
+        
+
+
+        const login_json = await login.json()
+        
+        if (login_json) {
+            quiz_visibility = 1;
+        } else if (login_json && username == "Admin") {
+            admin_visibility = 1;
+        } else {
             alert("Incorrect username or password");
-            username="";
-            password="";
         }
-        //----End Temporary Login
 
-        //----Start Future Login - UnComment When Done.
-
-        // const login = await fetch("https://dtpkanganquestionapi.azurewebsites.net/CheckUser", {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         username,
-        //         password
-        //     })
-        // })
-        // const json = await login.json()
-        // if (json == true && username == tempusername) {
-        //     username = "";
-        //     password = "";
-        //     admin_visibility = 1;
-        // } else if (json == true) {
-        //     username="";
-        //     password="";
-        //     quiz_visibility = 1;
-        // } else {
-        //     alert("Incorrect username or password");
-        //     username="";
-        //     password="";
-        // }
-
-        //----End Future Login
+        passwordTest = null;
+        passwordTest_json = null;
+        username = null;
+        password = null;
     }
 
     function handleLogOut() {
