@@ -108,8 +108,8 @@
         }
     }
     
-        // Function to get Question List from API
-        async function QuestionList() {
+    // Function to get Question List from API
+    async function QuestionList() {
         const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions');
         const data_list = await res_list.json();
 
@@ -147,8 +147,13 @@
     }
 
     async function GenerateNewAIQuestion () {
-        //Add stuff when API ready. 
-        console.log("Do Stuff Later");
+         
+        const res_NewAIQuestion = await fetch('https://dotnetcore78277kangan.azurewebsites.net/generateandstorequiz')
+        const data_NewAIQuestion = await res_NewAIQuestion.json();
+
+        console.log(data_NewAIQuestion)
+        QuestionList()
+
     }
 </script>
 
