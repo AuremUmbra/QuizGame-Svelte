@@ -41,14 +41,23 @@
         
 
 
-        const login_json = await login.json()
         
-        if (login_json) {
-            quiz_visibility = 1;
-        } else if (login_json && username == "Admin") {
-            admin_visibility = 1;
+        
+        if (login.ok) {
+            const login_json = await login.json()
+            if (login_json) {
+                quiz_visibility = 1;
+            } else if (login_json && username == "Admin") {
+                admin_visibility = 1;
+            } else {
+                alert("Incorrect username or password");
+            }
         } else {
-            alert("Incorrect username or password");
+            passwordTest = null;
+            passwordTest_json = null;
+            username = null;
+            password = null;
+            alert(error);
         }
 
         passwordTest = null;
