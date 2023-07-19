@@ -44,6 +44,7 @@
         
         
         if (login.ok) {
+            console.log("ok")
             const login_json = await login.json()
             if (login_json) {
                 quiz_visibility = 1;
@@ -57,7 +58,7 @@
             passwordTest_json = null;
             username = null;
             password = null;
-            alert(error);
+            return error;          
         }
 
         passwordTest = null;
