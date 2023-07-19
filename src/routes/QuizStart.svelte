@@ -24,7 +24,8 @@
     let maxlength = 10;
     let duplicate;
     let duplicatedisabled = true;
-    let userProfilePromise
+    let userProfilePromise;
+    let user;
 
     // Function to start quiz
     function handleStartClick() {
@@ -165,7 +166,7 @@
 
         user = null;
         if (res_user.ok) {
-            user_list = [...user_list,{"name":data_user.login_id,"firstname":data_user.firstname,"lastname":data_user.lastname}]
+            user = [...user,{"name":data_user.login_id,"firstname":data_user.firstname,"lastname":data_user.lastname}]
         } else {
             return error;
         }
@@ -197,7 +198,7 @@
     <Exitquiz on:click={handleQuizExit}/>
 {:else if profile_visibility}
     <UserMBtn on:click={handleUserProfile()} User_Manager="Home Page"/>
-    <UserProfile/>
+    <UserProfile {userProfilePromise} {user}/>
 {:else}
     <UserMBtn on:click={handleUserProfile()} User_Manager="User Profile" />
     <Homepage on:click={handleStartClick}/>
