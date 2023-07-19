@@ -26,6 +26,9 @@
     let duplicatedisabled = true;
     let userProfilePromise;
     let user;
+    export let username;
+    let history;
+    let history_json;
 
     // Function to start quiz
     function handleStartClick() {
@@ -54,6 +57,7 @@
         answerID = [];
         
         //Call ScoreUpdate function when it is finished
+        AddHistory(username,question_id,answeredID)
         ScoreUpdate(question_id,answeredID)
         Duplicatecheck(duplicate);
 
@@ -108,10 +112,32 @@
         
     }
 
+    async function AddHistory(login_id,question_id,answeredID) {
+        history = {
+            "login_id":"",
+            "question_id":0,
+            "option_name":""
+        };
+
+        history.login_id = login_id;
+        history.question_id = question_id;
+        history.option_name = answeredID;
+
+        history_json = JSON.stringify(history);
+
+        const res_history = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/addhistory`, {
+            method:'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: history_json
+        });
+
+        const data_history = await res_history.json();
+    }
     //Function to check answers and update score
     async function ScoreUpdate(question_id,answeredID) {
+
         // Need to update this later to get actual result.
-        const res_check = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer`) // -- Output will be Boolian Value
+        const res_check = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer?question_id=${question_id}&option_name=${answeredID}`) // -- Output will be Boolian Value
         const data_check = await res_check.json();
 
         // Ahn's API -> `https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`
