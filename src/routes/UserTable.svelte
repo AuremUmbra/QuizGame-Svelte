@@ -6,11 +6,13 @@
 
     //Array to store data objects
     export let user_list = [];
+    export let userListPromise;
 
     let UpdateUserName;
     let UpdateUserFirstName;
     let UpdateUserLastName;
     let UpdateUserPassword;
+
 
     export let update_visibility = false;
 
@@ -26,7 +28,7 @@
         })
 
 
-        GetUserList()
+        userListPromise = GetUserList()
     };
 
     async function GetUserList() {
@@ -70,7 +72,7 @@
             body: uUpdate_json
         })
 
-        GetUserList()
+        userListPromise = GetUserList()
         update_visibility = false;
         uUpdate = null;
         uUpdate_json = null;

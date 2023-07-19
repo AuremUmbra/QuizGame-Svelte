@@ -4,7 +4,8 @@
     //Define array for the table headers
     let columns = ["Name", "User ID", "First Name", "Last Name"/* , "Date Created", "Last Updated "*/];
 
-    let user;
+    export let user;
+    export let userProfilePromise;
     let UpdateUserName;
     let UpdateUserFirstName;
     let UpdateUserLastName;
@@ -50,7 +51,7 @@
             body: uUpdate_json
         })
 
-        GetUser()
+        userProfilePromise = GetUser()
         update_visibility = false;
         uUpdate = null;
         uUpdate_json = null;
@@ -60,10 +61,14 @@
         UpdateUserPassword = null;
     }
 
+     
 
 </script>
 
 <style>
+    h2 {
+        text-align: center;
+    }
     tr td {
         background: #eee;
         vertical-align: middle;
@@ -108,39 +113,44 @@
     }
 </style>
 
+{#await userProfilePromise}
+    <h2>Loading User</h2>
+{:then}
+    {#if update_visibility}
+        <UserInput
+            bind:newName = {UpdateUserName}
+            bind:firstname = {UpdateUserFirstName}
+            bind:lastname = {UpdateUserLastName}
+            {title}
+            effect = {UpdateBtn}
+            usernameChangeDisabled = {true}
+            on:click={(() => UpdateUserEnd())}
+        />
+    {/if}
 
-{#if update_visibility}
-    <UserInput
-        bind:newName = {UpdateUserName}
-        bind:firstname = {UpdateUserFirstName}
-        bind:lastname = {UpdateUserLastName}
-        {title}
-        effect = {UpdateBtn}
-        usernameChangeDisabled = {true}
-        on:click={(() => UpdateUserEnd())}
-    />
-{/if}
 
 
-
-<table>
-    <!-- The column headers -->
-    <tr>
-        {#each columns as column}
-            <th>{column}</th>
-        {/each}
-    </tr>
-    <!-- The table data -->
-    {#each user as row}
+    <table>
+        <!-- The column headers -->
         <tr>
-            <td>{row.name}</td>
-            <td>{row.userID}</td>
-            <td>{row.firstname}</td>
-            <td>{row.lastname}</td>
-<!--             <td>{row.datecreated}</td>
-            <td>{row.lastupdated}</td> -->
-            <!-- button to update user from table -->
-            <button class="UpdateUser" on:click={() => updateUserStart(row)}>U</button>
+            {#each columns as column}
+                <th>{column}</th>
+            {/each}
         </tr>
-    {/each}
-</table>
+        <!-- The table data -->
+        {#each user as row}
+            <tr>
+                <td>{row.name}</td>
+                <td>{row.userID}</td>
+                <td>{row.firstname}</td>
+                <td>{row.lastname}</td>
+    <!--             <td>{row.datecreated}</td>
+                <td>{row.lastupdated}</td> -->
+                <!-- button to update user from table -->
+                <button class="UpdateUser" on:click={() => updateUserStart(row)}>U</button>
+            </tr>
+        {/each}
+    </table>
+{:catch error}
+    <p style="color:red">{error.message}</p>]
+{/await}

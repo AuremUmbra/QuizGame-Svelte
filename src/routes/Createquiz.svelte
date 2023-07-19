@@ -21,7 +21,7 @@
     let AINewQuestion = "Get New Question From AI";
 
 
-    async function handleAddNewQuestion() {
+    async function AddNewQuestion() {
         qNew = {
             "questionID":"",
             "questionDescription":"", "questionAnswers": [
@@ -152,8 +152,12 @@
         const data_NewAIQuestion = await res_NewAIQuestion.json();
 
         console.log(data_NewAIQuestion)
-        QuestionList()
+        questionListPromise = QuestionList();
 
+    }
+
+    function handleAddNewQuestion() {
+        questionListPromise = AddNewQuestion();
     }
 </script>
 
@@ -184,6 +188,7 @@
             {question_array} 
             {question_list} 
             bind:newID = {newID}
+            bind:questionListPromise = {questionListPromise}
         />
     
     {:catch error}

@@ -2,6 +2,7 @@
     // Array to hold all question objects
     export let question_array = [];
     export let question_list = []; 
+    export let questionListPromise;
     let answer_list;
     let question_description;
     let question_id;
@@ -27,7 +28,7 @@
         })
 
 
-        QuestionList()
+        questionListPromise = QuestionList()
     };
 
     // Function to get Question List from API
@@ -98,7 +99,7 @@
             body: qUpdate_json
         })
 
-        QuestionList()
+        questionListPromise = QuestionList()
         update_visibility = false;
         qUpdate = null;
         qUpdate_json = null;

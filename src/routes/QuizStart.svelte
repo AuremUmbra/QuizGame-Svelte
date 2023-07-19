@@ -24,6 +24,7 @@
     let maxlength = 10;
     let duplicate;
     let duplicatedisabled = true;
+    let userProfilePromise
 
     // Function to start quiz
     function handleStartClick() {
@@ -152,7 +153,22 @@
     }
 
     function handleUserProfile() {
-        profile_visibility != profile_viibility;
+        profile_visibility != profile_visibility;
+        if (profile_visibility) {
+            userProfilePromise = GetUser()
+        }
+    }
+
+    async function GetUser() {
+        const res_user = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/getuser/${username}`);
+        const data_user = await res_user.json();
+
+        user = null;
+        if (res_user.ok) {
+            user_list = [...user_list,{"name":data_user.login_id,"firstname":data_user.firstname,"lastname":data_user.lastname}]
+        } else {
+            return error;
+        }
     }
 
 </script>

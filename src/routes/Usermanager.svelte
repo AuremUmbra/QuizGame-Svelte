@@ -54,6 +54,10 @@
         }
     };
 
+    function handleAddUser() {
+        userListPromise = addUser()
+    }
+
 </script>
 
 <style>
@@ -69,7 +73,7 @@
         bind:firstname = {newFirstName}
         bind:lastname = {newLastName}
         bind:password = {newPassword}
-        on:click={(() => addUser())} 
+        on:click={handleAddUser()} 
     />
 {/if}
 
@@ -79,6 +83,7 @@
     <UserTable 
         user_list = {user_list} 
         bind:update_visibility = {update_visibility}
+        bind:userListPromise = {userListPromise}
     />
 
 {:catch error}
