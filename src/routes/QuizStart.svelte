@@ -216,7 +216,7 @@
     {:then question}
         <Question_page  on:click={handleClickAnswer} questions={question.questionDescription} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
     {:catch error}
-        <p style="color:red">{error.message}</p>
+        <h2 style="color:red">{error.message}</h2>
     {/await}
     <Exitquiz on:click={handleQuizExit}/>
 {:else if score_visibility}

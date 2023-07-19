@@ -13,6 +13,7 @@
     let UpdateUserLastName;
     let UpdateUserPassword;
 
+    let userStatusButton = A;
 
     export let update_visibility = false;
 
@@ -66,7 +67,7 @@
 
         uUpdate_json = JSON.stringify(uUpdate)
 
-        const res_update = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/updateuser/${UpdateUserID}`, {
+        const res_update = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/updateuser/${UpdateUserName}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: uUpdate_json
@@ -80,6 +81,15 @@
         UpdateUserFirstName = null;
         UpdateUserLastName = null;
         UpdateUserPassword = null;
+    }
+
+    async function toggleUserStatus(u) {
+        
+        const res_userStatus = await fetch(`https://dtpkanganquestionapi.azurewebsites.net/activateuserstatus?login_id=${u.name}`,{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'}
+        })
+        userListPromise = GetUserList()
     }
 </script>
 
@@ -146,6 +156,26 @@
         /*Text size*/
         font-size: 14px;
     }
+
+    .ActivateUser {
+        /*Button background color*/
+        background-color: yellow;
+        /*Button text color*/
+        color: black;
+        /*Button space around text*/
+        padding: 10px 25px;
+        margin-top: 5px;
+        /*Centering text inside button*/
+        text-align: center;
+        /*Button rounding*/
+        border-radius: 8px;
+        /*Button border*/
+        border: none;
+        text-decoration:none;
+        display: inline-block;
+        /*Text size*/
+        font-size: 14px;
+    }
 </style>
 
 
@@ -182,6 +212,7 @@
             <td>{row.lastupdated}</td> -->
             <!-- button to delete user from table -->
             <button class="UpdateUser" on:click={() => updateUserStart(row)}>U</button>
+            <button class="ActivateUser" on:click={() => toggleUserStatus(row.userID)}>{userStatusButton}</button>
             <button class="DeleteUser" on:click={() => deleteUser(row.userID)}>X</button>
         </tr>
     {/each}

@@ -10,6 +10,9 @@
     let UpdateUserFirstName;
     let UpdateUserLastName;
     let UpdateUserPassword;
+    let update_visibility = false;
+    let title = "Update Your Profile";
+    let UpdateBtn = "Update";
 
     async function GetUser() {
         const res_user = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/getuser/${username}`);
@@ -152,5 +155,5 @@
         {/each}
     </table>
 {:catch error}
-    <p style="color:red">{error.message}</p>]
+    <h2 style="color:red">{error.message}</h2>]
 {/await}

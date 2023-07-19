@@ -13,6 +13,7 @@
     let score = 0;
     let answeredID;
     let questionPromise;
+    let loginPromise;
     let answers = []; 
     let answerID = [];
     let question_id;
@@ -20,7 +21,11 @@
     let passwordTest;
     let passwordTest_json;
 
-    async function handleLogIn() {
+    function handleLogIn() {
+        loginPromise = LogIn()
+    }
+
+    async function LogIn() {
 
         passwordTest = {
             "login_id":"",
@@ -90,33 +95,44 @@
         display:flex;
         justify-content:flex-end;
     }
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        font: sans-serif;
+        font-weight: bold;
+    }
 </style>
 
-
-{#if admin_visibility}
-    <div class="logout">
-    <Loginbutton on:click={handleLogOut} login="Log Out"/>
-    </div>
-    <Adminpage/>
-    
-{:else if quiz_visibility}
-    <div class="logout">
-    <Loginbutton on:click={handleLogOut} login="Log Out"/>
-    </div>
-    <QuizStart
-        {question_visibility}
-        {score_visibility}
-        {i}
-        {score}
-        {answeredID}
-        {questionPromise}
-        {answers}
-        {answerID}
-        {question_id}
-        {questionsID}
-    />
-    
-{:else}
-    <LoginPage on:click={handleLogIn} bind:username={username} bind:password={password} />
-{/if}
-
+{#await loginPromise}
+    <h2>Logging In</h2>
+{:then}
+    {#if admin_visibility}
+        <div class="logout">
+        <Loginbutton on:click={handleLogOut} login="Log Out"/>
+        </div>
+        <Adminpage/>
+        
+    {:else if quiz_visibility}
+        <div class="logout">
+        <Loginbutton on:click={handleLogOut} login="Log Out"/>
+        </div>
+        <QuizStart
+            {question_visibility}
+            {score_visibility}
+            {i}
+            {score}
+            {answeredID}
+            {questionPromise}
+            {answers}
+            {answerID}
+            {question_id}
+            {questionsID}
+            {username}
+        />
+        
+    {:else}
+        <LoginPage on:click={handleLogIn} bind:username={username} bind:password={password} />
+    {/if}
+{:catch error}
+    <h2 style="color:red">{error.message}</h2>
+{/await}

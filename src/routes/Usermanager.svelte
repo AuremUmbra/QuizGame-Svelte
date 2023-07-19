@@ -63,6 +63,9 @@
 <style>
     h2 {
         text-align: center;
+        font-size: 28px;
+        font: sans-serif;
+        font-weight: bold;
     }
 </style>
 
@@ -87,7 +90,7 @@
     />
 
 {:catch error}
-    <p style="color:red">{error.message}</p>
+    <h2 style="color:red">{error.message}</h2>
 {/await}
 
 
