@@ -4,6 +4,7 @@
     export let firstname;
     export let lastname;
     export let password;
+    export let usernameChangeDisabled = false;
 
     export let title = "New User";
     export let effect = "Add";
@@ -72,7 +73,7 @@
 <h2>{title}</h2>
 <!-- New user input -->
 <div class="NewUserInput">
-    <input placeholder="User Name" type="text" bind:value={newName} /> 
+    <input placeholder="User Name" disabled={usernameChangeDisabled} type="text" bind:value={newName} /> 
     <input placeholder="First Name" type="text" bind:value={firstname} />
     <input placeholder="Last Name" type="text" bind:value={lastname} />
     <input placeholder="Password" type="text" bind:value={password} />

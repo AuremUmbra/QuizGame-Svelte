@@ -1,54 +1,34 @@
 <script>
     import UserInput from "./UserInput.svelte";
-    
+
     //Define array for the table headers
     let columns = ["Name", "User ID", "First Name", "Last Name"/* , "Date Created", "Last Updated "*/];
 
-    //Array to store data objects
-    export let user_list = [];
-
+    let user;
     let UpdateUserName;
     let UpdateUserFirstName;
     let UpdateUserLastName;
     let UpdateUserPassword;
 
-    export let update_visibility = false;
-
-    let uUpdate;
-    let uUpdate_json;
-    let title = "Update User";
-    let UpdateBtn = "Update";
-    
-    //Function to delete a row of user information from the table
-    async function deleteUser(uID) {
-        const res = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/deleteuser/${uID}`, {
-            method: 'DELETE',
-        })
-
-
-        GetUserList()
-    };
-
-    async function GetUserList() {
-        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/allusers');
+    async function GetUser() {
+        const res_user = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/getuser/${username}`);
         const data_user = await res_user.json();
 
-        user_list = [];
+        user = null;
         if (res_user.ok) {
-            data_user.users.forEach((u) => {
-                user_list = [...user_list,{"name":u.login_id,"firstname":u.firstname,"lastname":u.lastname}]
-            })
+            user_list = [...user_list,{"name":data_user.login_id,"firstname":data_user.firstname,"lastname":data_user.lastname}]
         } else {
             return error;
         }
     }
-
+    
     function updateUserStart(u) {
         UpdateUserName = u.name
         UpdateUserFirstName = u.firstname
         UpdateUserLastName = u.lastname
         update_visibility = true;
     }
+
 
     async function UpdateUserEnd() {
         uUpdate = {
@@ -70,7 +50,7 @@
             body: uUpdate_json
         })
 
-        GetUserList()
+        GetUser()
         update_visibility = false;
         uUpdate = null;
         uUpdate_json = null;
@@ -79,29 +59,11 @@
         UpdateUserLastName = null;
         UpdateUserPassword = null;
     }
+
+
 </script>
 
 <style>
-    .DeleteUser {
-        /*Button background color*/
-        background-color: black;
-        /*Button text color*/
-        color: white;
-        /*Button space around text*/
-        padding: 10px 25px;
-        margin-top: 5px;
-        /*Centering text inside button*/
-        text-align: center;
-        /*Button rounding*/
-        border-radius: 8px;
-        /*Button border*/
-        border: none;
-        text-decoration:none;
-        display: inline-block;
-        /*Text size*/
-        font-size: 14px;
-    }
-   
     tr td {
         background: #eee;
         vertical-align: middle;
@@ -147,7 +109,6 @@
 </style>
 
 
-
 {#if update_visibility}
     <UserInput
         bind:newName = {UpdateUserName}
@@ -161,7 +122,7 @@
 {/if}
 
 
-<!-- The table holding each user's information, including the Admin's information -->
+
 <table>
     <!-- The column headers -->
     <tr>
@@ -170,7 +131,7 @@
         {/each}
     </tr>
     <!-- The table data -->
-    {#each user_list as row}
+    {#each user as row}
         <tr>
             <td>{row.name}</td>
             <td>{row.userID}</td>
@@ -178,9 +139,8 @@
             <td>{row.lastname}</td>
 <!--             <td>{row.datecreated}</td>
             <td>{row.lastupdated}</td> -->
-            <!-- button to delete user from table -->
+            <!-- button to update user from table -->
             <button class="UpdateUser" on:click={() => updateUserStart(row)}>U</button>
-            <button class="DeleteUser" on:click={() => deleteUser(row.userID)}>X</button>
         </tr>
     {/each}
 </table>

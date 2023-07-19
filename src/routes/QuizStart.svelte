@@ -4,11 +4,14 @@
     import Homepage from "./homepage.svelte";
     import Exitquiz from "./exitquiz.svelte";
     import Scorepage from "./scorepage.svelte";
-    
+    import UserMBtn from "./UserMBtn.svelte";
+    import UserProfile from "./UserProfile.svelte";
+
 
     // Defining variables
     export let question_visibility = false;
     export let score_visibility = false;
+    let profile_visibility = false;
     export let i = 0;
     export let score = 0;
     export let answeredID;
@@ -147,6 +150,11 @@
             //Do things
         }
     }
+
+    function handleUserProfile() {
+        profile_visibility != profile_viibility;
+    }
+
 </script>
 
 <style>
@@ -171,6 +179,10 @@
 {:else if score_visibility}
     <Scorepage score={score} questionslength={length}/>
     <Exitquiz on:click={handleQuizExit}/>
+{:else if profile_visibility}
+    <UserMBtn on:click={handleUserProfile()} User_Manager="Home Page"/>
+    <UserProfile/>
 {:else}
+    <UserMBtn on:click={handleUserProfile()} User_Manager="User Profile" />
     <Homepage on:click={handleStartClick}/>
 {/if} 
