@@ -37,7 +37,7 @@ function handleAdminHome() {
 
     // Function to get Question List from API
     async function QuestionList() {
-        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions');
+        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/getquiz');
         const data_list = await res_list.json();
 
         question_array = [];
@@ -79,7 +79,7 @@ function handleAdminHome() {
     }
 
     async function GetUserList() {
-        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/allusers');
+        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/users');
         const data_user = await res_user.json();
 
         user_list = [];

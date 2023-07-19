@@ -32,7 +32,7 @@
 
     // Function to get Question List from API
     async function QuestionList() {
-        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions');
+        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/getquiz');
         const data_list = await res_list.json();
 
         question_array = [];

@@ -36,7 +36,7 @@
 
         newUser_json = JSON.stringify(newUser)
 
-        const res_nUser = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/newuser`, {
+        const res_nUser = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/adduser`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: newUser_json    
