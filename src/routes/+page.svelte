@@ -38,7 +38,7 @@
 
         passwordTest_json = JSON.stringify(passwordTest)
 
-        const login = await fetch("https://dtpkanganquestionapi.azurewebsites.net/userlogin", {
+        const login = await fetch("https://dtpkanganquestionapi.azurewebsites.net/checkuser", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: passwordTest_json
