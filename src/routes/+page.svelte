@@ -49,11 +49,10 @@
         
         
         if (login.ok) {
-            console.log("ok")
             const login_json = await login.json()
-            if (login_json) {
+            if (login_json == true) {
                 quiz_visibility = 1;
-            } else if (login_json && username == "Admin") {
+            } else if (login_json == 'Admin') {
                 admin_visibility = 1;
             } else {
                 alert("Incorrect username or password");
