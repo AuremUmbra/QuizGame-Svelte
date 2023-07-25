@@ -164,7 +164,7 @@
         // Team's API -> 'https://dotnetcore78277kangan.azurewebsites.net/AllQuestions'
 
         if (res_length.ok) {
-            if (data_length.questions.length <= 10) {
+            if (data_length.questions.length <= maxlength) {
                 length = data_length.questions.length
             } else {
                 length = maxlength
@@ -180,8 +180,10 @@
     }
 
     function handleUserProfile() {
-        profile_visibility != profile_visibility;
         if (profile_visibility) {
+            profile_visibility = false
+        } else if (profile_visibility == false) {
+            profile_visibility = true
             userProfilePromise = GetUser()
         }
     }
