@@ -1,16 +1,13 @@
 <script>
     export let answeredID;
-    function buttonDisabled(answeredID) {
+    export let answerID;
+    function buttonDisabled(answeredID,answerID) {
 
-        if (answeredID == undefined) {
-            return answeredID == undefined
+        if (answeredID == answerID[0] || answeredID == answerID[1] || answeredID == answerID[2] || answeredID == answerID[3]) {
+            return false;
+        } else {
+            return true;
         }
-
-        if (answeredID.length != 1) {
-            return answeredID.length != 1
-        }
-
-        return (answeredID <= 0)
     }
 </script>
 
@@ -52,5 +49,5 @@
 
 <!-- Button for submiting answer -->
 <div class="buttons" >
-    <button class="button" disabled={buttonDisabled(answeredID)} on:click>Submit</button>
+    <button class="button" disabled={buttonDisabled(answeredID,answerID)} on:click>Submit</button>
 </div>

@@ -15,7 +15,7 @@
     let questionPromise;
     let loginPromise;
     let answers = []; 
-    let answerID = [];
+    let answerID = [1,2,3,4];
     let question_id;
     let questionsID = [];
     let passwordTest;
@@ -82,7 +82,6 @@
         answeredID = null;
         questionPromise = null;
         answers = []; 
-        answerID = [];
         question_id = null;
         questionsID = [];
     }

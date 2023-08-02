@@ -17,7 +17,9 @@
     export let answeredID;
     export let questionPromise;
     export let answers = []; 
-    export let answerID = ["A","B","C","D"];
+    let answerTitle = ["A","B","C","D"];
+    let answeredTitle;
+    export let answerID = [1,2,3,4];
     export let question_id;
     export let questionsID = [];
     let length = 10;
@@ -33,6 +35,7 @@
 
     // Function to start quiz
     function handleStartClick() {
+        console.log(answerID)
         question_visibility = true;
         // QuizLength();
         handleQuestionClick();
@@ -47,14 +50,18 @@
         score=0;
         answers = [];
         // answerID = [];
-        answeredID = 0;
+        answeredID = null;
         questionsID = [];
         duplicate = false;
     }
 
     //Function to move to next question and end quiz at end
     function handleClickAnswer() {
+
+        answeredTitle = answerTitle[(answeredID - 1)]
+
         console.log(answeredID)
+        console.log(answeredTitle)
         answers = [];
         // answerID = [];
         
@@ -65,7 +72,7 @@
 
         duplicate = false;
         duplicatedisabled = false;
-        answeredID = 0;
+        answeredID = null;
         i += 1;
 
         //End quiz if finished
@@ -81,6 +88,7 @@
 
     //Function to get questions and answers from API
     async function QuestionGet() {
+        console.log(answerID)
         const res = await fetch("https://best-quiz-game.azurewebsites.net/getaquiz", {
             //mode: 'no-cors'
         });
@@ -138,6 +146,8 @@
     } */
     //Function to check answers and update score
     async function ScoreUpdate(question_id,answeredID) {
+
+
 
         // Need to update this later to get actual result.
         const res_check = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer?question_id=${question_id}&option_name=${answeredID}`) // -- Output will be Boolian Value
@@ -219,8 +229,7 @@
     {#await questionPromise}
         <h2>Loading Question</h2>
     {:then}
-    <!-- {console.log(answerID)} -->
-        <Question_page  on:click={(() => handleClickAnswer())} questions={questionText} answers={answers} answerTitle={answerID} bind:answeredTitle = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
+        <Question_page  on:click={(() => handleClickAnswer())} questions={questionText} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
     {:catch error}
         <h2 style="color:red">{error.message}</h2>
     {/await}
