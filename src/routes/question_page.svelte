@@ -2,9 +2,11 @@
     // Defining variables and allowing them to be filled by other components
     export let questions;
     export let i = 0;
-    export let answeredID;
+    let answeredID;
+    export let answeredTitle; 
     export let answers;
-    export let answerID;
+    let answerID = [0,1,2,3];
+    export let answerTitle;
     export let length;
     export let duplicate;
     export let duplicatedisabled;
@@ -12,7 +14,11 @@
     //Importing component 
     import Answerblock from "./answerblock.svelte";
 
-    
+    $: if (answeredID >= 0 && answeredID <=3) {
+        answeredTitle = answerTitle[answeredID]
+        console.log(answeredTitle)
+    }
+       
 
 </script>
 

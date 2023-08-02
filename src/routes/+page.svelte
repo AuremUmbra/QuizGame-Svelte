@@ -28,47 +28,46 @@
     async function LogIn() {
 
         passwordTest = {
-            "login_id":"",
-            "password":""
+            "Login_Id":"",
+            "Password":""
         }
        
-        passwordTest.login_id = username;
-        passwordTest.password = password;
+        passwordTest.Login_Id = username;
+        passwordTest.Password = password;
 
 
         passwordTest_json = JSON.stringify(passwordTest)
 
-        const login = await fetch("https://dtpkanganquestionapi.azurewebsites.net/checkuser", {
+        const login = await fetch(`https://best-quiz-game.azurewebsites.net/userlogin?Login_Id=${passwordTest.Login_Id}&Password=${passwordTest.Password}`       /*Old Version "https://dtpkanganquestionapi.azurewebsites.net/userlogin" */, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: passwordTest_json
             })
         
-
+            console.log(login)
+            
 
         
-        
+        passwordTest = null;
+        passwordTest_json = null;
+        password = null;
+
         if (login.ok) {
             const login_json = await login.json()
-            if (login_json == true) {
-                quiz_visibility = 1;
+            console.log(login_json)
+            if (login_json == "Login Successful.") {
+                quiz_visibility = true;
             } else if (login_json == 'Admin') {
-                admin_visibility = 1;
+                admin_visibility = true;
             } else {
                 alert("Incorrect username or password");
             }
         } else {
-            passwordTest = null;
-            passwordTest_json = null;
-            username = null;
-            password = null;
             return error;          
         }
 
-        passwordTest = null;
-        passwordTest_json = null;
-        username = null;
-        password = null;
+        
+        
     }
 
     function handleLogOut() {

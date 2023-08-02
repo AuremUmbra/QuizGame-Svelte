@@ -17,7 +17,7 @@
     export let answeredID;
     export let questionPromise;
     export let answers = []; 
-    export let answerID = [];
+    export let answerID = ["A","B","C","D"];
     export let question_id;
     export let questionsID = [];
     let length = 10;
@@ -29,11 +29,12 @@
     export let username;
     let history;
     let history_json;
+    let questionText;
 
     // Function to start quiz
     function handleStartClick() {
-        question_visibility = 1;
-        QuizLength();
+        question_visibility = true;
+        // QuizLength();
         handleQuestionClick();
         duplicatedisabled = true;
     }
@@ -45,7 +46,7 @@
         i = 0;
         score=0;
         answers = [];
-        answerID = [];
+        // answerID = [];
         answeredID = 0;
         questionsID = [];
         duplicate = false;
@@ -53,11 +54,12 @@
 
     //Function to move to next question and end quiz at end
     function handleClickAnswer() {
+        console.log(answeredID)
         answers = [];
-        answerID = [];
+        // answerID = [];
         
         //Call ScoreUpdate function when it is finished
-        AddHistory(username,question_id,answeredID)
+        // AddHistory(username,question_id,answeredID)
         ScoreUpdate(question_id,answeredID)
         Duplicatecheck(duplicate);
 
@@ -79,26 +81,27 @@
 
     //Function to get questions and answers from API
     async function QuestionGet() {
-        const res = await fetch("https://dotnetcore78277kangan.azurewebsites.net/question", {
+        const res = await fetch("https://best-quiz-game.azurewebsites.net/getaquiz", {
             //mode: 'no-cors'
         });
         const data = await res.json();
 
         // Ahn's API -> "https://dtpkanganquestionapi.azurewebsites.net/Question"
         // Team's API -> https://dotnetcore78277kangan.azurewebsites.net/Question
-
         if (res.ok) {
-            if (questionsID.includes(data.questionID)) {
+            if (questionsID.includes(data[0].QuestionID)) {
                 handleQuestionClick()
             } else {             
-                                
-                data.questionAnswers.forEach((q) => { //questionAnswers for Team / options for Ahn's API
-                    answers = [...answers, q.answerDescription]; //Text for Ahn's API, Description for Team's API
-                    answerID = [...answerID,q.answerID];
-                })
-                questionsID = [...questionsID,data.questionID];
+              
+                answers = [data[0].Options.A,data[0].Options.B,data[0].Options.C,data[0].Options.D] //Text for Ahn's API, Description for Team's API
+                question_id = data[0].QuestionID;
+                questionsID = [...questionsID,question_id];
+                questionText = data[0].QuestionText;
+                console.log(questionText)
+                console.log(data[0])
+                console.log(answers[0])
             }
-            question_id = data.questionID;
+            
             return data;
         } else {
             throw new Error(data);
@@ -112,7 +115,7 @@
         
     }
 
-    async function AddHistory(login_id,question_id,answeredID) {
+    /* async function AddHistory(login_id,question_id,answeredID) {
         history = {
             "login_id":"",
             "question_id":0,
@@ -132,7 +135,7 @@
         });
 
         const data_history = await res_history.json();
-    }
+    } */
     //Function to check answers and update score
     async function ScoreUpdate(question_id,answeredID) {
 
@@ -156,7 +159,7 @@
         }
     }  
 
-    async function QuizLength() {
+    /* async function QuizLength() {
         //Need to change when API Endpoint exitsts/know what it is. 
         const res_length = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions')
         const data_length = await res_length.json();
@@ -171,10 +174,10 @@
             }
             
         }
-    }
+    } */
 
     function Duplicatecheck(duplicate) {
-        if (duplicate == true) {
+        if (duplicate) {
             //Do things
         }
     }
@@ -215,19 +218,20 @@
 {#if question_visibility}
     {#await questionPromise}
         <h2>Loading Question</h2>
-    {:then question}
-        <Question_page  on:click={handleClickAnswer} questions={question.questionDescription} answers={answers} answerID={answerID} bind:answeredID = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
+    {:then}
+    <!-- {console.log(answerID)} -->
+        <Question_page  on:click={(() => handleClickAnswer())} questions={questionText} answers={answers} answerTitle={answerID} bind:answeredTitle = {answeredID} bind:duplicate={duplicate} {duplicatedisabled} i={i} length={length}/>
     {:catch error}
         <h2 style="color:red">{error.message}</h2>
     {/await}
-    <Exitquiz on:click={handleQuizExit}/>
+    <Exitquiz on:click={(() => handleQuizExit())}/>
 {:else if score_visibility}
     <Scorepage score={score} questionslength={length}/>
-    <Exitquiz on:click={handleQuizExit}/>
+    <Exitquiz on:click={(() => handleQuizExit())}/>
 {:else if profile_visibility}
-    <UserMBtn on:click={handleUserProfile()} User_Manager="Home Page"/>
+    <UserMBtn on:click={(() => handleUserProfile())} User_Manager="Home Page"/>
     <UserProfile {userProfilePromise} {user}/>
 {:else}
-    <UserMBtn on:click={handleUserProfile()} User_Manager="User Profile" />
-    <Homepage on:click={handleStartClick}/>
+    <UserMBtn on:click={(() => handleUserProfile())} User_Manager="User Profile" />
+    <Homepage on:click={(() => handleStartClick())}/>
 {/if} 
