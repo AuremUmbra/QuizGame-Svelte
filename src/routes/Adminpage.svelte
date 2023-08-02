@@ -104,7 +104,7 @@ function handleAdminHome() {
 
 <!-- Show user manager page, create/modify quiz page or admin home page -->
 {#if usermanager_visibility}
-    <UserMBtn on:click={handleAdminHome()} User_Manager="Home Page"/>
+    <UserMBtn on:click={(() => handleAdminHome())} User_Manager="Home Page"/>
     <Adminhome title="User Manager"/>
     <Usermanager 
         user_list={user_list} 
@@ -112,8 +112,8 @@ function handleAdminHome() {
     />
 
 {:else if createquiz_visibility}
-    <UserMBtn on:click={handleAdminHome()} User_Manager="Home Page"/>
-    <UserMBtn on:click={handleUserM()} User_Manager="User Manager"/>
+    <UserMBtn on:click={(() => handleAdminHome())} User_Manager="Home Page"/>
+    <UserMBtn on:click={(() => handleUserM())} User_Manager="User Manager"/>
     <Adminhome title="Create or modify your quiz"/>
     <Createquiz 
         {question_array} 
@@ -124,7 +124,7 @@ function handleAdminHome() {
 
 
 {:else}
-    <UserMBtn on:click={handleUserM()} User_Manager="User Manager"/>
+    <UserMBtn on:click={(() => handleUserM())} User_Manager="User Manager"/>
     <Adminhome title="Admin Page"/>
-    <CreatequizBtn on:click={handleCreateQuiz()} createbtn="Create or Modify Quiz"/>
+    <CreatequizBtn on:click={(() => handleCreateQuiz())} createbtn="Create or Modify Quiz"/>
 {/if}

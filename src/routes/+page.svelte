@@ -55,10 +55,10 @@
         if (login.ok) {
             const login_json = await login.json()
             console.log(login_json)
-            if (login_json == "Login Successful.") {
-                quiz_visibility = true;
-            } else if (login_json == 'Admin') {
+            if (login_json == 'Login Successful.' && username == 'admin') {
                 admin_visibility = true;
+            } else if (login_json == "Login Successful.") {
+                quiz_visibility = true;
             } else {
                 alert("Incorrect username or password");
             }
