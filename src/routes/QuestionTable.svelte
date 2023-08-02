@@ -202,10 +202,10 @@
     {#each question_list as row}
         <tr>
             <td>{row.questionDescription}</td>
-            <td>{row.correctAnswer}</td>
-            <td>{row.incorrectAnswer1}</td>
-            <td>{row.incorrectAnswer2}</td>
-            <td>{row.incorrectAnswer3}</td>
+            <td>{row.answer1}</td>
+            <td>{row.answer2}</td>
+            <td>{row.answer3}</td>
+            <td>{row.answer4}</td>
             <!-- button to delete user from table -->
             <button class="UpdateUser" on:click={() => updateQuestionStart(row)}>U</button>
             <button class="DeleteUser" on:click={() => deleteRow(row.questionID)}>X</button>

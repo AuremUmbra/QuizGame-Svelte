@@ -37,40 +37,38 @@ function handleAdminHome() {
 
     // Function to get Question List from API
     async function QuestionList() {
-        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/Question/GetAll');
+        const res_list = await fetch('https://best-quiz-game.azurewebsites.net/GetAllQuiz');
         const data_list = await res_list.json();
 
         question_array = [];
         if (res_list.ok) {
-            data_list.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.options}]
+            data_list.forEach((q) => {
+                question_array = [...question_array,{"questionID": q.QuestionID, "questionDescription": q.QuestionText, "questionAnswers": q.Options}]
             })
+            console.log(question_array)
         } else {
             return error;
         }
 
         question_list = [];
             question_array.forEach((q) => {
-                answer_list = [];
-                q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
-                })
-                /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
-                    if (a.isCorrect) return -1;
-                    if (b.isCorrect) return 1;
-                }) */
-                question_list = [...question_list,
+                answer_list = [
+                    {"answerDescription": q.questionAnswers.A},
+                    {"answerDescription": q.questionAnswers.B},
+                    {"answerDescription": q.questionAnswers.C},
+                    {"answerDescription": q.questionAnswers.D}
+                ]
+                question_list = [
+                    ...question_list,
                     {"questionID": q.questionID,
                     "questionDescription": q.questionDescription, 
-                    "correctAnswer": answer_list[0].answerDescription, 
-                    "incorrectAnswer1": answer_list[1].answerDescription, 
-                    "incorrectAnswer2": answer_list[2].answerDescription, 
-                    "incorrectAnswer3": answer_list[3].answerDescription}]
-                 if (newQuestionID <= q.questionID) {
-                     newQuestionID = q.questionID + 1
-                }
-            })
-       
+                    "answer1": answer_list[0].answerDescription, 
+                    "answer2": answer_list[1].answerDescription, 
+                    "answer3": answer_list[2].answerDescription, 
+                    "answer4": answer_list[3].answerDescription}
+                ]
+        })
+       console.log(question_list)
     }
 
     //Function to start Above function which gets question list from API
