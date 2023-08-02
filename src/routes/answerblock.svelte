@@ -40,5 +40,5 @@
 
 <!-- Get Submit button -->
 <div class="buttons">
-    <Submitbutton on:click answeredID = {answeredID}/>
+    <Submitbutton on:click answeredID = {answeredID} {answerID}/>
 </div>

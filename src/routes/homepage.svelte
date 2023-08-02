@@ -3,6 +3,7 @@
     import Startbutton from "./startbutton.svelte";
     import Title from "./title.svelte";
     import Logos from "./Logos.svelte";
+ 
 </script>
 
 <style>
@@ -17,10 +18,10 @@
 </style>
 
 
-    <!-- Creating title -->
-    <Logos />
-    <Title/>
-    <!-- Using imported component and passing on:click event on to another component -->
-    <div class=buttons>
-        <Startbutton on:click/>
-    </div>
+<!-- Creating title -->
+<Logos />
+<Title/>
+<!-- Using imported component and passing on:click event on to another component -->
+<div class=buttons>
+    <Startbutton on:click/>
+</div>

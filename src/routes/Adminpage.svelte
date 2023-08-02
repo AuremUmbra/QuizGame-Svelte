@@ -16,7 +16,6 @@ let question_list = [];
 let answer_list = [];
 let user_list = [];
 let newQuestionID = 0;
-let newUserID = 0;
 
 // Function to go to the user manager page
 function handleUserM() {
@@ -38,13 +37,13 @@ function handleAdminHome() {
 
     // Function to get Question List from API
     async function QuestionList() {
-        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions');
+        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/Question/GetAll');
         const data_list = await res_list.json();
 
         question_array = [];
         if (res_list.ok) {
             data_list.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionDescription, "questionAnswers": q.questionAnswers}]
+                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.options}]
             })
         } else {
             return error;
@@ -54,12 +53,12 @@ function handleAdminHome() {
             question_array.forEach((q) => {
                 answer_list = [];
                 q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerDescription, "isCorrect": a.isCorrect}]
+                    answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
                 })
-                answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
+                /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
                     if (a.isCorrect) return -1;
                     if (b.isCorrect) return 1;
-                })
+                }) */
                 question_list = [...question_list,
                     {"questionID": q.questionID,
                     "questionDescription": q.questionDescription, 
@@ -80,17 +79,13 @@ function handleAdminHome() {
     }
 
     async function GetUserList() {
-        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/allusers');
+        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/users');
         const data_user = await res_user.json();
 
         user_list = [];
-        newUserID = 0;
         if (res_user.ok) {
             data_user.users.forEach((u) => {
                 user_list = [...user_list,{"name":u.name,"userID":u.userId}]
-                if (newUserID <= u.userId) {
-                    newUserID = (u.userId + 1)
-                }
             })
         } else {
             return error;
@@ -109,17 +104,16 @@ function handleAdminHome() {
 
 <!-- Show user manager page, create/modify quiz page or admin home page -->
 {#if usermanager_visibility}
-    <UserMBtn on:click={handleAdminHome} User_Manager="Home Page"/>
+    <UserMBtn on:click={handleAdminHome()} User_Manager="Home Page"/>
     <Adminhome title="User Manager"/>
     <Usermanager 
         user_list={user_list} 
         {userListPromise}
-        {newUserID}
     />
 
 {:else if createquiz_visibility}
-    <UserMBtn on:click={handleAdminHome} User_Manager="Home Page"/>
-    <UserMBtn on:click={handleUserM} User_Manager="User Manager"/>
+    <UserMBtn on:click={handleAdminHome()} User_Manager="Home Page"/>
+    <UserMBtn on:click={handleUserM()} User_Manager="User Manager"/>
     <Adminhome title="Create or modify your quiz"/>
     <Createquiz 
         {question_array} 
@@ -130,7 +124,7 @@ function handleAdminHome() {
 
 
 {:else}
-    <UserMBtn on:click={handleUserM} User_Manager="User Manager"/>
+    <UserMBtn on:click={handleUserM()} User_Manager="User Manager"/>
     <Adminhome title="Admin Page"/>
-    <CreatequizBtn on:click={handleCreateQuiz} createbtn="Create or Modify Quiz"/>
+    <CreatequizBtn on:click={handleCreateQuiz()} createbtn="Create or Modify Quiz"/>
 {/if}

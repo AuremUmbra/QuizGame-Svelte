@@ -2,14 +2,19 @@
     import UserInput from "./UserInput.svelte";
     
     //Define array for the table headers
-    let columns = ["Name", "User ID"/* , "Date Created", "Last Updated "*/];
+    let columns = ["Name", "User ID", "First Name", "Last Name"/* , "Date Created", "Last Updated "*/];
 
     //Array to store data objects
     export let user_list = [];
-    export let newUserID;
+    export let userListPromise;
 
-    let UpdateUserID;
     let UpdateUserName;
+    let UpdateUserFirstName;
+    let UpdateUserLastName;
+    let UpdateUserPassword;
+
+    let userStatusButton = A;
+
     export let update_visibility = false;
 
     let uUpdate;
@@ -24,7 +29,7 @@
         })
 
 
-        GetUserList()
+        userListPromise = GetUserList()
     };
 
     async function GetUserList() {
@@ -32,13 +37,9 @@
         const data_user = await res_user.json();
 
         user_list = [];
-        newUserID = 0;
         if (res_user.ok) {
             data_user.users.forEach((u) => {
-                user_list = [...user_list,{"name":u.name,"userID":u.userId}]
-                if (newUserID <= u.userId) {
-                    newUserID = (u.userId + 1)
-                }
+                user_list = [...user_list,{"name":u.login_id,"firstname":u.firstname,"lastname":u.lastname}]
             })
         } else {
             return error;
@@ -46,33 +47,49 @@
     }
 
     function updateUserStart(u) {
-        UpdateUserID = u.userID;
         UpdateUserName = u.name
+        UpdateUserFirstName = u.firstname
+        UpdateUserLastName = u.lastname
         update_visibility = true;
     }
 
     async function UpdateUserEnd() {
         uUpdate = {
-            "name":"",
-            "userId":0
+            "login_id":"",
+            "firstname":"",
+            "lastname":"",
+            "password":""
         }
-        uUpdate.name = UpdateUserName;
-        uUpdate.userId = UpdateUserID;
+        uUpdate.login_id = UpdateUserName;
+        uUpdate.firstname = UpdateUserFirstName;
+        uUpdate.lastname = UpdateUserLastName;
+        uUpdate.password = UpdateUserPassword
 
         uUpdate_json = JSON.stringify(uUpdate)
 
-        const res_update = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/updateuser/${UpdateUserID}`, {
+        const res_update = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/updateuser/${UpdateUserName}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: uUpdate_json
         })
 
-        GetUserList()
+        userListPromise = GetUserList()
         update_visibility = false;
         uUpdate = null;
         uUpdate_json = null;
-        UpdateUserID = null;
         UpdateUserName = null;
+        UpdateUserFirstName = null;
+        UpdateUserLastName = null;
+        UpdateUserPassword = null;
+    }
+
+    async function toggleUserStatus(u) {
+        
+        const res_userStatus = await fetch(`https://dtpkanganquestionapi.azurewebsites.net/activateuserstatus?login_id=${u.name}`,{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'}
+        })
+        userListPromise = GetUserList()
     }
 </script>
 
@@ -139,6 +156,26 @@
         /*Text size*/
         font-size: 14px;
     }
+
+    .ActivateUser {
+        /*Button background color*/
+        background-color: yellow;
+        /*Button text color*/
+        color: black;
+        /*Button space around text*/
+        padding: 10px 25px;
+        margin-top: 5px;
+        /*Centering text inside button*/
+        text-align: center;
+        /*Button rounding*/
+        border-radius: 8px;
+        /*Button border*/
+        border: none;
+        text-decoration:none;
+        display: inline-block;
+        /*Text size*/
+        font-size: 14px;
+    }
 </style>
 
 
@@ -146,8 +183,11 @@
 {#if update_visibility}
     <UserInput
         bind:newName = {UpdateUserName}
+        bind:firstname = {UpdateUserFirstName}
+        bind:lastname = {UpdateUserLastName}
         {title}
         effect = {UpdateBtn}
+        usernameChangeDisabled = {true}
         on:click={(() => UpdateUserEnd())}
     />
 {/if}
@@ -166,10 +206,13 @@
         <tr>
             <td>{row.name}</td>
             <td>{row.userID}</td>
+            <td>{row.firstname}</td>
+            <td>{row.lastname}</td>
 <!--             <td>{row.datecreated}</td>
             <td>{row.lastupdated}</td> -->
             <!-- button to delete user from table -->
             <button class="UpdateUser" on:click={() => updateUserStart(row)}>U</button>
+            <button class="ActivateUser" on:click={() => toggleUserStatus(row.userID)}>{userStatusButton}</button>
             <button class="DeleteUser" on:click={() => deleteUser(row.userID)}>X</button>
         </tr>
     {/each}

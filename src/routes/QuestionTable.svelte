@@ -2,6 +2,7 @@
     // Array to hold all question objects
     export let question_array = [];
     export let question_list = []; 
+    export let questionListPromise;
     let answer_list;
     let question_description;
     let question_id;
@@ -27,18 +28,18 @@
         })
 
 
-        QuestionList()
+        questionListPromise = QuestionList()
     };
 
     // Function to get Question List from API
     async function QuestionList() {
-        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions');
+        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/Question/GetAll');
         const data_list = await res_list.json();
 
         question_array = [];
         if (res_list.ok) {
             data_list.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionDescription, "questionAnswers": q.questionAnswers}]
+                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.options}]
             })
         } else {
             return error;
@@ -48,12 +49,12 @@
             question_array.forEach((q) => {
                 answer_list = [];
                 q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerDescription, "isCorrect": a.isCorrect}]
+                    answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
                 })
-                answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
+                /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
                     if (a.isCorrect) return -1;
                     if (b.isCorrect) return 1;
-                })
+                }) */
                 question_list = [...question_list,
                     {"questionID": q.questionID,
                     "questionDescription": q.questionDescription, 
@@ -98,7 +99,7 @@
             body: qUpdate_json
         })
 
-        QuestionList()
+        questionListPromise = QuestionList()
         update_visibility = false;
         qUpdate = null;
         qUpdate_json = null;

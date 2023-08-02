@@ -19,9 +19,10 @@
     export let newID;
     let newAID = 1;
     let AINewQuestion = "Get New Question From AI";
+    let verificationAI;
 
 
-    async function handleAddNewQuestion() {
+    async function AddNewQuestion() {
         qNew = {
             "questionID":"",
             "questionDescription":"", "questionAnswers": [
@@ -49,7 +50,7 @@
         
         qNew_json = JSON.stringify(qNew)
 
-        const res_nQuestion = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/newquestion`, {
+        const res_nQuestion = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/Question/Add`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: qNew_json
@@ -60,7 +61,7 @@
         question_array = [];
         if (res_nQuestion.ok) {
             data_nQuestion.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionDescription, "questionAnswers": q.questionAnswers}]
+                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.questionAnswers}]
             })
         } else {
             return error;
@@ -70,12 +71,12 @@
             question_array.forEach((q) => {
                 answer_list = [];
                 q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerDescription, "isCorrect": a.isCorrect}]
+                    answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
                 })
-                answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
+                /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
                     if (a.isCorrect) return -1;
                     if (b.isCorrect) return 1;
-                })
+                }) */
                 question_list = [...question_list,
                     {"questionID": q.questionID,
                     "questionDescription": q.questionDescription, 
@@ -108,15 +109,15 @@
         }
     }
     
-        // Function to get Question List from API
-        async function QuestionList() {
-        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/AllQuestions');
+    // Function to get Question List from API
+    async function QuestionList() {
+        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/Question/GetAll');
         const data_list = await res_list.json();
 
         question_array = [];
         if (res_list.ok) {
             data_list.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionDescription, "questionAnswers": q.questionAnswers}]
+                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.options}]
             })
         } else {
             return error;
@@ -126,12 +127,12 @@
             question_array.forEach((q) => {
                 answer_list = [];
                 q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerDescription, "isCorrect": a.isCorrect}]
+                    answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
                 })
-                answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
+                /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
                     if (a.isCorrect) return -1;
                     if (b.isCorrect) return 1;
-                })
+                }) */
                 question_list = [...question_list,
                     {"questionID": q.questionID,
                     "questionDescription": q.questionDescription, 
@@ -147,14 +148,26 @@
     }
 
     async function GenerateNewAIQuestion () {
-        //Add stuff when API ready. 
-        console.log("Do Stuff Later");
+         
+        const res_NewAIQuestion = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/Question/Add/Ai/${verificationAI}`)
+        const data_NewAIQuestion = await res_NewAIQuestion.json();
+
+        console.log(data_NewAIQuestion)
+        questionListPromise = QuestionList();
+
+    }
+
+    function handleAddNewQuestion() {
+        questionListPromise = AddNewQuestion();
     }
 </script>
 
 <style>
-    h2 {
+   h2 {
         text-align: center;
+        font-size: 28px;
+        font: sans-serif;
+        font-weight: bold;
     }
 </style>
 
@@ -179,9 +192,10 @@
             {question_array} 
             {question_list} 
             bind:newID = {newID}
+            bind:questionListPromise = {questionListPromise}
         />
     
     {:catch error}
-        <p style="color:red">{error.message}</p>
+        <h2 style="color:red">{error.message}</h2>
     {/await}
 {/if}

@@ -12,7 +12,7 @@
     //Importing component 
     import Answerblock from "./answerblock.svelte";
 
-    
+          
 
 </script>
 
