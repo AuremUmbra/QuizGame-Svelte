@@ -22,7 +22,7 @@
     export let answerID = [1,2,3,4];
     export let question_id;
     export let questionsID = [];
-    let length = 10;
+    let length = 3;
     let maxlength = 10;
     let duplicate;
     let duplicatedisabled = true;
@@ -67,7 +67,7 @@
         
         //Call ScoreUpdate function when it is finished
         // AddHistory(username,question_id,answeredID)
-        ScoreUpdate(question_id,answeredID)
+        ScoreUpdate(question_id,answeredTitle)
         Duplicatecheck(duplicate);
 
         duplicate = false;
@@ -145,24 +145,20 @@
         const data_history = await res_history.json();
     } */
     //Function to check answers and update score
-    async function ScoreUpdate(question_id,answeredID) {
+    async function ScoreUpdate(question_id,answeredTitle) {
 
 
 
         // Need to update this later to get actual result.
-        const res_check = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer?question_id=${question_id}&option_name=${answeredID}`) // -- Output will be Boolian Value
+        const res_check = await fetch(`https://best-quiz-game.azurewebsites.net/checkanswer?QuestionID=${question_id}&optionname=${answeredTitle}`) // -- Output will be Boolian Value
         const data_check = await res_check.json();
 
         // Ahn's API -> `https://dtpkanganquestionapi.azurewebsites.net/CheckAnswer/${question_id}/${answeredID}`
         // Team's API -> https://dotnetcore78277kangan.azurewebsites.net/CheckAnswer
 
         if (res_check.ok) {
-            if (data_check == true) {
+            if (data_check.Result == true) {
             score += 1
-            // } else if (data_check == 'True' ) {
-            //     score += 1
-            // } else if (data_check == 'true') {
-            //     score += 1
             }
         } else {
             throw new Error(data_check);
