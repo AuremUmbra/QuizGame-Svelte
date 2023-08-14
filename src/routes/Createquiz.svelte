@@ -1,23 +1,24 @@
 <script>
     import CreatequizBtn from "./CreatequizBtn.svelte";
-    import QuestionInput from "./QuestionInput.svelte";
+    // import QuestionInput from "./QuestionInput.svelte";
     import QuestionTable from "./QuestionTable.svelte";
 
     export let question_array = [];
     export let questionListPromise;
     export let question_list = [];
-    let newQuestion;
+    /* let newQuestion;
     let newcorrectAnswer;
     let newincorrectAnswer1;
     let newincorrectAnswer2;
     let newincorrectAnswer3;
     let qNew;
-    let qNew_json;
+    let qNew_json; */
     let answer_list = [];
     let showNewQuestion = false;
     let createbtn = "Make New Question";
     let AINewQuestion = "Get New Question From AI";
     let verificationAI;
+    let generateQuestionTopic;
 
 
     // async function AddNewQuestion() {
@@ -131,8 +132,8 @@
     }
 
     async function GenerateNewAIQuestion () {
-         
-        const res_NewAIQuestion = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/Question/Add/Ai/${verificationAI}`)
+        console.log(generateQuestionTopic)
+        const res_NewAIQuestion = await fetch(`https://best-quiz-game.azurewebsites.net/generatequiz?topic=${generateQuestionTopic}`)
         const data_NewAIQuestion = await res_NewAIQuestion.json();
 
         console.log(data_NewAIQuestion)
@@ -152,10 +153,30 @@
         font: sans-serif;
         font-weight: bold;
     }
+
+    .generateQuizInput {
+        text-align:center;
+        border-radius: 8px;
+        margin:0px;
+        padding:0px 0px;
+        width:220px;
+        height:45px;
+    }
+
+    .generateQuiz {
+        display: flex;
+        justify-content: center;
+    }
 </style>
 
+<br>
 <!-- <CreatequizBtn {createbtn} on:click = {() => MakeNewQuestion()}/> -->
-<CreatequizBtn createbtn = {AINewQuestion} on:click = {() => GenerateNewAIQuestion()}/>
+<div class="generateQuiz">
+    <div>
+        <input class="generateQuizInput" placeholder="Generate Question Topic" bind:value={generateQuestionTopic}/>
+        <CreatequizBtn createbtn = {AINewQuestion} on:click = {() => GenerateNewAIQuestion()}/>
+    </div>
+</div>
 
 <!-- {#if showNewQuestion == true } 
     <QuestionInput 

@@ -4,7 +4,7 @@
 
 <style>
 button {
-        margin: 60px auto;
+        margin: 10px auto;
         display: block;
         padding: 5px;
         width: 200px;
@@ -25,4 +25,5 @@ button {
         background-color:  rgb(255, 155, 0);
     }
 </style>
+
 <button on:click>{createbtn}</button>
