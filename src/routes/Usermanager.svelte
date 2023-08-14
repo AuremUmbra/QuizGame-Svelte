@@ -18,15 +18,15 @@
     //Function to add a new row of user information
     async function addUser() {
         newUser =  {
-            "name": "",
-            "firstname":"",
-            "lastname":"",
-            "password":""
+            "LoginID": "",
+            "FirstName":"",
+            "LastName":"",
+            "Password":""
         }
-        newUser.name = newName;
-        newUser.firstname = newFirstName;
-        newUser.lastname = newLastName;
-        newUser.password = newPassword
+        newUser.LoginID = newName;
+        newUser.FirstName = newFirstName;
+        newUser.LastName = newLastName;
+        newUser.Password = newPassword
 
         newName = "";
         newFirstName = "";
@@ -36,7 +36,7 @@
 
         newUser_json = JSON.stringify(newUser)
 
-        const res_nUser = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/adduser`, {
+        const res_nUser = await fetch(`https://best-quiz-game.azurewebsites.net/adduser?LoginID=${newUser.LoginID}&FirstName=${newUser.FirstName}&LastName=${newUser.LastName}&Password=${newUser.Password}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: newUser_json    
@@ -44,18 +44,25 @@
 
         const data_nUser = await res_nUser.json();
 
-        user_list = [];
-        if (res_nUser.ok) {
-            data_nUser.users.forEach((u) => {
-                user_list = [...user_list,{"name":u.name,"userID":u.userId}]
-            })
-        } else {
-            return error;
-        }
+        userListPromise = GetUserList();
     };
 
     function handleAddUser() {
         userListPromise = addUser()
+    }
+
+    async function GetUserList() {
+        const res_user = await fetch('https://best-quiz-game.azurewebsites.net/getallusers');
+        const data_user = await res_user.json();
+        
+        user_list = [];
+        if (res_user.ok) {
+            data_user.forEach((u) => {
+                user_list = [...user_list,{"username":u.LoginID,"firstName":u.FirstName,"lastName":u.LastName}]
+            })
+        } else {
+            return error;
+        }
     }
 
 </script>
@@ -76,7 +83,7 @@
         bind:firstname = {newFirstName}
         bind:lastname = {newLastName}
         bind:password = {newPassword}
-        on:click={handleAddUser()} 
+        on:click={(() => handleAddUser())} 
     />
 {/if}
 

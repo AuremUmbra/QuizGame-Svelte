@@ -2,7 +2,7 @@
     import UserInput from "./UserInput.svelte";
     
     //Define array for the table headers
-    let columns = ["Name", "User ID", "First Name", "Last Name"/* , "Date Created", "Last Updated "*/];
+    let columns = ["Username", "First Name", "Last Name"/* , "Date Created", "Last Updated "*/];
 
     //Array to store data objects
     export let user_list = [];
@@ -13,7 +13,7 @@
     let UpdateUserLastName;
     let UpdateUserPassword;
 
-    let userStatusButton = A;
+    let userStatusButton = "A";
 
     export let update_visibility = false;
 
@@ -23,23 +23,23 @@
     let UpdateBtn = "Update";
     
     //Function to delete a row of user information from the table
-    async function deleteUser(uID) {
+    /* async function deleteUser(uID) {
         const res = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/deleteuser/${uID}`, {
             method: 'DELETE',
         })
 
 
         userListPromise = GetUserList()
-    };
+    }; */
 
     async function GetUserList() {
-        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/allusers');
+        const res_user = await fetch('https://best-quiz-game.azurewebsites.net/getallusers');
         const data_user = await res_user.json();
-
+        
         user_list = [];
         if (res_user.ok) {
-            data_user.users.forEach((u) => {
-                user_list = [...user_list,{"name":u.login_id,"firstname":u.firstname,"lastname":u.lastname}]
+            data_user.forEach((u) => {
+                user_list = [...user_list,{"username":u.LoginID,"firstName":u.FirstName,"lastName":u.LastName}]
             })
         } else {
             return error;
@@ -47,33 +47,33 @@
     }
 
     function updateUserStart(u) {
-        UpdateUserName = u.name
-        UpdateUserFirstName = u.firstname
-        UpdateUserLastName = u.lastname
+        UpdateUserName = u.username
+        UpdateUserFirstName = u.firstName
+        UpdateUserLastName = u.lastName
         update_visibility = true;
     }
 
     async function UpdateUserEnd() {
         uUpdate = {
-            "login_id":"",
-            "firstname":"",
-            "lastname":"",
-            "password":""
+            "LoginID":"",
+            "FirstName":"",
+            "LastName":"",
+            "Password":""
         }
-        uUpdate.login_id = UpdateUserName;
-        uUpdate.firstname = UpdateUserFirstName;
-        uUpdate.lastname = UpdateUserLastName;
-        uUpdate.password = UpdateUserPassword
+        uUpdate.LoginID = UpdateUserName;
+        uUpdate.FirstName = UpdateUserFirstName;
+        uUpdate.LastName = UpdateUserLastName;
+        uUpdate.Password = UpdateUserPassword
 
         uUpdate_json = JSON.stringify(uUpdate)
 
-        const res_update = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/updateuser/${UpdateUserName}`, {
+        const res_update = await fetch(`https://best-quiz-game.azurewebsites.net/updateuser?loginid=${UpdateUserName}&FirstName=${UpdateUserFirstName}&LastName=${UpdateUserLastName}&Password=${UpdateUserPassword}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: uUpdate_json
         })
 
-        userListPromise = GetUserList()
+        userListPromise = await GetUserList()
         update_visibility = false;
         uUpdate = null;
         uUpdate_json = null;
@@ -83,14 +83,25 @@
         UpdateUserPassword = null;
     }
 
-    async function toggleUserStatus(u) {
-        
-        const res_userStatus = await fetch(`https://dtpkanganquestionapi.azurewebsites.net/activateuserstatus?login_id=${u.name}`,{
+    async function activateUser(u) {
+        const res_userStatus = await fetch(`https://best-quiz-game.azurewebsites.net/activateuserstatus?login_id=${u}`,{
             method: 'PUT',
             headers: {'Content-Type': 'application/json'}
         })
         userListPromise = GetUserList()
+        alert("User Activated")
     }
+
+
+    async function deactivateUser(u) {
+        const res_userStatus = await fetch(`https://best-quiz-game.azurewebsites.net/deactivateuserstatus?login_id=${u}`,{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'}
+        })
+        userListPromise = GetUserList()
+        alert("User Deactivated")
+    }
+
 </script>
 
 <style>
@@ -185,6 +196,7 @@
         bind:newName = {UpdateUserName}
         bind:firstname = {UpdateUserFirstName}
         bind:lastname = {UpdateUserLastName}
+        bind:password = {UpdateUserPassword}
         {title}
         effect = {UpdateBtn}
         usernameChangeDisabled = {true}
@@ -204,16 +216,15 @@
     <!-- The table data -->
     {#each user_list as row}
         <tr>
-            <td>{row.name}</td>
-            <td>{row.userID}</td>
-            <td>{row.firstname}</td>
-            <td>{row.lastname}</td>
+            <td>{row.username}</td>
+            <td>{row.firstName}</td>
+            <td>{row.lastName}</td>
 <!--             <td>{row.datecreated}</td>
             <td>{row.lastupdated}</td> -->
             <!-- button to delete user from table -->
             <button class="UpdateUser" on:click={() => updateUserStart(row)}>U</button>
-            <button class="ActivateUser" on:click={() => toggleUserStatus(row.userID)}>{userStatusButton}</button>
-            <button class="DeleteUser" on:click={() => deleteUser(row.userID)}>X</button>
+            <button class="ActivateUser" on:click={(() => activateUser(row.username))}>{userStatusButton}</button>
+            <button class="DeleteUser" on:click={(() => deactivateUser(row.username))}>D</button>
         </tr>
     {/each}
 </table>

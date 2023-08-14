@@ -74,13 +74,13 @@ function handleAdminHome() {
     }
 
     async function GetUserList() {
-        const res_user = await fetch('https://dotnetcore78277kangan.azurewebsites.net/users');
+        const res_user = await fetch('https://best-quiz-game.azurewebsites.net/getallusers');
         const data_user = await res_user.json();
-
+        
         user_list = [];
         if (res_user.ok) {
-            data_user.users.forEach((u) => {
-                user_list = [...user_list,{"name":u.name,"userID":u.userId}]
+            data_user.forEach((u) => {
+                user_list = [...user_list,{"username":u.LoginID,"firstName":u.FirstName,"lastName":u.LastName}]
             })
         } else {
             return error;
