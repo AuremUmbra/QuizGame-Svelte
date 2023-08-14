@@ -1,74 +1,70 @@
 <script>
     // Array to hold all question objects
-    export let question_array = [];
+    // export let question_array = [];
     export let question_list = []; 
-    export let questionListPromise;
-    let answer_list;
-    let question_description;
-    let question_id;
-    let correct_answer;
-    let incorrect_answer1;
-    let incorrect_answer2;
-    let incorrect_answer3;
-    let update_visibility = false;
-    let qUpdate;
-    let qUpdate_json;
-    export let newID;
-    let UpdateBtn = "Update";
+    // export let questionListPromise;
+    // let answer_list;
+    // let question_description;
+    // let question_id;
+    // let correct_answer;
+    // let incorrect_answer1;
+    // let incorrect_answer2;
+    // let incorrect_answer3;
+    // let update_visibility = false;
+    // let qUpdate;
+    // let qUpdate_json;
+    // let UpdateBtn = "Update";
 
-    import QuestionInput from "./QuestionInput.svelte";
+    // import QuestionInput from "./QuestionInput.svelte";
 
     // Array for the headers of each column for the table holding the questions and answers
-    let columns = ["Question", "Correct Answer", "Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"];
+    let columns = ["Question ID","Question", "A", "B", "C", "D"];
 
     //function to delete a question, answer and incorrect answers
-    async function deleteRow(qID) {
+    /* async function deleteRow(qID) {
         const res = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/deletequestion/${qID}`, {
             method: 'DELETE',
         })
 
 
         questionListPromise = QuestionList()
-    };
+    }; */
 
     // Function to get Question List from API
-    async function QuestionList() {
-        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/Question/GetAll');
-        const data_list = await res_list.json();
+    // async function QuestionList() {
+    //     const res_list = await fetch('https://best-quiz-game.azurewebsites.net/GetAllQuiz');
+    //     const data_list = await res_list.json();
 
-        question_array = [];
-        if (res_list.ok) {
-            data_list.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.options}]
-            })
-        } else {
-            return error;
-        }
+    //     question_array = [];
+    //     if (res_list.ok) {
+    //         data_list.forEach((q) => {
+    //             question_array = [...question_array,{"questionID": q.QuestionID, "questionDescription": q.QuestionText, "questionAnswers": q.Options}]
+    //         })
+    //     } else {
+    //         return error;
+    //     }
 
-        question_list = [];
-            question_array.forEach((q) => {
-                answer_list = [];
-                q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
-                })
-                /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
-                    if (a.isCorrect) return -1;
-                    if (b.isCorrect) return 1;
-                }) */
-                question_list = [...question_list,
-                    {"questionID": q.questionID,
-                    "questionDescription": q.questionDescription, 
-                    "correctAnswer": answer_list[0].answerDescription, 
-                    "incorrectAnswer1": answer_list[1].answerDescription, 
-                    "incorrectAnswer2": answer_list[2].answerDescription, 
-                    "incorrectAnswer3": answer_list[3].answerDescription}]
-                if (newID < q.questionID) {
-                    newID = q.questionID + 1
-                }
-            })
-    }
+    //     question_list = [];
+    //         question_array.forEach((q) => {
+    //             answer_list = [
+    //                 {"answerDescription": q.questionAnswers.A},
+    //                 {"answerDescription": q.questionAnswers.B},
+    //                 {"answerDescription": q.questionAnswers.C},
+    //                 {"answerDescription": q.questionAnswers.D}
+    //             ]
+    //             question_list = [
+    //                 ...question_list,
+    //                 {"questionID": q.questionID,
+    //                 "questionDescription": q.questionDescription, 
+    //                 "answer1": answer_list[0].answerDescription, 
+    //                 "answer2": answer_list[1].answerDescription, 
+    //                 "answer3": answer_list[2].answerDescription, 
+    //                 "answer4": answer_list[3].answerDescription}
+    //             ]
+    //     })
+    // }
 
-    function updateQuestionStart(Q) {
+   /*  function updateQuestionStart(Q) {
         question_id = Q.questionID;
         question_description = Q.questionDescription;
         correct_answer = Q.correctAnswer;
@@ -76,9 +72,9 @@
         incorrect_answer2 = Q.incorrectAnswer2;
         incorrect_answer3 = Q.incorrectAnswer3;
         update_visibility = true;
-    }
+    } */
 
-    async function handleUpdateQuestionEnd() {
+    /* async function handleUpdateQuestionEnd() {
         qUpdate = {
             "questionDescription":"", "questionAnswers": [
             {"answerDescription":"", "isCorrect": true}, 
@@ -109,7 +105,7 @@
         incorrect_answer1 = null;
         incorrect_answer2 = null;
         incorrect_answer3 = null;
-    }
+    } */
 </script>
 
 
@@ -178,7 +174,7 @@
 </style>
 
 
-{#if update_visibility}
+<!-- {#if update_visibility}
     <QuestionInput 
         bind:Question = {question_description} 
         bind:CorrectAnswer = {correct_answer} 
@@ -188,7 +184,7 @@
         on:click = {() => handleUpdateQuestionEnd()}
         effect = {UpdateBtn}
     />
-{/if}
+{/if} -->
 
 <!-- A table to hold all the questions, answers and incorrect answers -->
 <table>
@@ -201,14 +197,15 @@
     <!-- The table data -->
     {#each question_list as row}
         <tr>
+            <td>{row.questionID}</td>
             <td>{row.questionDescription}</td>
             <td>{row.answer1}</td>
             <td>{row.answer2}</td>
             <td>{row.answer3}</td>
             <td>{row.answer4}</td>
             <!-- button to delete user from table -->
-            <button class="UpdateUser" on:click={() => updateQuestionStart(row)}>U</button>
-            <button class="DeleteUser" on:click={() => deleteRow(row.questionID)}>X</button>
+            <!-- <button class="UpdateUser" on:click={() => updateQuestionStart(row)}>U</button> -->
+            <!-- <button class="DeleteUser" on:click={() => deleteRow(row.questionID)}>X</button> -->
         </tr>
     {/each}
 </table>

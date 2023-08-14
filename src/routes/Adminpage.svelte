@@ -15,7 +15,6 @@ let userListPromise;
 let question_list = [];
 let answer_list = [];
 let user_list = [];
-let newQuestionID = 0;
 
 // Function to go to the user manager page
 function handleUserM() {
@@ -45,7 +44,6 @@ function handleAdminHome() {
             data_list.forEach((q) => {
                 question_array = [...question_array,{"questionID": q.QuestionID, "questionDescription": q.QuestionText, "questionAnswers": q.Options}]
             })
-            console.log(question_array)
         } else {
             return error;
         }
@@ -68,7 +66,6 @@ function handleAdminHome() {
                     "answer4": answer_list[3].answerDescription}
                 ]
         })
-       console.log(question_list)
     }
 
     //Function to start Above function which gets question list from API
@@ -117,7 +114,6 @@ function handleAdminHome() {
         {question_array} 
         {questionListPromise} 
         {question_list} 
-        newID={newQuestionID}
     />
 
 

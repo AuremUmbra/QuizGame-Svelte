@@ -16,87 +16,74 @@
     let answer_list = [];
     let showNewQuestion = false;
     let createbtn = "Make New Question";
-    export let newID;
-    let newAID = 1;
     let AINewQuestion = "Get New Question From AI";
     let verificationAI;
 
 
-    async function AddNewQuestion() {
-        qNew = {
-            "questionID":"",
-            "questionDescription":"", "questionAnswers": [
-                {"answerDescription":"", "isCorrect": true, "answerID":""}, 
-                {"answerDescription":"", "isCorrect": false, "answerID":""}, 
-                {"answerDescription":"", "isCorrect": false, "answerID":""}, 
-                {"answerDescription":"", "isCorrect": false, "answerID":""}
-            ]
-        };
-        qNew.questionID = newID
-        qNew.questionDescription = newQuestion;
-        qNew.questionAnswers[0].answerDescription = newcorrectAnswer;
-        qNew.questionAnswers[1].answerDescription = newincorrectAnswer1;
-        qNew.questionAnswers[2].answerDescription = newincorrectAnswer2;
-        qNew.questionAnswers[3].answerDescription = newincorrectAnswer3;
+    // async function AddNewQuestion() {
+    //     qNew = {
+    //         "questionID":"",
+    //         "questionDescription":"", "questionAnswers": [
+    //             {"answerDescription":"", "isCorrect": true, "answerID":""}, 
+    //             {"answerDescription":"", "isCorrect": false, "answerID":""}, 
+    //             {"answerDescription":"", "isCorrect": false, "answerID":""}, 
+    //             {"answerDescription":"", "isCorrect": false, "answerID":""}
+    //         ]
+    //     };
+    //     qNew.questionDescription = newQuestion;
+    //     qNew.questionAnswers[0].answerDescription = newcorrectAnswer;
+    //     qNew.questionAnswers[1].answerDescription = newincorrectAnswer1;
+    //     qNew.questionAnswers[2].answerDescription = newincorrectAnswer2;
+    //     qNew.questionAnswers[3].answerDescription = newincorrectAnswer3;
 
-        qNew.questionAnswers[0].answerID = newAID
-        newAID += 1;
-        qNew.questionAnswers[1].answerID = newAID
-        newAID += 1;
-        qNew.questionAnswers[2].answerID = newAID
-        newAID += 1;
-        qNew.questionAnswers[3].answerID = newAID
-        newAID += 1;
-        
-        qNew_json = JSON.stringify(qNew)
+      
+    //     qNew_json = JSON.stringify(qNew)
 
-        const res_nQuestion = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/Question/Add`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: qNew_json
-        });
+    //     const res_nQuestion = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/Question/Add`, {
+    //         method: 'POST',
+    //         headers: {'Content-Type': 'application/json'},
+    //         body: qNew_json
+    //     });
 
-        const data_nQuestion = await res_nQuestion.json();
+    //     const data_nQuestion = await res_nQuestion.json();
 
-        question_array = [];
-        if (res_nQuestion.ok) {
-            data_nQuestion.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.questionAnswers}]
-            })
-        } else {
-            return error;
-        }
+    //     question_array = [];
+    //     if (res_nQuestion.ok) {
+    //         data_nQuestion.questions.forEach((q) => {
+    //             question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.questionAnswers}]
+    //         })
+    //     } else {
+    //         return error;
+    //     }
 
-        question_list = [];
-            question_array.forEach((q) => {
-                answer_list = [];
-                q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
-                })
-                /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
-                    if (a.isCorrect) return -1;
-                    if (b.isCorrect) return 1;
-                }) */
-                question_list = [...question_list,
-                    {"questionID": q.questionID,
-                    "questionDescription": q.questionDescription, 
-                    "correctAnswer": answer_list[0].answerDescription, 
-                    "incorrectAnswer1": answer_list[1].answerDescription, 
-                    "incorrectAnswer2": answer_list[2].answerDescription, 
-                    "incorrectAnswer3": answer_list[3].answerDescription}]
-                if (newID <= q.questionID) {
-                    newID = q.questionID + 1
-                }
-            })
+    //     question_list = [];
+    //         question_array.forEach((q) => {
+    //             answer_list = [];
+    //             q.questionAnswers.forEach((a) => {
+    //                 answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
+    //             })
+    //             /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
+    //                 if (a.isCorrect) return -1;
+    //                 if (b.isCorrect) return 1;
+    //             }) */
+    //             question_list = [...question_list,
+    //                 {"questionID": q.questionID,
+    //                 "questionDescription": q.questionDescription, 
+    //                 "correctAnswer": answer_list[0].answerDescription, 
+    //                 "incorrectAnswer1": answer_list[1].answerDescription, 
+    //                 "incorrectAnswer2": answer_list[2].answerDescription, 
+    //                 "incorrectAnswer3": answer_list[3].answerDescription}]
+                
+    //         })
 
-        newQuestion = null;
-        newcorrectAnswer  = null;
-        newincorrectAnswer1 = null;
-        newincorrectAnswer2 = null;
-        newincorrectAnswer3 = null;
-        showNewQuestion = false;
-        createbtn = "Make New Question"
-    }
+    //     newQuestion = null;
+    //     newcorrectAnswer  = null;
+    //     newincorrectAnswer1 = null;
+    //     newincorrectAnswer2 = null;
+    //     newincorrectAnswer3 = null;
+    //     showNewQuestion = false;
+    //     createbtn = "Make New Question"
+    // }
 
     function MakeNewQuestion() {
         if (showNewQuestion == false) {
@@ -111,13 +98,13 @@
     
     // Function to get Question List from API
     async function QuestionList() {
-        const res_list = await fetch('https://dotnetcore78277kangan.azurewebsites.net/Question/GetAll');
+        const res_list = await fetch('https://best-quiz-game.azurewebsites.net/GetAllQuiz');
         const data_list = await res_list.json();
 
         question_array = [];
         if (res_list.ok) {
-            data_list.questions.forEach((q) => {
-                question_array = [...question_array,{"questionID": q.questionID, "questionDescription": q.questionText, "questionAnswers": q.options}]
+            data_list.forEach((q) => {
+                question_array = [...question_array,{"questionID": q.QuestionID, "questionDescription": q.QuestionText, "questionAnswers": q.Options}]
             })
         } else {
             return error;
@@ -125,26 +112,22 @@
 
         question_list = [];
             question_array.forEach((q) => {
-                answer_list = [];
-                q.questionAnswers.forEach((a) => {
-                    answer_list = [...answer_list,{"answerDescription": a.answerText, /* "isCorrect": a.isCorrect */}]
-                })
-                /* answer_list.sort((a,b) => {if (a.isCorrect && b.isCorrect) return 0;
-                    if (a.isCorrect) return -1;
-                    if (b.isCorrect) return 1;
-                }) */
-                question_list = [...question_list,
+                answer_list = [
+                    {"answerDescription": q.questionAnswers.A},
+                    {"answerDescription": q.questionAnswers.B},
+                    {"answerDescription": q.questionAnswers.C},
+                    {"answerDescription": q.questionAnswers.D}
+                ]
+                question_list = [
+                    ...question_list,
                     {"questionID": q.questionID,
                     "questionDescription": q.questionDescription, 
-                    "correctAnswer": answer_list[0].answerDescription, 
-                    "incorrectAnswer1": answer_list[1].answerDescription, 
-                    "incorrectAnswer2": answer_list[2].answerDescription, 
-                    "incorrectAnswer3": answer_list[3].answerDescription}]
-                 if (newID < q.questionID) {
-                     newID = q.questionID + 1
-                }
-            })
-       
+                    "answer1": answer_list[0].answerDescription, 
+                    "answer2": answer_list[1].answerDescription, 
+                    "answer3": answer_list[2].answerDescription, 
+                    "answer4": answer_list[3].answerDescription}
+                ]
+        })
     }
 
     async function GenerateNewAIQuestion () {
@@ -157,9 +140,9 @@
 
     }
 
-    function handleAddNewQuestion() {
-        questionListPromise = AddNewQuestion();
-    }
+    // function handleAddNewQuestion() {
+    //     questionListPromise = AddNewQuestion();
+    // }
 </script>
 
 <style>
@@ -171,10 +154,10 @@
     }
 </style>
 
-<CreatequizBtn {createbtn} on:click = {() => MakeNewQuestion()}/>
+<!-- <CreatequizBtn {createbtn} on:click = {() => MakeNewQuestion()}/> -->
 <CreatequizBtn createbtn = {AINewQuestion} on:click = {() => GenerateNewAIQuestion()}/>
 
-{#if showNewQuestion == true } 
+<!-- {#if showNewQuestion == true } 
     <QuestionInput 
         on:click={() => handleAddNewQuestion()}
         bind:Question={newQuestion} 
@@ -184,18 +167,15 @@
         bind:IncorrectAnswer3={newincorrectAnswer3}
     />
 
-{:else}
+{:else} -->
     {#await questionListPromise}
         <h2>Loading Question List</h2>
     {:then}
         <QuestionTable 
-            {question_array} 
             {question_list} 
-            bind:newID = {newID}
-            bind:questionListPromise = {questionListPromise}
         />
     
     {:catch error}
         <h2 style="color:red">{error.message}</h2>
     {/await}
-{/if}
+<!-- {/if} -->
