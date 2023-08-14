@@ -45,7 +45,6 @@
             })
         
             console.log(login)
-            
 
         
         passwordTest = null;

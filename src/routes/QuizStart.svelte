@@ -198,12 +198,12 @@
     }
 
     async function GetUser() {
-        const res_user = await fetch(`https://dotnetcore78277kangan.azurewebsites.net/getuser/${username}`);
+        const res_user = await fetch(`https://best-quiz-game.azurewebsites.net/getuser?loginID=${username}`);
         const data_user = await res_user.json();
 
         user = null;
         if (res_user.ok) {
-            user = [...user,{"name":data_user.login_id,"firstname":data_user.firstname,"lastname":data_user.lastname}]
+            user = [{"username":data_user.LoginID,"FirstName":data_user.FirstName,"LastName":data_user.LastName}]
         } else {
             return error;
         }
