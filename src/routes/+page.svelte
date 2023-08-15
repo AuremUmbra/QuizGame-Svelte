@@ -53,7 +53,6 @@
 
         if (login.ok) {
             const login_json = await login.json()
-            console.log(login_json)
             if (login_json == 'Login Successful.' && username == 'admin') {
                 admin_visibility = true;
             } else if (login_json == "Login Successful.") {
@@ -62,6 +61,13 @@
                 alert("Incorrect username or password");
             }
         } else {
+            const login_json = await login.json()
+            console.log(login_json)
+            if (login_json == "Login ID is not active.") {
+                alert(login_json);
+                return
+            }
+            // alert(login)
             return error;          
         }
 
