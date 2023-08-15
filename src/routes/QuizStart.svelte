@@ -235,7 +235,7 @@
     <Exitquiz on:click={(() => handleQuizExit())}/>
 {:else if profile_visibility}
     <UserMBtn on:click={(() => handleUserProfile())} User_Manager="Home Page"/>
-    <UserProfile {userProfilePromise} {user}/>
+    <UserProfile {userProfilePromise} {user} {username}/>
 {:else}
     <UserMBtn on:click={(() => handleUserProfile())} User_Manager="User Profile" />
     <Homepage on:click={(() => handleStartClick())}/>

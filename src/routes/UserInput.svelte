@@ -4,7 +4,7 @@
     export let firstname;
     export let lastname;
     export let password;
-    export let usernameChangeDisabled = false;
+    export let usernameChangeDisabled = true;
 
     export let title = "New User";
     export let effect = "Add";
@@ -67,6 +67,10 @@
         text-align:center;
         font-size: 2em;
         font:sans-serif;
+    }
+
+    input:disabled {
+        background-color: lightgray;
     }
 </style>
 
