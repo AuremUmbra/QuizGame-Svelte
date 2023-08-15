@@ -102,6 +102,9 @@
         alert("User Deactivated")
     }
 
+    function cancelUpdate() {
+        update_visibility = false;
+    }
 </script>
 
 <style>
@@ -187,21 +190,57 @@
         /*Text size*/
         font-size: 14px;
     }
+
+    .CancelUpdate {
+        /*Button background color*/
+        background-color: #b88103;
+        /*Button text color*/
+        color: white;
+        /*Button space around text*/
+        padding: 15px 32px;
+        /*Centering text inside button*/
+        text-align: center;
+        /*Button rounding*/
+        border-radius: 8px;
+        /*Button border*/
+        border: none;
+        text-decoration:none;
+        display: inline-block;
+        /*Text size*/
+        font-size: 14px;
+    }
+    .CancelUpdate:hover {
+        background-color: #d68e10;
+    }
+
+    .CancelUpdate:disabled {
+        background-color: grey;
+
+    }
+
+    .CancelUpdateDiv {
+        display:flex;
+        justify-content: center;
+    }
 </style>
 
 
 
 {#if update_visibility}
-    <UserInput
-        bind:newName = {UpdateUserName}
-        bind:firstname = {UpdateUserFirstName}
-        bind:lastname = {UpdateUserLastName}
-        bind:password = {UpdateUserPassword}
-        {title}
-        effect = {UpdateBtn}
-        usernameChangeDisabled = {true}
-        on:click={(() => UpdateUserEnd())}
-    />
+    
+        <UserInput
+            bind:newName = {UpdateUserName}
+            bind:firstname = {UpdateUserFirstName}
+            bind:lastname = {UpdateUserLastName}
+            bind:password = {UpdateUserPassword}
+            {title}
+            effect = {UpdateBtn}
+            usernameChangeDisabled = {true}
+            on:click={(() => UpdateUserEnd())}
+        />
+    <div class="CancelUpdateDiv">
+        <button class="CancelUpdate" on:click={(() => cancelUpdate())}>Cancel</button>
+    </div>
 {/if}
 
 

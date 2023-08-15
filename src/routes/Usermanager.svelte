@@ -84,6 +84,7 @@
         bind:lastname = {newLastName}
         bind:password = {newPassword}
         on:click={(() => handleAddUser())} 
+        usernameChangeDisabled = {false}
     />
 {/if}
 
