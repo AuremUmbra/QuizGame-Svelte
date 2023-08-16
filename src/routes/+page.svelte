@@ -45,7 +45,6 @@
             body: passwordTest_json
             })
         
-            console.log(login)
 
         
         passwordTest = null;
@@ -62,8 +61,8 @@
                 alert("Incorrect username or password");
             }
         } else {
+            username = "";
             const login_json = await login.json()
-            console.log(login_json)
             if (login_json == "Login ID is not active.") {
                 alert(login_json);
                 return

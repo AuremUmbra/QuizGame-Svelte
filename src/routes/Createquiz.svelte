@@ -2,6 +2,7 @@
     import CreatequizBtn from "./CreatequizBtn.svelte";
     // import QuestionInput from "./QuestionInput.svelte";
     import QuestionTable from "./QuestionTable.svelte";
+    import GenerateQuestion from "./GenerateQuestion.svelte";
 
     export let question_array = [];
     export let questionListPromise;
@@ -19,6 +20,7 @@
     let AINewQuestion = "Get New Question From AI";
     let verificationAI;
     let generateQuestionTopic;
+    let generateQuestionQuantity;
 
 
     // async function AddNewQuestion() {
@@ -132,11 +134,9 @@
     }
 
     async function GenerateNewAIQuestion () {
-        console.log(generateQuestionTopic)
-        const res_NewAIQuestion = await fetch(`https://best-quiz-game.azurewebsites.net/generatequiz?topic=${generateQuestionTopic}`)
+        const res_NewAIQuestion = await fetch(`https://best-quiz-game.azurewebsites.net/generatequiz?topic=${generateQuestionTopic}&qty=${generateQuestionQuantity}`)
         const data_NewAIQuestion = await res_NewAIQuestion.json();
 
-        console.log(data_NewAIQuestion)
         questionListPromise = QuestionList();
 
     }
@@ -153,30 +153,16 @@
         font: sans-serif;
         font-weight: bold;
     }
-
-    .generateQuizInput {
-        text-align:center;
-        border-radius: 8px;
-        margin:0px;
-        padding:0px 0px;
-        width:220px;
-        height:45px;
-    }
-
-    .generateQuiz {
-        display: flex;
-        justify-content: center;
-    }
 </style>
 
 <br>
 <!-- <CreatequizBtn {createbtn} on:click = {() => MakeNewQuestion()}/> -->
-<div class="generateQuiz">
-    <div>
-        <input class="generateQuizInput" placeholder="Generate Question Topic" bind:value={generateQuestionTopic}/>
-        <CreatequizBtn createbtn = {AINewQuestion} on:click = {() => GenerateNewAIQuestion()}/>
-    </div>
-</div>
+<GenerateQuestion 
+    bind:generateQuestionQuantity = {generateQuestionQuantity}
+    bind:generateQuestionTopic = {generateQuestionTopic}
+    {AINewQuestion}
+    on:click = {(() => GenerateNewAIQuestion())}
+/>
 
 <!-- {#if showNewQuestion == true } 
     <QuestionInput 

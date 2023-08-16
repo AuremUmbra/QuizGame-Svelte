@@ -1,5 +1,6 @@
 <script>
     export let createbtn;
+    export let createBtnDisabled = false;
 </script>
 
 <style>
@@ -24,6 +25,11 @@ button {
         color: white;
         background-color:  rgb(255, 155, 0);
     }
+
+    button:disabled {
+        color: black;
+        background-color: gray;
+    }
 </style>
 
-<button on:click>{createbtn}</button>
+<button disabled={createBtnDisabled} on:click>{createbtn}</button>
