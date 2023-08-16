@@ -26,6 +26,7 @@
     }
 
     async function LogIn() {
+        username = username.toLowerCase()
 
         passwordTest = {
             "Login_Id":"",
@@ -65,6 +66,10 @@
             console.log(login_json)
             if (login_json == "Login ID is not active.") {
                 alert(login_json);
+                return
+            }
+            if (login_json == "Your username or Password is incorrect.") {
+                alert("Incorrect username or password");
                 return
             }
             // alert(login)
