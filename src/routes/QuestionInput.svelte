@@ -6,6 +6,8 @@
     export let IncorrectAnswer2;
     export let IncorrectAnswer3;
     export let effect = "Add";
+    export let answerTitle;
+    export let answerTitleDisabled = true;
     
 
     // existing arrays for questions, correct answers and incorrect answers.
@@ -13,7 +15,7 @@
     // let correct_answers = ['Cremorne','Richmond','Canberra'];
     // let incorrect_answers = ['South Yarra','Bendigo','Dandenong','Frankston','Cranburne','Berwick','Beaconsfield','Adelaide','Brisbane','Perth','Paris','Melbourne','Sydney','Newcastle'];
 
-    function NewQuestionDisabled(Q,CA,IA1,IA2,IA3) {
+    function NewQuestionDisabled(Q,CA,IA1,IA2,IA3,AT) {
         if (Q == null || Q == "") {
             return true
         }
@@ -29,6 +31,9 @@
         if (IA3 == null || IA3 == "") {
             return true
         } 
+        if (AT == null || AT == "") {
+            return true
+        }
         return false
     }
 </script>
@@ -99,22 +104,26 @@
     </div>
 
     <div class="InputBox">
-        <p>Correct Answer:</p><input class="correct_answer" bind:value={CorrectAnswer}>
+        <p>A:</p><input class="correct_answer" bind:value={CorrectAnswer}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 1:</p><input class="incorrect_answer" bind:value={IncorrectAnswer1}>
+        <p>B:</p><input class="incorrect_answer" bind:value={IncorrectAnswer1}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 2:</p><input class="incorrect_answer" bind:value={IncorrectAnswer2}>
+        <p>C:</p><input class="incorrect_answer" bind:value={IncorrectAnswer2}>
     </div>
 
     <div class="InputBox">
-        <p>Incorrect Answer 3:</p><input class="incorrect_answer" bind:value={IncorrectAnswer3}>
+        <p>D:</p><input class="incorrect_answer" bind:value={IncorrectAnswer3}>
+    </div>
+
+    <div class="InputBox">
+        <p>Answer Title</p><input bind:value={answerTitle} disabled={answerTitleDisabled}>
     </div>
 
     <!-- A button to add a new row consisting of a question, the correct answer and 3 incorrect answers -->
-    <div class="AddBtnDiv"><button disabled={NewQuestionDisabled(Question,CorrectAnswer,IncorrectAnswer1,IncorrectAnswer2,IncorrectAnswer3)} class="Add" on:click>{effect}</button></div>
+    <div class="AddBtnDiv"><button disabled={NewQuestionDisabled(Question,CorrectAnswer,IncorrectAnswer1,IncorrectAnswer2,IncorrectAnswer3,answerTitle)} class="Add" on:click>{effect}</button></div>
 </div>
 
