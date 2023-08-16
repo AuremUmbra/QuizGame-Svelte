@@ -5,6 +5,7 @@
     export let generateQuestionQuantity;
     export let generateQuestionTopic;
     export let AINewQuestion;
+    let previousN = 1;
 
     function createBtnDisabled(gQQ,gQT) {
         if (gQQ == null || gQQ == "") {
@@ -13,8 +14,21 @@
         if (gQT == null || gQT == "") {
             return true;
         }
-        return false;
+        if (gQQ < 11 && gQQ > 0) {
+            return false;
+        }
+        return true
     }
+
+    function validator(node, value) {
+    return {
+      update(value) {
+				generateQuestionQuantity = value === null || generateQuestionQuantity < node.min ? previousN : parseInt(value)
+        previousN = generateQuestionQuantity
+      }
+    }
+  }
+
 </script>
 
 
@@ -40,7 +54,7 @@
 <div class="generateQuiz">
     <div>
         <input class="generateQuizInput" placeholder="Generate Question Topic" bind:value={generateQuestionTopic}/>
-        <input class="generateQuizInput" placeholder="Generate Question Quantity" bind:value={generateQuestionQuantity}/>
+        <input class="generateQuizInput" placeholder="Generate Question Quantity" use:validator={generateQuestionQuantity} type='number' min=1 bind:value={generateQuestionQuantity}/>
         <CreatequizBtn createBtnDisabled = {createBtnDisabled(generateQuestionQuantity,generateQuestionTopic)} createbtn = {AINewQuestion} on:click/>
     </div>
 </div>
