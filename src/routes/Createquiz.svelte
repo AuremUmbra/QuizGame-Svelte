@@ -1,5 +1,5 @@
 <script>
-    import CreatequizBtn from "./CreatequizBtn.svelte";
+    // import CreatequizBtn from "./CreatequizBtn.svelte";
     // import QuestionInput from "./QuestionInput.svelte";
     import QuestionTable from "./QuestionTable.svelte";
     import GenerateQuestion from "./GenerateQuestion.svelte";
@@ -180,6 +180,8 @@
     {:then}
         <QuestionTable 
             {question_list} 
+            {question_array}
+            {questionListPromise}
         />
     
     {:catch error}

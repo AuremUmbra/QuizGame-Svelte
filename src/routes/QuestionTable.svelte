@@ -1,9 +1,9 @@
 <script>
     // Array to hold all question objects
-    // export let question_array = [];
+    export let question_array = [];
     export let question_list = []; 
-    // export let questionListPromise;
-    // let answer_list;
+    export let questionListPromise;
+    let answer_list;
     let question_description;
     let question_id;
     let answer1;
@@ -11,12 +11,16 @@
     let answer3;
     let answer4;
     let update_visibility = false;
+    let duplicate_visibility = false;
     // let qUpdate;
     // let qUpdate_json;
     let UpdateBtn = "Update";
     let answerTitle;
+    let showDuplicateButton = "Show Duplicate Questions"; 
+    let hideDuplicateButton = "Return";
 
     import QuestionInput from "./QuestionInput.svelte";
+    import CreatequizBtn from "./CreatequizBtn.svelte";
 
     // Array for the headers of each column for the table holding the questions and answers
     let columns = ["Question ID","Question", "A", "B", "C", "D"];
@@ -32,7 +36,7 @@
     }; */
 
     // Function to get Question List from API
-    /* async function QuestionList() {
+    async function QuestionList() {
         const res_list = await fetch('https://best-quiz-game.azurewebsites.net/GetAllQuiz');
         const data_list = await res_list.json();
 
@@ -63,7 +67,7 @@
                     "answer4": answer_list[3].answerDescription}
                 ]
         })
-    } */
+    }
 
     async function updateQuestionStart(Q) {
         question_id = Q.questionID;
@@ -122,6 +126,48 @@
     }
 
 
+    async function duplicateQuestionList() {
+        const res_list = await fetch('https://best-quiz-game.azurewebsites.net/GetDuplicateQuestions');
+        const data_list = await res_list.json();
+
+        question_array = [];
+        if (res_list.ok) {
+            data_list.forEach((q) => {
+                question_array = [...question_array,{"questionID": q.QuestionID, "questionDescription": q.QuestionText, "questionAnswers": q.Options}]
+            })
+        } else {
+            return error;
+        }
+
+        question_list = [];
+            question_array.forEach((q) => {
+                answer_list = [
+                    {"answerDescription": q.questionAnswers.A},
+                    {"answerDescription": q.questionAnswers.B},
+                    {"answerDescription": q.questionAnswers.C},
+                    {"answerDescription": q.questionAnswers.D}
+                ]
+                question_list = [
+                    ...question_list,
+                    {"questionID": q.questionID,
+                    "questionDescription": q.questionDescription, 
+                    "answer1": answer_list[0].answerDescription, 
+                    "answer2": answer_list[1].answerDescription, 
+                    "answer3": answer_list[2].answerDescription, 
+                    "answer4": answer_list[3].answerDescription}
+                ]
+        })
+    }
+
+    function handleShowDuplicateButton() {
+        duplicate_visibility = true;
+        questionListPromise = duplicateQuestionList();
+    }
+
+    function handleHideDuplicateButton() {
+        duplicate_visibility = false;
+        questionListPromise = QuestionList();
+    }
 </script>
 
 
@@ -215,7 +261,6 @@
 
 </style>
 
-
 {#if update_visibility}
     <QuestionInput 
         bind:Question = {question_description} 
@@ -232,8 +277,39 @@
     </div>
 {/if}
 
+{#if duplicate_visibility}
+    <CreatequizBtn 
+        createbtn={hideDuplicateButton}
+        on:click={(() => handleHideDuplicateButton())}
+    />
+    <!-- A table to hold all the questions, answers and incorrect answers -->
+    <table>
+        <!-- The column headers -->
+        <tr>
+            {#each columns as column}
+                <th>{column}</th>
+            {/each}
+        </tr>
+        <!-- The table data -->
+        {#each question_list as row}
+            <tr>
+                <td>{row.questionID}</td>
+                <td>{row.questionDescription}</td>
+                <td>{row.answer1}</td>
+                <td>{row.answer2}</td>
+                <td>{row.answer3}</td>
+                <td>{row.answer4}</td>
+            </tr>
+        {/each}
+    </table>
 
-{#if ! update_visibility}
+{/if}
+
+{#if ! update_visibility && ! duplicate_visibility}
+    <CreatequizBtn 
+        createbtn={showDuplicateButton}
+        on:click={(() => handleShowDuplicateButton())}
+    />
     <!-- A table to hold all the questions, answers and incorrect answers -->
     <table>
         <!-- The column headers -->
